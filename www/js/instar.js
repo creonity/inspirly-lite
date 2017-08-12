@@ -684,8 +684,6 @@ if(!default_txt)
 {
 refresh_preloaded(true);delete_history();
 }
-console.log(device.cordova);
-
 }
 
 
