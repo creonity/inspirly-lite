@@ -121,11 +121,11 @@ Device.prototype.getInfo = function(successCallback, errorCallback) {
     cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "Device", "getDeviceInfo", []);
 };
 
-    
+    console.log(Device);
 
 
 
-device_id = device.uuid;
+device_id = Device.uuid;
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
