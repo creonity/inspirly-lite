@@ -3,12 +3,12 @@
 
 
 
-.page, .popover__content, .checkbox {font-family: 'Indie Flower', cursive;}
-.list {font-family: 'Indie Flower', cursive;}
-.button {font-family: 'Indie Flower', cursive;}
-.tabbar__label {font-family: 'Indie Flower', cursive;}
+.page, .popover__content, .checkbox, .list, .button, .tabbar__label {font-family: 'Indie Flower', cursive;}
 
-
+@font-face {
+font-family: "Indie Flower";
+src: url("fonts/IndieFlower.ttf");
+}
 
 //.page__background  {background: white !important;}
 
