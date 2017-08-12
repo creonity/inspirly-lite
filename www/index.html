@@ -110,8 +110,7 @@ For production change content-security-policy and admob
     <ons-list-header>Insert text</ons-list-header>
 
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="Life is just some sample text" id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
-<textarea style="display:none" id="default_txt" rows="3">Life is just some sample text</textarea>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
 </ons-list-item>
 
 
@@ -127,7 +126,7 @@ For production change content-security-policy and admob
 
 <p style="text-align: center;">
 
-<button class="button button--outline download_btn" onclick=" getQuote()">Random</button>
+<button class="button button--outline download_btn" onclick="getQuote()">Random</button>
 <button class="button button--outline download_btn" onclick="$('#user_txt').val('')">Clear</button>
 </p>
 

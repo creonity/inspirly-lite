@@ -64,7 +64,7 @@ if (page.matches("#share")) {$("#print_products").hide();}
 AdMob.hideBanner();
 })
 
-device_id = device.uuid;
+device_id = window.plugins.device.uuid;
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
@@ -277,8 +277,8 @@ if(text_items.length==2){user_txt=text_items[0]+"\n"+text_items[1];}
 
 
 user_txt = $("#user_txt").val();
-if(user_txt.length==0){user_txt=$("#default_txt").val();}
-var ori_user_txt = user_txt;
+if(user_txt.length==0){getQuote(true);user_txt = $("#user_txt").val();}
+//var ori_user_txt = user_txt;
 str_length = user_txt.length;
 
 if($("#autolinebreak").children().is(':checked'))
@@ -671,7 +671,7 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 
-function getQuote() {
+function getQuote(default_txt) {
 var author = randomKey(quote_array);
 var quote = quote_array[author];
 
@@ -679,9 +679,11 @@ var quote = quote_array[author];
 var encoded_quote = quote;
 
 $("#user_txt").val(encoded_quote);
-
-        refresh_preloaded(true);delete_history();
-                }
+if(!default_txt)
+{
+refresh_preloaded(true);delete_history();
+}
+}
 
 
 var quote_array = [];
