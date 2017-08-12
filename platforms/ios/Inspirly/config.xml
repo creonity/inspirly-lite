@@ -71,8 +71,7 @@
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
     <preference name="CameraUsesGeolocation" value="false" />
-    <feature name="UniqueDeviceID">
-        <param name="ios-package" value="CDVUniqueDeviceID" />
-        <param name="onload" value="true" />
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
     </feature>
 </widget>

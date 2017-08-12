@@ -55,9 +55,8 @@
 		F48E8E677A2A48CA96041046 /* NSString+SSURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4C0B44417491E9E01883B /* NSString+SSURLEncoding.m */; };
 		9344073784A0427882AD0103 /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 03804C6B790A4371BF3280B1 /* SocialSharing.m */; };
 		B63CABA303B242CFBB2CE416 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA25DC12DDC480185B56C6D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		60757F4E7E6A430B850DA823 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B52DAE3CBF40FCABB5D5F3 /* UICKeyChainStore.m */; };
-		B750CF95F786405A8E3856DB /* CDVUniqueDeviceID.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C52DB65D3284BB4AB0AD430 /* CDVUniqueDeviceID.m */; };
-		6835A3EF521643A5BA170583 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E501DCA6BB42F488811EEC /* Security.framework */; };
+		990331091F4B44EEA494EE5D /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DA683223C40044B9B8400478 /* CDVDevice.m */; };
+		856B235AA5A746D88A26E1C2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F85DD53445D74C0FBCE00AF2 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,11 +153,9 @@
 		EB36613DABC54661BBA9A981 /* NSString+SSURLEncoding.h */ = {isa = PBXFileReference; name = "NSString+SSURLEncoding.h"; path = "cordova-plugin-x-socialsharing/NSString+SSURLEncoding.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		AAA2A17F61D1451E810FFFE1 /* SocialSharing.h */ = {isa = PBXFileReference; name = "SocialSharing.h"; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		DBA25DC12DDC480185B56C6D /* Social.framework */ = {isa = PBXFileReference; name = "Social.framework"; path = "System/Library/Frameworks/Social.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		53B52DAE3CBF40FCABB5D5F3 /* UICKeyChainStore.m */ = {isa = PBXFileReference; name = "UICKeyChainStore.m"; path = "cordova-plugin-uniquedeviceid/UICKeyChainStore.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		7C52DB65D3284BB4AB0AD430 /* CDVUniqueDeviceID.m */ = {isa = PBXFileReference; name = "CDVUniqueDeviceID.m"; path = "cordova-plugin-uniquedeviceid/CDVUniqueDeviceID.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		1C6D881DA8AD458FA9F042C9 /* UICKeyChainStore.h */ = {isa = PBXFileReference; name = "UICKeyChainStore.h"; path = "cordova-plugin-uniquedeviceid/UICKeyChainStore.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		B6347E69C7D94BE5A4118819 /* CDVUniqueDeviceID.h */ = {isa = PBXFileReference; name = "CDVUniqueDeviceID.h"; path = "cordova-plugin-uniquedeviceid/CDVUniqueDeviceID.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		B4E501DCA6BB42F488811EEC /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		DA683223C40044B9B8400478 /* CDVDevice.m */ = {isa = PBXFileReference; name = "CDVDevice.m"; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		C3CAD4A27C934802BE4E0535 /* CDVDevice.h */ = {isa = PBXFileReference; name = "CDVDevice.h"; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F85DD53445D74C0FBCE00AF2 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +189,7 @@
 				6E0EB6BC1BC94952A73BCC00 /* UIKit.framework in Frameworks */,
 				8AC274A00F284BABA09C9DAD /* ImageIO.framework in Frameworks */,
 				B63CABA303B242CFBB2CE416 /* Social.framework in Frameworks */,
-				6835A3EF521643A5BA170583 /* Security.framework in Frameworks */,
+				856B235AA5A746D88A26E1C2 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +285,7 @@
 				51E28E3ECEF14A40BD59A834 /* UIKit.framework */,
 				D9EB74193C22426F8622E0F8 /* ImageIO.framework */,
 				DBA25DC12DDC480185B56C6D /* Social.framework */,
-				B4E501DCA6BB42F488811EEC /* Security.framework */,
+				F85DD53445D74C0FBCE00AF2 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -345,10 +342,8 @@
 				03804C6B790A4371BF3280B1 /* SocialSharing.m */,
 				EB36613DABC54661BBA9A981 /* NSString+SSURLEncoding.h */,
 				AAA2A17F61D1451E810FFFE1 /* SocialSharing.h */,
-				53B52DAE3CBF40FCABB5D5F3 /* UICKeyChainStore.m */,
-				7C52DB65D3284BB4AB0AD430 /* CDVUniqueDeviceID.m */,
-				1C6D881DA8AD458FA9F042C9 /* UICKeyChainStore.h */,
-				B6347E69C7D94BE5A4118819 /* CDVUniqueDeviceID.h */,
+				DA683223C40044B9B8400478 /* CDVDevice.m */,
+				C3CAD4A27C934802BE4E0535 /* CDVDevice.h */,
 			);
 			name = Plugins;
 			path = "Inspirly/Plugins";
@@ -475,8 +470,7 @@
 				BBADE1A23CC447B9BAB18C5C /* CDVOrientation.m in Sources */,
 				F48E8E677A2A48CA96041046 /* NSString+SSURLEncoding.m in Sources */,
 				9344073784A0427882AD0103 /* SocialSharing.m in Sources */,
-				60757F4E7E6A430B850DA823 /* UICKeyChainStore.m in Sources */,
-				B750CF95F786405A8E3856DB /* CDVUniqueDeviceID.m in Sources */,
+				990331091F4B44EEA494EE5D /* CDVDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

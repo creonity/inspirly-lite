@@ -69,7 +69,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"UniqueDeviceID\"><param name=\"ios-package\" value=\"CDVUniqueDeviceID\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -115,7 +115,7 @@
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "ly.inspir.lite"
         },
-        "cordova-plugin-uniquedeviceid": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "ly.inspir.lite"
         }
     },
@@ -381,11 +381,11 @@
             ]
         },
         {
-            "id": "cordova-plugin-uniquedeviceid.UniqueDeviceID",
-            "file": "plugins/cordova-plugin-uniquedeviceid/www/uniqueid.js",
-            "pluginId": "cordova-plugin-uniquedeviceid",
-            "merges": [
-                "window.plugins.uniqueDeviceID"
+            "id": "cordova-plugin-device.device",
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "pluginId": "cordova-plugin-device",
+            "clobbers": [
+                "device"
             ]
         }
     ],
@@ -401,6 +401,6 @@
         "cordova-plugin-whitelist": "1.3.2",
         "es6-promise-plugin": "4.1.0",
         "cordova-plugin-x-socialsharing": "5.1.8",
-        "cordova-plugin-uniquedeviceid": "1.3.2"
+        "cordova-plugin-device": "1.1.6"
     }
 }

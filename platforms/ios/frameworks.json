@@ -22,5 +22,5 @@
     "UIKit.framework": 1,
     "ImageIO.framework": 1,
     "Social.framework": 1,
-    "Security.framework": 1
+    "libz.tbd": 1
 }

@@ -35,7 +35,7 @@
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "ly.inspir.lite"
         },
-        "cordova-plugin-uniquedeviceid": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "ly.inspir.lite"
         }
     },

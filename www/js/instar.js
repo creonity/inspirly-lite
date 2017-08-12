@@ -31,7 +31,7 @@ AdMob.hideBanner();
 })
 
 var error_connection_txt = "Please connect to the internet.";
-var device_id = window.plugins.uniqueDeviceID.get(success, fail);
+var device_id = false;
 
 var showDialog = function (id) {
   document
@@ -62,6 +62,7 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
+device_id = device.uuid;
     if (AdMob) {
 create_bannerAd();
 create_interstitial();
