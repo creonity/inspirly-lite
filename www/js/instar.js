@@ -61,6 +61,7 @@ autoShow:false
 
 function create_banner()
 {
+console.log(admobid.banner);
   AdMob.createBanner( {
     license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
     adId: admobid.banner,
