@@ -34,7 +34,6 @@ channel.waitForInitialization('onCordovaInfoReady');
  * phone, etc.
  * @constructor
  */
- console.log("script");
 function Device() {
     this.available = false;
     this.platform = null;
@@ -47,7 +46,7 @@ function Device() {
     this.serial = null;
 
     var me = this;
-console.log("Device");
+
     channel.onCordovaReady.subscribe(function() {
         me.getInfo(function(info) {
             //ignoring info.cordova returning from native, we should use value from cordova.version defined in cordova.js
@@ -63,7 +62,6 @@ console.log("Device");
             me.manufacturer = info.manufacturer || 'unknown';
             me.serial = info.serial || 'unknown';
             channel.onCordovaInfoReady.fire();
-            console.log("ready");
         },function(e) {
             me.available = false;
             utils.alert("[ERROR] Error initializing Cordova: " + e);

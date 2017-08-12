@@ -13,9 +13,6 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "ly.inspir.lite"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "ly.inspir.lite"
-        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "ly.inspir.lite"
         },
@@ -32,6 +29,9 @@
             "PACKAGE_NAME": "ly.inspir.lite"
         },
         "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "ly.inspir.lite"
         }
     },
