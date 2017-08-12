@@ -499,34 +499,6 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 </body>
 
 <script>
-var admobid = {};
-if( /(android)/i.test(navigator.userAgent) ) {
-	admobid = { // for Android
-					banner: 'ca-app-pub-3176168089117396/9768598254',
-					interstitial: 'ca-app-pub-3176168089117396/4266001898'
-	};
-} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-	admobid = { // for iOS
-    banner: 'ca-app-pub-3176168089117396/1348673444',
-    interstitial: 'ca-app-pub-3176168089117396/6668750058'
-	};
-}
-
-function initApp() {
-    if (AdMob) {
-  AdMob.createBanner( {
-    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    isTesting: true, // TODO: remove this line when release
-    overlap: false,
-    offsetTopBar: false,
-    bgColor: 'black',
-    autoShow : false
-  } );
-    }
-}
-
 document.addEventListener('deviceready', initApp, false);
 </script>
 </html>
