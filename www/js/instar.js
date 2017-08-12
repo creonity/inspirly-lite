@@ -9,7 +9,7 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {
-//AdMob.removeBanner();create_banner();
+//AdMob.removeBanner();create_bannerAd();
 }
 if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
@@ -29,6 +29,12 @@ AdMob.hideBanner();
 })
 
 
+var showDialog = function (id) {
+  document
+    .getElementById(id)
+    .show();
+};
+
 show_counter=0;
 var admobid = {};
 if( /(android)/i.test(navigator.userAgent) ) {
@@ -47,7 +53,7 @@ if( /(android)/i.test(navigator.userAgent) ) {
 
 function initApp() {
     if (AdMob) {
-create_banner();
+create_bannerAd();
 create_interstitial();
     }
 
@@ -61,9 +67,9 @@ autoShow:false
 */
 }
 
-function create_banner()
+function create_bannerAd()
 {
-console.log(admobid.banner);
+console.log("hallo "+admobid.banner);
   AdMob.createBanner( {
     license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
     adId: admobid.banner,
