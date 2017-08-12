@@ -8,11 +8,7 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 
 $(document).on("show", function( event ) {
 var page = event.target;
-if (page.matches("#image")) {
-if (AdMob) {
-AdMob.removeBanner();create_bannerAd();
-}
-}
+if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
 if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
 $(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
@@ -248,7 +244,7 @@ $("#current_image").html("");
 
 function create_random(preload)
 {
-if(!preload){show_counter = show_counter +1;}
+show_counter = show_counter +1;
 /*
 if(!user_txt)
 {
@@ -551,6 +547,16 @@ $.ajax({
   success: function(msg, error) {
   var data = JSON.parse(msg);
 
+var share_options;
+share_options = {
+  message: 'Created with inspir.ly #inspirly', // not supported on some apps (Facebook, Instagram)
+  subject: 'Get inspired', // fi. for email
+  files: [data.image_url], // an array of filenames either locally or remotely
+  url: 'https://www.inspir.ly',
+  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+}
+
+
 if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook('Created with inspir.ly #inspirly',  data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
 if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram('Created with inspir.ly #inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
 if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
@@ -559,15 +565,6 @@ if(platform == "snapchat"){window.plugins.socialsharing.shareWithOptions(share_o
 if(platform == "other"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 
 
-var share_options;
-
-share_options = {
-  message: 'Created with inspir.ly #inspirly', // not supported on some apps (Facebook, Instagram)
-  subject: 'Get inspired', // fi. for email
-  files: [data.image_url], // an array of filenames either locally or remotely
-  url: 'https://www.inspir.ly',
-  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
-}
 
 
 var share_onSuccess = function(result) {
