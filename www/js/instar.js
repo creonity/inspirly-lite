@@ -63,6 +63,7 @@ if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide
 if (page.matches("#share")) {$("#print_products").hide();}
 AdMob.hideBanner();
 })
+console.log(device.cordova);
 
 device_id = window.plugins.device.uuid;
 /*
