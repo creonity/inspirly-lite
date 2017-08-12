@@ -551,10 +551,10 @@ $.ajax({
   success: function(msg, error) {
   var data = JSON.parse(msg);
 
-if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook('Created with inspir.ly #inspirly', null /* data.image_url */, null /* 'http://www.inspir.ly' */, function() {console.log('share ok')}, function(errormsg){ons.notification.alert(errormsg)});}
-if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram('Created with inspir.ly #inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){'You need to install the instagram app'});}
-if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp('Created with inspir.ly #inspirly', null /* data.image_url */, null /* 'http://www.inspir.ly' */, function() {console.log('share ok')}, function(errormsg){ons.notification.alert(errormsg)});}
-if(platform == "twitter"){window.plugins.socialsharing.shareViaTwitter('Created with inspir.ly #inspirly', null /* data.image_url */, 'http://www.inspir.ly')}
+if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook('Created with inspir.ly #inspirly',  data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');});}
+if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram('Created with inspir.ly #inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');});}
+if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');});}
+if(platform == "twitter"){window.plugins.socialsharing.shareViaTwitter('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly'), function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');});}
 if(platform == "snapchat"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 if(platform == "other"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 
@@ -576,7 +576,7 @@ var share_onSuccess = function(result) {
 }
 
 var share_onError = function(msg) {
-  console.log("Sharing failed with message: " + msg);
+ons.notification.alert("Sharing failed with message: " + msg);
 }
 
   $("#share_progress").fadeOut(4000, function(){$(".share_btn").prop("disabled", false);});
