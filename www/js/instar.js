@@ -8,7 +8,9 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 
 $(document).on("show", function( event ) {
 var page = event.target;
-if (page.matches("#image")) {AdMob.removeBanner();create_banner();}
+if (page.matches("#image")) {
+//AdMob.removeBanner();create_banner();
+}
 if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
 $(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
