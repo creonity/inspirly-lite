@@ -2,9 +2,7 @@
 $(document).ready(function(){
 //window.plugins.orientationLock.lock("portrait");
 
-if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
-    document.addEventListener('deviceready', initApp, false);
-} else {initApp();}
+
 
 $(document).on("show", function( event ) {
 var page = event.target;
@@ -25,6 +23,10 @@ AdMob.hideBanner();
 })
 
 })
+
+if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
+    document.addEventListener('deviceready', initApp, false);
+} else {initApp();}
 
 var error_connection_txt = "Please connect to the internet.";
 var device_id = false;
@@ -77,16 +79,7 @@ autoShow:false
 function create_bannerAd()
 {
 console.log("hallo "+admobid.banner);
-  AdMob.createBanner( {
-    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    isTesting: true, // TODO: remove this line when release
-    overlap: false,
-    offsetTopBar: false,
-    bgColor: 'black',
-    autoShow : false
-  } );
+create_bannerAd();
 }
 
 function create_interstitial()
