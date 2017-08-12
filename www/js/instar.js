@@ -7,7 +7,7 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 } else {initApp();}
 })
 
-
+var version = "l1.0";
 
 var error_connection_txt = "Please connect to the internet.";
 var device_id = false;
@@ -63,7 +63,7 @@ if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide
 if (page.matches("#share")) {$("#print_products").hide();}
 AdMob.hideBanner();
 })
-console.log(device.cordova);
+
 
 device_id = window.plugins.device.uuid;
 /*
@@ -306,7 +306,7 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+$("#code").html()+"&device_id="+device_id+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+var datatosend = "code="+$("#code").html()+"&version="+version+"&device_id="+device_id+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
@@ -684,6 +684,8 @@ if(!default_txt)
 {
 refresh_preloaded(true);delete_history();
 }
+console.log(device.cordova);
+
 }
 
 
