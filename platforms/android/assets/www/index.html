@@ -28,7 +28,7 @@ For production change content-security-policy and admob
     <link rel="stylesheet" href="css/onsen-css-components.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
 
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
     <script src="js/jquery.min.js"></script>
     <script src="js/onsenui.min.js"></script>
     <script src="js/functions.js"></script>
@@ -47,14 +47,8 @@ For production change content-security-policy and admob
   <ons-splitter-side id="menu" side="left" width="220px" collapse>
     <ons-page>
       <ons-list>
-        <ons-list-item onclick="fn.load('home.html')" tappable>
-          Home
-        </ons-list-item>
         <ons-list-item onclick="fn.load('create.html')" tappable>
           Design
-        </ons-list-item>
-        <ons-list-item onclick="fn.load('features.html')" tappable>
-          Addfree
         </ons-list-item>
         <ons-list-item onclick="fn.load('about.html')" tappable>
           About
@@ -62,7 +56,7 @@ For production change content-security-policy and admob
       </ons-list>
     </ons-page>
   </ons-splitter-side>
-  <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+  <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
 </ons-splitter>
 
 
@@ -75,42 +69,29 @@ For production change content-security-policy and admob
 
 
 
-<template id="home.html">
- <ons-page id="home" modifier="full_bg">
-
-
-    <p style="text-align: center;">
-    <section style="padding: 8px;margin-top:200px">
-    <ons-button modifier="large outline transparent marginb20" id="create_btn">Design Image</ons-button>
-    <ons-button modifier="large outline transparent marginb20" id="features_btn">Addfree</ons-button>
-    <ons-button modifier="large outline transparent marginb20" id="about_btn">About</ons-button>
-    </section>
-    </p>
-  </ons-page>
-</template>
 
 
 
 <template id="create.html">
 <ons-page id="tabbarPage">
-<ons-toolbar>
+<ons-toolbar disable-auto-styling>
       <div class="left">
-        <ons-toolbar-button onclick="fn.open()">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
           <ons-icon icon="md-menu"></ons-icon>
         </ons-toolbar-button>
       </div>
       <div class="center">
-        Inspir.ly
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
       </div>
     </ons-toolbar>
-<ons-tabbar id="tabbar">
-  <ons-tab label="Text" page="text.html">
+<ons-tabbar id="tabbar" disable-auto-styling>
+  <ons-tab label="Text" page="text.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab label="Mood" page="mood.html">
+  <ons-tab label="Mood" page="mood.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab label="Design" id='btn_image_menu' page="rand_img.html" active>
+  <ons-tab label="Design" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
   </ons-tab>
-  <ons-tab label="Share" id='share' page="share.html">
+  <ons-tab label="Share" id='share' page="share.html" disable-auto-styling>
   </ons-tab>
 </ons-tabbar>
   </ons-page>
@@ -129,7 +110,7 @@ For production change content-security-policy and admob
     <ons-list-header>Insert text</ons-list-header>
 
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;height:200px" class="textarea--transparent" rows="5" placeholder="Life is just some sample text" id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="Life is just some sample text" id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
 <textarea style="display:none" id="default_txt" rows="3">Life is just some sample text</textarea>
 </ons-list-item>
 
@@ -139,7 +120,7 @@ For production change content-security-policy and admob
 <ons-list-item>
 
       <div class="center">Auto line break</div>
-      <div class="right"><ons-switch id="autolinebreak" checked></ons-switch></div>
+      <div class="right"><ons-switch id="autolinebreak" checked disable-auto-styling></ons-switch></div>
 </ons-list-item>
 
 </ons-list>
@@ -154,6 +135,9 @@ For production change content-security-policy and admob
 
   </ons-page>
 </template>
+
+
+
 
 <template id="mood.html">
   <ons-page id="mood">
@@ -181,8 +165,8 @@ For production change content-security-policy and admob
 <ons-gesture-detector>
 
 
-  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; position: relative; width: 100%;  max-width:400px; text-align: center; max-height:400px">
-<div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:10px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
+  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
+<div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
 Swipe left to change the style
 </div>
 
@@ -244,9 +228,9 @@ History Code<div id='history_code'></div><br>
     <ons-list-header>Download image</ons-list-header>
 </ons-list>
 <button class="button button--outline download_btn" onclick="download_image(400)">Small</button>
-<button class="button button--outline download_btn" onclick="download_image(1080)">Medium</button>
-<button class="button button--outline download_btn" onclick="download_image(2000)">Large</button>
-<button class="button button--outline download_btn" onclick="download_image(4000)">x-Large</button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">Medium</button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">Large</button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">x-Large</button>
 </p>
 <img id='imageElement' src=''>
 <div class="progress-bar progress-bar--indeterminate hidden" id="download_progress"></div>
@@ -267,14 +251,34 @@ History Code<div id='history_code'></div><br>
 
 
 
+<ons-alert-dialog id="dialog-1">
+  <div class="alert-dialog-title">Please upgrade!</div>
+  <div class="alert-dialog-content">
+    This is only supported in the full version of inspirly. You find it in the app store &ndash; oh, and it comes completely adfree.
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')">OK</button>
+  </div>
+</ons-alert-dialog>
 
+<ons-alert-dialog id="dialog-2">
+  <div class="alert-dialog-title">Error!</div>
+  <div class="alert-dialog-content">
+    You can only share if you have the app installed.
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')">OK</button>
+  </div>
+</ons-alert-dialog>
 
 
 <ons-popover direction="up" cancelable id="options">
   <div style="padding: 10px; text-align: right;">
-
+<ons-list style="margin-bottom:10px">
+<ons-list-item>
 Which aspect of the image do you like? Mark what should not be changed.<br>
-
+</ons-list-item>
+</ons-list>
 <label class="checkbox">
   <input id="font" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
 Fontstyle <div class="checkbox__checkmark"></div>
@@ -294,76 +298,44 @@ Fontfilling <div class="checkbox__checkmark"></div>
   <input id="frame" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
 Frame <div class="checkbox__checkmark"></div>
 </label>
-<br>
-<label class="checkbox">
+<br><label class="checkbox">
   <input id="background" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
 Background <div class="checkbox__checkmark"></div>
 </label>
-<br>
-<label class="checkbox">
+<br><label class="checkbox">
   <input id="texture" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
 Texture <div class="checkbox__checkmark"></div>
 </label>
 <br>
 
-
+  <div class="center" style="margin-top:20px">Preview quality <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
   </div>
 </ons-popover>
 
 
 
 
-<template id="features.html">
-  <ons-page>
-<ons-toolbar>
-      <div class="left">
-        <ons-toolbar-button onclick="fn.open()">
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-        Inspir.ly
-      </div>
-    </ons-toolbar>
-
-    <p style="text-align: center;">
-
-<table>
-<tr><td></td><td>LIGHT</td><td>PLUS</td><td>PRO</td></tr>
-<tr><td>Generate Images with inspir.ly designer</td><td>TICK</td><td>TICK</td><td>TICK</td></tr>
-<tr><td>Use your own image</td><td>TICK</td><td>TICK</td><td>TICK</td></tr>
-<tr><td>Max resolution to download and share</td><td>medium (1k)</td><td>large (4k)</td><td>xtra large (8k)</td></tr>
-<tr><td>Layout options</td><td>Image only</td><td>For each elements</td><td>For each word</td></tr>
-<tr><td>Adfree</td><td></td><td>TICK</td><td>TICK</td></tr>
-<tr><td>Unlimited text length</td><td></td><td>TICK</td><td>TICK</td></tr>
-<tr><td>Use templates</td><td></td><td></td><td>TICK</td></tr>
-</table>
-
-    </p>
-  </ons-page>
-</template>
-
 
 
 
 <template id="about.html">
   <ons-page>
-<ons-toolbar>
+<ons-toolbar disable-auto-styling>
       <div class="left">
-        <ons-toolbar-button onclick="fn.open()">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
           <ons-icon icon="md-menu"></ons-icon>
         </ons-toolbar-button>
       </div>
       <div class="center">
-        Inspir.ly
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
       </div>
     </ons-toolbar>
-
+<div style='padding:20px'>
     <p style="text-align: center;">
-We at inspir.ly love beautiful text on images. All images are created by our unique inspirly design engine. The engine learns each time it creates an image to get better and better. When you like what
+We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique inspirly design engine. The engine learns each time it creates an image to get better and better. When you like what
 you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.
-<br><br>
-Contact us for any questions or ideas:<br>
+<br><br>Don't like seeing adds or want to download your images up to 4k? Download the full version of inspirly in the app store. Thanks you!<br><br>
+Contact us for any questions, problems or ideas:<br>
 <address>
   <strong>Nagel WebApps</strong><br>
   Lukas Nagel<br>
@@ -491,6 +463,7 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 
 
     </p>
+</div>
   </ons-page>
 </template>
 
@@ -499,34 +472,6 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 </body>
 
 <script>
-var admobid = {};
-if( /(android)/i.test(navigator.userAgent) ) {
-	admobid = { // for Android
-					banner: 'ca-app-pub-3176168089117396/9768598254',
-					interstitial: 'ca-app-pub-3176168089117396/4266001898'
-	};
-} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-	admobid = { // for iOS
-    banner: 'ca-app-pub-3176168089117396/1348673444',
-    interstitial: 'ca-app-pub-3176168089117396/6668750058'
-	};
-}
-
-function initApp() {
-    if (AdMob) {
-  AdMob.createBanner( {
-    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    isTesting: true, // TODO: remove this line when release
-    overlap: false,
-    offsetTopBar: false,
-    bgColor: 'black',
-    autoShow : true
-  } );
-    }
-}
-
 document.addEventListener('deviceready', initApp, false);
 </script>
 </html>
