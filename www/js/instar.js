@@ -35,6 +35,12 @@ var showDialog = function (id) {
     .show();
 };
 
+var hideDialog = function (id) {
+  document
+    .getElementById(id)
+    .hide();
+};
+
 show_counter=0;
 var admobid = {};
 if( /(android)/i.test(navigator.userAgent) ) {
