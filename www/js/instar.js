@@ -409,7 +409,12 @@ var ft = new FileTransfer();
 
 function download_image(size)
 {
-showRewardVideoAd();
+AdMob.showRewardVideoAd();
+AdMob.prepareRewardVideoAd( {
+isTesting: true,
+adId:admobid.reward,
+autoShow:false
+});
 
 
 $("#download_progress").fadeIn();
