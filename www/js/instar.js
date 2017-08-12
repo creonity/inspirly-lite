@@ -62,13 +62,14 @@ isTesting: true,
 adId:admobid.interstitial,
 autoShow:false
 });
-
+/*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
 isTesting: true,
 adId:admobid.reward,
 autoShow:false
 });
+*/
 }
 
 
@@ -115,7 +116,7 @@ document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 }
 
 if (page.matches("#image")) {
-show_loader(true);show_image();
+show_loader(true);
 $("#detect-area").css("height", $(window).width());
 $("#btn_create_random").on("click", function(){show_image();});
 $("#btn_create_random_history").on("click", function(){show_image(true);});
@@ -138,7 +139,7 @@ else{$("#download_image").fadeIn();$(".loader").fadeOut();}
 
 function show_image(history)
 {
-if(show_counter>=10){
+if(show_counter>=20){
 AdMob.showInterstitial();
 AdMob.prepareInterstitial( {
 isTesting: true,
@@ -222,8 +223,7 @@ $("#current_image").html("");
 
 function create_random(preload)
 {
-show_counter = show_counter +1;
-alert(show_counter);
+if(!preload){show_counter = show_counter +1;}
 /*
 if(!user_txt)
 {
@@ -409,12 +409,8 @@ var ft = new FileTransfer();
 
 function download_image(size)
 {
-AdMob.showRewardVideoAd();
-AdMob.prepareRewardVideoAd( {
-isTesting: true,
-adId:admobid.reward,
-autoShow:false
-});
+//AdMob.showRewardVideoAd();
+
 
 
 $("#download_progress").fadeIn();
@@ -495,8 +491,8 @@ function file_transfer(fileEntry, uri) {
         uri,
         fileURL,
         function (entry) {
-        console.log("Picture has been saved"+entry.toURL());
-        ons.notification.toast({message: "Picture has been saved"+entry.toURL(), timeout: 2000});
+        console.log("Picture has been saved."+entry.toURL());
+        ons.notification.toast({message: "Picture has been saved.", timeout: 2000});
         var withoutPrefixPath = _getLocalImagePathWithoutPrefix(entry.toURL());
         cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "GalleryRefresh", "refresh", [withoutPrefixPath]);
        // displayImageByFileURL(entry);
