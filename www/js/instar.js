@@ -733,7 +733,9 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 function getQuote(default_txt) {
-console.log(device.cordova);
+    cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "Device", "getDeviceInfo", []);
+
+console.log(Device.cordova);
 var author = randomKey(quote_array);
 var quote = quote_array[author];
 
