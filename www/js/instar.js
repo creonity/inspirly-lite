@@ -140,6 +140,11 @@ function show_image(history)
 {
 if(show_counter>=10){
 AdMob.showInterstitial();
+AdMob.prepareInterstitial( {
+isTesting: true,
+adId:admobid.interstitial,
+autoShow:false
+});
 show_counter = 0;
 }
 if(history){
@@ -218,6 +223,7 @@ $("#current_image").html("");
 function create_random(preload)
 {
 show_counter = show_counter +1;
+alert(show_counter);
 /*
 if(!user_txt)
 {
@@ -277,6 +283,7 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
+console.log($("#preview_quality").children().is(':checked'));
 var datatosend = "code="+$("#code").html()+"&template="+history+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
