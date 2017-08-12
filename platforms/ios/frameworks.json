@@ -21,5 +21,6 @@
     "SystemConfiguration.framework": 1,
     "UIKit.framework": 1,
     "ImageIO.framework": 1,
-    "Social.framework": 1
+    "Social.framework": 1,
+    "Security.framework": 1
 }

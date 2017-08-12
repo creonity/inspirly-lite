@@ -30,6 +30,8 @@ AdMob.hideBanner();
 
 })
 
+var error_connection_txt = "Please connect to the internet.";
+var device_id = window.plugins.uniqueDeviceID.get(success, fail);
 
 var showDialog = function (id) {
   document
@@ -204,7 +206,7 @@ create_random();
 if($("#current_image").html()!="")
 {
 image_url = $("#current_image").html();
-$("#download_image").html("<img style='width: 100%; max-width: 400px; height:"+$(window).width()+"px; max-height:400px;' src='"+image_url+"'>");
+$("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_url+"'>");
 $("#download_image").fadeIn();$(".loader").hide();
 }
 
@@ -303,7 +305,7 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+$("#code").html()+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+var datatosend = "code="+$("#code").html()+"&device_id="+device_id+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
@@ -314,21 +316,16 @@ $.ajax({
    // console.log(msg.replace(/\\/g, ''));
    console.log(msg);
     var data = JSON.parse(msg);
-    image_width = true;
-  if(image_width){
-
-
+    if(data.error){ons.notification.alert(data.error);}
+else{
 $([data.image_url]).preload();
 //$("#next_image").html(data.image_url);
 $("#preloaded_code").html(data.code);
 $("#preloaded_image").html(data.image_url);
 if(!preload){show_image();}
-  }else{
-//vorlage_canvas(data.image_url,data.code);
 }
-
 },
-error: function (msg, textStatus, errorThrown) {ons.notification.alert(errorThrown+' No internet available. Please connect and try again.');}
+error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
     });
 }
 
@@ -461,7 +458,7 @@ download(data.image_url,data.image_name);
 error: function (msg, textStatus, errorThrown) {
  $("#download_progress").fadeOut();
  $(".download_btn").prop("disabled", false);
-ons.notification.alert(errorThrown+' No internet available. Please connect and try again.');}
+ons.notification.alert(error_connection_txt);}
     });
 }
 
@@ -487,9 +484,9 @@ dirEntry.getDirectory( "inspirly",{create:true, exclusive: false},function(direc
 }, onErrorLoadFs);
 }
 
-function onErrorCreateDir(msg){alert("problemo creating directory "+msg.code);}
-function onErrorRequestFs(msg){alert("problemo requesting file sysetm"+msg.code);}
-function onErrorLoadFs(msg){alert("problemo loading directory"+msg.code);}
+function onErrorCreateDir(msg){alert("Error while creating directory.");}
+function onErrorRequestFs(msg){alert("Error while requesting file system.");}
+function onErrorLoadFs(msg){alert("Error while loading directory.");}
 
 function createFile(dirEntry, File_Name, URL) {
 // Creates a new file or returns the file if it already exists.
@@ -517,9 +514,7 @@ function file_transfer(fileEntry, uri) {
        // displayImageByFileURL(entry);
         },
         function (error) {
-            ons.notification.alert("download error source " + error.source);
-            ons.notification.alert("download error target " + error.target);
-            ons.notification.alert("upload error code" + error.code);
+            ons.notification.alert("Error while downloading source.");
         },
         null, // or, pass false
         {
@@ -589,7 +584,7 @@ ons.notification.alert("Sharing failed with message: " + msg);
 error: function (msg, textStatus, errorThrown) {
  $("#share_progress").fadeOut();
  $(".share_btn").prop("disabled", false);
-ons.notification.alert(errorThrown+' No internet available. Please connect and try again.');}
+ons.notification.alert(error_connection_txt);}
     });
 }
 
@@ -660,7 +655,7 @@ error: function (msg, textStatus, errorThrown) {
 var eles = document.getElementsByTagName('img');
 for (var i=0; i < eles.length; i++)
    eles[i].onclick = print_product;
-ons.notification.alert(errorThrown+' No internet available. Please connect and try again.');}
+ons.notification.alert(error_connection_txt);}
     });
 
 }
@@ -694,12 +689,82 @@ quote_array["Vivian Greene"] = ["Life isn't about waiting for the storm to pass.
 quote_array["Proverbs"] = ["Live today for tomorrow it will all be history."];
 quote_array["Proverbs"] = ["Before you embark on a journey of revenge, dig two graves."];
 quote_array["Proverbs"] = ["Live today for tomorrow it will all be history."];
-quote_array["Vivian Greene"] = ["Life isn’t about waiting for the storm to pass… It’s about learning to dance in the rain."];
+quote_array["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
 quote_array["Lao Tzu"] = ["If you are depressed you are living in the past. If you are anxious you are living in the future. If you are at peace you are living in the present."];
 quote_array["Soren Kierkegaard"] = ["Life is not a problem to be solved, but a reality to be experienced."];
 quote_array["Jack London"] = ["Life is not always a matter of holding good cards, but sometimes, playing a poor hand well."];
 quote_array["Marcus Aurelius"] = ["Dwell on the beauty of life. Watch the stars, and see yourself running with them."];
 quote_array["Unknown"] = ["The best time to plant a tree is twenty-five years ago. The second best time is today."];
+quote_array["Dr. Seuss"] = ["Don't cry because it's over, smile because it happened."];
+quote_array["Oscar Wilde"] = ["Be yourself; everyone else is already taken."];
+quote_array["Albert Einstein"] = ["Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."];
+quote_array["Frank Zappa"] = ["So many books, so little time."];
+quote_array["William W. Purkey"] = ["You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth."];
+quote_array["Marcus Tullius Cicero"] = ["A room without books is like a body without a soul."];
+quote_array["Mae West"] = ["You only live once, but if you do it right, once is enough."];
+quote_array["Mahatma Gandhi"] = ["Be the change that you wish to see in the world."];
+quote_array["J.K. Rowling"] = ["If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals."];
+quote_array["Mark Twain"] = ["If you tell the truth, you don't have to remember anything."];
+quote_array["Elbert Hubbard"] = ["A friend is someone who knows all about you and still loves you."];
+quote_array["Mahatma Gandhi"] = ["Live as if you were to die tomorrow. Learn as if you were to live forever."];
+quote_array["Oscar Wilde"] = ["To live is the rarest thing in the world. Most people exist, that is all."];
+quote_array["Martin Luther King Jr."] = ["Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that."];
+quote_array["Oscar Wilde"] = ["I am so clever that sometimes I don't understand a single word of what I am saying."];
+quote_array["Anonymous"] = ["Insanity is doing the same thing, over and over again, but expecting different results."];
+quote_array["J.K. Rowling"] = ["I do believe something magical can happen when you read a good book."];
+quote_array["Winston Churchill"] = ["The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees The Opportunity In Every Difficulty."];
+quote_array["Will Rogers"] = ["Don't Let Yesterday Take Up Too Much Of Today."];
+quote_array["Steve Jobs"] = ["If You Are Working On Something That You Really Care About, You Don't Have To Be Pushed. The Vision Pulls You."];
+quote_array["Rob Siltanen"] = ["People Who Are Crazy Enough To Think They Can Change The World, Are The Ones Who Do."];
+quote_array["Ernest Hemingway"] = ["The world breaks everyone, and afterward, some are strong at the broken places."];
+quote_array["Walt Disney"] = ["If you can dream it, you can do it."];
+quote_array["Eleanor Roosevelt"] = ["The future belongs to those who believe in the beauty of their dreams."];
+quote_array["W. Clement Stone"] = ["Aim for the moon. If you miss, you may hit a star."];
+quote_array["Yoko Ono"] = ["Smile in the mirror. Do that every morning and you'll start to see a big difference in your life."];
+quote_array["Mother Teresa"] = ["Peace begins with a smile."];
+quote_array["Andy Rooney"] = ["If you smile when no one else is around, you really mean it."];
+quote_array["Charlie Chaplin"] = ["You'll find that life is still worthwhile, if you just smile."];
+quote_array["Unknown"] = ["I look at you and see the rest of my life in front of my eyes."];
+quote_array["Leo Tolstoy"] = ["All, everything that I understand, I only understand because I love."];
+quote_array["Unknown"] = ["I'm much more me when I'm with you."];
+quote_array["Salvador Dali"] = ["I don't do drugs, I am drugs."];
+quote_array["Jim Morrison"] = ["Actually I don't remember being born, it must have happened during one of my black outs."];
+quote_array["Unknown"] = ["I didn't fall. The floor just needed a hug."];
+quote_array["Unknown"] = ["Sleep all day. Party all night. Never grow old. Never die."];
+quote_array["Unknown"] = ["Happiness is not having what you want. It is appreciating what you have."];
+quote_array["Unknown"] = ["We fall in love by chance, we stay in love by choice."];
+quote_array["Unknown"] = ["You can't change yesterday, but you can ruin today by worrying about tomorrow."];
+quote_array["Unknown"] = ["Silence isn't empty. It's full of answers."];
+quote_array["Unknown"] = ["The goal is to die with memories, not dreams."];
+quote_array["Alyssa Knight"] = ["Count your rainbows, not your thunderstorms."];
+quote_array["Robert A. Heinlein"] = ["Love is that condition in which the happiness of another person is essential to your own."];
+quote_array["Mahatma Gandhi"] = ["Happiness is when what you think, what you say, and what you do are in harmony."];
+quote_array["Winnie the Pooh"] = ["Nobody can be uncheered with a balloon."];
+quote_array["Confucius"] = ["What you do not want done to yourself, do not do to others."];
+quote_array["Aristotle"] = ["Happiness depends upon ourselves."];
+quote_array[""] = ["Be the best version of YOU"];
+quote_array[""] = ["If it is important, you'll find a way. If not you'll find an excuse."];
+quote_array[""] = ["Your only limit is YOU"];
+quote_array[""] = ["Hard work beats talent when talent doesn't work hard"];
+quote_array[""] = ["Do more of what makes you happy"];
+quote_array[""] = ["stop wishing. start doing."];
+quote_array[""] = ["I'm not here to be average. I'm here to be awesome."];
+quote_array[""] = ["Be fearless in the pursuit of what sets your soul on fire."];
+quote_array["Oprah Winfrey"] = ["Think like a queen."];
+quote_array[""] = ["A little progress each day adds up to big results"];
+quote_array[""] = ["Hope is the only thing stronger than fear"];
+quote_array[""] = ["Believe in yourself"];
+quote_array[""] = ["Make your dreams happen"];
+quote_array[""] = ["I'm going to make you so proud - not to self"];
+quote_array[""] = ["Be stronger than your excuses"];
+quote_array["Steve Martin"] = ["Be so good they can't ignore you"];
+quote_array[""] = ["Sweat is your fat crying"];
+quote_array[""] = ["If you're tired of starting over STOP giving up"];
+quote_array[""] = ["Wake up. Kick ass. Repeat."];
+quote_array[""] = ["Be happy. Be bright. Be you."];
+quote_array[""] = ["I'm donig this for ME"];
+
+
 
 function randomKey(obj) {
     var ret;
