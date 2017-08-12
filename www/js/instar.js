@@ -8,7 +8,7 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 
 $(document).on("show", function( event ) {
 var page = event.target;
-if (page.matches("#image")) {}
+if (page.matches("#image")) {AdMob.removeBanner();create_banner();}
 if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
 $(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
@@ -45,23 +45,10 @@ if( /(android)/i.test(navigator.userAgent) ) {
 
 function initApp() {
     if (AdMob) {
-  AdMob.createBanner( {
-    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    isTesting: true, // TODO: remove this line when release
-    overlap: false,
-    offsetTopBar: false,
-    bgColor: 'black',
-    autoShow : false
-  } );
+create_banner();
+create_interstitial();
     }
-AdMob.prepareInterstitial( {
-license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-isTesting: true,
-adId:admobid.interstitial,
-autoShow:false
-});
+
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
@@ -72,9 +59,29 @@ autoShow:false
 */
 }
 
+function create_banner()
+{
+  AdMob.createBanner( {
+    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+    adId: admobid.banner,
+    position: AdMob.AD_POSITION.BOTTOM_CENTER,
+    isTesting: true, // TODO: remove this line when release
+    overlap: false,
+    offsetTopBar: false,
+    bgColor: 'black',
+    autoShow : false
+  } );
+}
 
-
-
+function create_interstitial()
+{
+AdMob.prepareInterstitial( {
+license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+isTesting: true,
+adId:admobid.interstitial,
+autoShow:false
+});
+}
 
 
 
@@ -116,7 +123,7 @@ document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 }
 
 if (page.matches("#image")) {
-show_loader(true);
+show_loader(true);show_image();
 $("#detect-area").css("height", $(window).width());
 $("#btn_create_random").on("click", function(){show_image();});
 $("#btn_create_random_history").on("click", function(){show_image(true);});
@@ -141,11 +148,7 @@ function show_image(history)
 {
 if(show_counter>=20){
 AdMob.showInterstitial();
-AdMob.prepareInterstitial( {
-isTesting: true,
-adId:admobid.interstitial,
-autoShow:false
-});
+create_interstitial();
 show_counter = 0;
 }
 if(history){
