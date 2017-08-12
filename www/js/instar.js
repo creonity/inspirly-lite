@@ -41,7 +41,7 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
-
+screen.orientation.lock('portrait');
     if (AdMob) {
 create_bannerAd();
 create_interstitial();
