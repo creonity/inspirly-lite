@@ -79,7 +79,16 @@ autoShow:false
 function create_bannerAd()
 {
 console.log("hallo "+admobid.banner);
-create_bannerAd();
+  AdMob.createBanner( {
+    license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+    adId: admobid.banner,
+    position: AdMob.AD_POSITION.BOTTOM_CENTER,
+    isTesting: true, // TODO: remove this line when release
+    overlap: false,
+    offsetTopBar: false,
+    bgColor: 'black',
+    autoShow : false
+  } );
 }
 
 function create_interstitial()
