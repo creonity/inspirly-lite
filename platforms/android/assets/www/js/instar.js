@@ -5,30 +5,9 @@ $(document).ready(function(){
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
-
-$(document).on("show", function( event ) {
-var page = event.target;
-if (page.matches("#image")) {
-if (AdMob) {
-AdMob.removeBanner();create_bannerAd();
-}
-}
-if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
-if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
-$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
-if (page.matches("#share")) {create_banner();}
 })
 
 
-
-$(document).on("hide", function( event ) {
-var page = event.target;
-if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
-if (page.matches("#share")) {$("#print_products").hide();}
-AdMob.hideBanner();
-})
-
-})
 
 var error_connection_txt = "Please connect to the internet.";
 var device_id = false;
@@ -62,12 +41,30 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
-device_id = device.uuid;
+screen.orientation.lock('portrait');
     if (AdMob) {
 create_bannerAd();
 create_interstitial();
     }
+$(document).on("show", function( event ) {
+var page = event.target;
+if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
+if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
+$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
+if (page.matches("#share")) {create_banner();}
+})
 
+
+
+$(document).on("hide", function( event ) {
+var page = event.target;
+if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
+if (page.matches("#share")) {$("#print_products").hide();}
+AdMob.hideBanner();
+})
+
+device_id = window.plugins.device.uuid;
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
@@ -166,8 +163,10 @@ else{$("#download_image").fadeIn();$(".loader").fadeOut();}
 
 function show_image(history)
 {
+console.log(show_counter);
 if(show_counter>=20){
 AdMob.showInterstitial();
+console.log("show add");
 create_interstitial();
 show_counter = 0;
 }
@@ -246,7 +245,7 @@ $("#current_image").html("");
 
 function create_random(preload)
 {
-if(!preload){show_counter = show_counter +1;}
+show_counter = show_counter +1;
 /*
 if(!user_txt)
 {
@@ -278,8 +277,8 @@ if(text_items.length==2){user_txt=text_items[0]+"\n"+text_items[1];}
 
 
 user_txt = $("#user_txt").val();
-if(user_txt.length==0){user_txt=$("#default_txt").val();}
-var ori_user_txt = user_txt;
+if(user_txt.length==0){getQuote(true);user_txt = $("#user_txt").val();}
+//var ori_user_txt = user_txt;
 str_length = user_txt.length;
 
 if($("#autolinebreak").children().is(':checked'))
@@ -549,6 +548,16 @@ $.ajax({
   success: function(msg, error) {
   var data = JSON.parse(msg);
 
+var share_options;
+share_options = {
+  message: 'Created with inspir.ly #inspirly', // not supported on some apps (Facebook, Instagram)
+  subject: 'Get inspired', // fi. for email
+  files: [data.image_url], // an array of filenames either locally or remotely
+  url: 'https://www.inspir.ly',
+  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+}
+
+
 if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook('Created with inspir.ly #inspirly',  data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
 if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram('Created with inspir.ly #inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
 if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
@@ -557,15 +566,6 @@ if(platform == "snapchat"){window.plugins.socialsharing.shareWithOptions(share_o
 if(platform == "other"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 
 
-var share_options;
-
-share_options = {
-  message: 'Created with inspir.ly #inspirly', // not supported on some apps (Facebook, Instagram)
-  subject: 'Get inspired', // fi. for email
-  files: [data.image_url], // an array of filenames either locally or remotely
-  url: 'https://www.inspir.ly',
-  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
-}
 
 
 var share_onSuccess = function(result) {
@@ -671,7 +671,7 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 
-function getQuote() {
+function getQuote(default_txt) {
 var author = randomKey(quote_array);
 var quote = quote_array[author];
 
@@ -679,9 +679,11 @@ var quote = quote_array[author];
 var encoded_quote = quote;
 
 $("#user_txt").val(encoded_quote);
-
-        refresh_preloaded(true);delete_history();
-                }
+if(!default_txt)
+{
+refresh_preloaded(true);delete_history();
+}
+}
 
 
 var quote_array = [];

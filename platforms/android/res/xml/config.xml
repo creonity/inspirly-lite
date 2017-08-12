@@ -7,6 +7,9 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
@@ -30,7 +33,7 @@
     </feature>
     <name>inspirly LITE</name>
     <description>
-        Create easily beautiful images out of text and share them on instagram, facebook, whatsapp and co.
+        Create easily beautiful images out of words with the inspirly designer AI and share them on instagram, facebook, whatsapp and co.
     </description>
     <author email="contact@inspir.ly" href="http://www.inspir.ly">
         Inspir.ly Team
@@ -47,7 +50,5 @@
     <icon src="icon.png" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
+    <preference name="orientation" value="portrait" />
 </widget>

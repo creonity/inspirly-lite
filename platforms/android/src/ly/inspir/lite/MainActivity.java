@@ -21,8 +21,6 @@ package ly.inspir.lite;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
-import android.os.Build;
-import android.webkit.WebView;
 
 public class MainActivity extends CordovaActivity
 {
@@ -36,9 +34,6 @@ public class MainActivity extends CordovaActivity
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
             moveTaskToBack(true);
         }
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-  WebView.setWebContentsDebuggingEnabled(true);
-}
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
