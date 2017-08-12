@@ -9,8 +9,8 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {}
-if (page.matches("#usr_text_input")) {AdMob.showBanner();}
-if (page.matches("#mood")) {AdMob.showBanner();
+if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
 $(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
 if (page.matches("#share")) {create_banner();}
 })
@@ -21,7 +21,7 @@ $(document).on("hide", function( event ) {
 var page = event.target;
 if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
 if (page.matches("#share")) {$("#print_products").hide();}
-//AdMob.hideBanner();
+AdMob.hideBanner();
 })
 
 
