@@ -125,6 +125,7 @@ $("#detect-area").on('swiperight', function(event) {if($("#history_code").html()
 $(".tutorial").on('click', function(){$(".tutorial").fadeOut();})
 //show_image();
 $("#autolinebreak").on('change',function(){refresh_preloaded(true)});
+$("#preview_quality").on('change',function(){refresh_preloaded()});
 }
 });
 
@@ -276,7 +277,7 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+$("#code").html()+"&template="+history+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+var datatosend = "code="+$("#code").html()+"&template="+history+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
