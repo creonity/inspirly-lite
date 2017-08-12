@@ -64,7 +64,7 @@ if (page.matches("#share")) {$("#print_products").hide();}
 AdMob.hideBanner();
 })
 
-device_id = Device.uuid;
+device_id = device.uuid;
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
