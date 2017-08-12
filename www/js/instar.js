@@ -166,8 +166,10 @@ else{$("#download_image").fadeIn();$(".loader").fadeOut();}
 
 function show_image(history)
 {
+console.log(show_counter);
 if(show_counter>=20){
 AdMob.showInterstitial();
+console.log("show add");
 create_interstitial();
 show_counter = 0;
 }
