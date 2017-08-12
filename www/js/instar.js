@@ -5,25 +5,6 @@ $(document).ready(function(){
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
-
-$(document).on("show", function( event ) {
-var page = event.target;
-if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
-if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
-if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
-$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
-if (page.matches("#share")) {create_banner();}
-})
-
-
-
-$(document).on("hide", function( event ) {
-var page = event.target;
-if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
-if (page.matches("#share")) {$("#print_products").hide();}
-AdMob.hideBanner();
-})
-
 })
 
 
@@ -65,7 +46,25 @@ function initApp() {
 create_bannerAd();
 create_interstitial();
     }
-device_id = device.uuid;
+$(document).on("show", function( event ) {
+var page = event.target;
+if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
+if (page.matches("#usr_text_input")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+if (page.matches("#mood")) {AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
+$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==$("#mood_val").html()){$(this).addClass("active");}});}
+if (page.matches("#share")) {create_banner();}
+})
+
+
+
+$(document).on("hide", function( event ) {
+var page = event.target;
+if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
+if (page.matches("#share")) {$("#print_products").hide();}
+AdMob.hideBanner();
+})
+
+device_id = Device.uuid;
 /*
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
