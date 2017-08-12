@@ -1,0 +1,47 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-camera": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-gallery-refresh": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-screen-orientation": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        }
+    }
+}

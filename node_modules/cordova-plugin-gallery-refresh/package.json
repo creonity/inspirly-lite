@@ -1,0 +1,104 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-gallery-refresh",
+        "scope": null,
+        "escapedName": "cordova-plugin-gallery-refresh",
+        "name": "cordova-plugin-gallery-refresh",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\lukas\\OneDrive\\Homepages\\inspirly-lite\\node_modules"
+    ]
+  ],
+  "_from": "cordova-plugin-gallery-refresh@latest",
+  "_id": "cordova-plugin-gallery-refresh@1.0.56",
+  "_inCache": true,
+  "_location": "/cordova-plugin-gallery-refresh",
+  "_nodeVersion": "8.0.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-gallery-refresh-1.0.56.tgz_1499994657838_0.019682782469317317"
+  },
+  "_npmUser": {
+    "name": "pouu69",
+    "email": "pouu69@gmail.com"
+  },
+  "_npmVersion": "5.0.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-gallery-refresh",
+    "scope": null,
+    "escapedName": "cordova-plugin-gallery-refresh",
+    "name": "cordova-plugin-gallery-refresh",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-gallery-refresh/-/cordova-plugin-gallery-refresh-1.0.56.tgz",
+  "_shasum": "72c7f3f5735ca9dc505c53c9185d6e371eab2c7a",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-gallery-refresh",
+  "_where": "C:\\Users\\lukas\\OneDrive\\Homepages\\inspirly-lite\\node_modules",
+  "author": {
+    "name": "KwanUng_Park",
+    "email": "pouup69@gmail.com",
+    "url": "https://github.com/pouu69"
+  },
+  "bugs": {
+    "url": "https://github.com/pouu69/cordova-plugin-gallery-refresh/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-gallery-refresh",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "dependencies": {},
+  "description": "Platform Device gallery refresh after image download",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-hlK9CEmcuAtp/CSFAp3su9A8+BBamazV2ChQ5AYJA0W9PDdIxbr/vnrp9CB7GvJohb5JCdMJbMoUNQg3GurYZg==",
+    "shasum": "72c7f3f5735ca9dc505c53c9185d6e371eab2c7a",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-gallery-refresh/-/cordova-plugin-gallery-refresh-1.0.56.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "gitHead": "381c27e42830a405cafc766fa003d8073b052151",
+  "homepage": "https://github.com/pouu69/cordova-plugin-gallery-refresh",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova",
+    "gallery",
+    "cordova-ios",
+    "refresh"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "pouu69",
+      "email": "pouu69@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-gallery-refresh",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pouu69/cordova-plugin-gallery-refresh.git"
+  },
+  "version": "1.0.56"
+}
