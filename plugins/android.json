@@ -33,15 +33,15 @@
         },
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "ly.inspir.lite"
-        }
-    },
-    "dependent_plugins": {
+        },
         "cordova-plugin-extension": {
             "PACKAGE_NAME": "ly.inspir.lite"
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "ly.inspir.lite"
-        },
+        }
+    },
+    "dependent_plugins": {
         "es6-promise-plugin": {
             "PACKAGE_NAME": "ly.inspir.lite"
         }
