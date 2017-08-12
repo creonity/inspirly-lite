@@ -83,7 +83,7 @@ AdMob.hideBanner();
  */
 
 
-    exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "Device", "getDeviceInfo", []);
+    cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "Device", "getDeviceInfo", []);
 
 
 
