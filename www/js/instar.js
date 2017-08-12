@@ -510,8 +510,12 @@ function file_transfer(fileEntry, uri) {
         function (entry) {
         console.log("Picture has been saved."+entry.toURL());
         ons.notification.toast({message: "Picture has been saved.", timeout: 2000});
-        var withoutPrefixPath = _getLocalImagePathWithoutPrefix(entry.toURL());
-        cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "GalleryRefresh", "refresh", [withoutPrefixPath]);
+
+
+ window.galleryRefresh.refresh(entry.toURL(),function(success){ console.log(success); },function(error){ console.log(error); });
+
+     //   var withoutPrefixPath = _getLocalImagePathWithoutPrefix(entry.toURL());
+    //    cordova.exec(function(params){ console.log("done it"); }, function(error){ console.log("got an error "+error); }, "GalleryRefresh", "refresh", [withoutPrefixPath]);
        // displayImageByFileURL(entry);
         },
         function (error) {
