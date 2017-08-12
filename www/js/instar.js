@@ -25,6 +25,7 @@ AdMob.hideBanner();
 })
 
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
+console.log("added deviceready");
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
 
@@ -60,11 +61,12 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
+console.log(initApp);
 device_id = device.uuid;
-    if (AdMob) {
+
 create_bannerAd();
 create_interstitial();
-    }
+
 
 /*
 AdMob.prepareRewardVideoAd( {
