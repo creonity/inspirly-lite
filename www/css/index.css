@@ -14,7 +14,7 @@
 
 
 .page--full_bg__background {
-   background: url("/img/logo.jpg") !important;
+   background: url("img/logo.jpg") !important;
    background-size: cover !important;
    background-position: center center !important;
 }
