@@ -60,7 +60,7 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
-device_id = $cordovaDevice.getUUID();
+device_id = device.uuid;
     if (AdMob) {
 create_bannerAd();
 create_interstitial();
