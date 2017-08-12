@@ -52,6 +52,9 @@
 		7454936EBEDB433799EB8CB1 /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 340FF23CF9FA47EDB5565B0F /* CDVFileTransfer.m */; };
 		369D1F4142604F328CCFA315 /* GalleryRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E1DB40777A45AB9344A8BA /* GalleryRefresh.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BBADE1A23CC447B9BAB18C5C /* CDVOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = F54B5CF0DDCE413DAAC67259 /* CDVOrientation.m */; };
+		F48E8E677A2A48CA96041046 /* NSString+SSURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4C0B44417491E9E01883B /* NSString+SSURLEncoding.m */; };
+		9344073784A0427882AD0103 /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 03804C6B790A4371BF3280B1 /* SocialSharing.m */; };
+		B63CABA303B242CFBB2CE416 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA25DC12DDC480185B56C6D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +146,11 @@
 		04CF6DEAD26343489DC35025 /* GalleryRefresh.h */ = {isa = PBXFileReference; name = "GalleryRefresh.h"; path = "cordova-plugin-gallery-refresh/GalleryRefresh.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		F54B5CF0DDCE413DAAC67259 /* CDVOrientation.m */ = {isa = PBXFileReference; name = "CDVOrientation.m"; path = "cordova-plugin-screen-orientation/CDVOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		C73A7515F85940E88DC8036D /* CDVOrientation.h */ = {isa = PBXFileReference; name = "CDVOrientation.h"; path = "cordova-plugin-screen-orientation/CDVOrientation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		79E4C0B44417491E9E01883B /* NSString+SSURLEncoding.m */ = {isa = PBXFileReference; name = "NSString+SSURLEncoding.m"; path = "cordova-plugin-x-socialsharing/NSString+SSURLEncoding.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		03804C6B790A4371BF3280B1 /* SocialSharing.m */ = {isa = PBXFileReference; name = "SocialSharing.m"; path = "cordova-plugin-x-socialsharing/SocialSharing.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		EB36613DABC54661BBA9A981 /* NSString+SSURLEncoding.h */ = {isa = PBXFileReference; name = "NSString+SSURLEncoding.h"; path = "cordova-plugin-x-socialsharing/NSString+SSURLEncoding.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		AAA2A17F61D1451E810FFFE1 /* SocialSharing.h */ = {isa = PBXFileReference; name = "SocialSharing.h"; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		DBA25DC12DDC480185B56C6D /* Social.framework */ = {isa = PBXFileReference; name = "Social.framework"; path = "System/Library/Frameworks/Social.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +183,7 @@
 				C6738724A1F14C799E85C4DB /* SystemConfiguration.framework in Frameworks */,
 				6E0EB6BC1BC94952A73BCC00 /* UIKit.framework in Frameworks */,
 				8AC274A00F284BABA09C9DAD /* ImageIO.framework in Frameworks */,
+				B63CABA303B242CFBB2CE416 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +278,7 @@
 				D5C5F1AAFC954514828AB023 /* SystemConfiguration.framework */,
 				51E28E3ECEF14A40BD59A834 /* UIKit.framework */,
 				D9EB74193C22426F8622E0F8 /* ImageIO.framework */,
+				DBA25DC12DDC480185B56C6D /* Social.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -321,6 +331,10 @@
 				04CF6DEAD26343489DC35025 /* GalleryRefresh.h */,
 				F54B5CF0DDCE413DAAC67259 /* CDVOrientation.m */,
 				C73A7515F85940E88DC8036D /* CDVOrientation.h */,
+				79E4C0B44417491E9E01883B /* NSString+SSURLEncoding.m */,
+				03804C6B790A4371BF3280B1 /* SocialSharing.m */,
+				EB36613DABC54661BBA9A981 /* NSString+SSURLEncoding.h */,
+				AAA2A17F61D1451E810FFFE1 /* SocialSharing.h */,
 			);
 			name = Plugins;
 			path = "Inspirly/Plugins";
@@ -445,6 +459,8 @@
 				7454936EBEDB433799EB8CB1 /* CDVFileTransfer.m in Sources */,
 				369D1F4142604F328CCFA315 /* GalleryRefresh.m in Sources */,
 				BBADE1A23CC447B9BAB18C5C /* CDVOrientation.m in Sources */,
+				F48E8E677A2A48CA96041046 /* NSString+SSURLEncoding.m in Sources */,
+				9344073784A0427882AD0103 /* SocialSharing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

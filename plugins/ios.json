@@ -31,6 +31,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "ly.inspir.lite"
         }
     },
     "dependent_plugins": {
