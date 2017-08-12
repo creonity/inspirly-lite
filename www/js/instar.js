@@ -32,12 +32,14 @@ var admobid = {};
 if( /(android)/i.test(navigator.userAgent) ) {
 	admobid = { // for Android
 					banner: 'ca-app-pub-3176168089117396/9768598254',
-					interstitial: 'ca-app-pub-3176168089117396/4266001898'
+					interstitial: 'ca-app-pub-3176168089117396/4266001898',
+          reward: 'ca-app-pub-3176168089117396/2030467207'
 	};
 } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
 	admobid = { // for iOS
     banner: 'ca-app-pub-3176168089117396/1348673444',
-    interstitial: 'ca-app-pub-3176168089117396/6668750058'
+    interstitial: 'ca-app-pub-3176168089117396/6668750058',
+    reward: 'ca-app-pub-3176168089117396/6609674767'
 	};
 }
 
@@ -54,7 +56,19 @@ function initApp() {
     autoShow : false
   } );
     }
-AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false});
+AdMob.prepareInterstitial( {
+license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+isTesting: true,
+adId:admobid.interstitial,
+autoShow:false
+});
+
+AdMob.prepareRewardVideoAd( {
+license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+isTesting: true,
+adId:admobid.reward,
+autoShow:false
+});
 }
 
 
@@ -387,6 +401,8 @@ var ft = new FileTransfer();
 
 function download_image(size)
 {
+showRewardVideoAd();
+
 
 $("#download_progress").fadeIn();
 $(".download_btn").prop("disabled", true);
@@ -437,12 +453,8 @@ function download(URL, File_Name) {
 //window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function (dirEntry) {
 window.resolveLocalFileSystemURL('cdvfile://localhost/sdcard/Pictures/', function (dirEntry) {
 //alert('cdvfile URI: ' + dirEntry.toInternalURL());
-
-
-    
-    //The folder is created if doesn't exist
+//The folder is created if doesn't exist
 dirEntry.getDirectory( "inspirly",{create:true, exclusive: false},function(directory) {createFile(directory, File_Name, URL);},onErrorCreateDir);
-
 //createFile(dirEntry, File_Name, URL);
 }, onErrorLoadFs);
 }
