@@ -31,8 +31,13 @@ For production change content-security-policy and admob
 
     <script src="js/jquery.min.js"></script>
     <script src="js/onsenui.min.js"></script>
+    <script src="js/knockout-3.4.2.js"></script>
+    <script src="js/language_model.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/instar.js"></script>
+
+
+    
     <script type="text/javascript" src="cordova.js"></script>
 
 
@@ -41,23 +46,48 @@ For production change content-security-policy and admob
 
 
 <body>
+<ons-navigator id="myNavigator" page="language.html"></ons-navigator>
 
 
+<ons-template id="mySplitter.html">
+<ons-page id="mySplitter">
 <ons-splitter>
   <ons-splitter-side id="menu" side="left" width="220px" collapse>
     <ons-page>
       <ons-list>
         <ons-list-item onclick="fn.load('create.html')" tappable>
-          Design
+          <span data-bind="html: Design"></span>
+        </ons-list-item>
+           <ons-list-item onclick="fn.load('settings.html')" tappable>
+          <span data-bind="html: Settings"></span>
         </ons-list-item>
         <ons-list-item onclick="fn.load('about.html')" tappable>
-          About
+          <span data-bind="html: About"></span>
         </ons-list-item>
       </ons-list>
     </ons-page>
   </ons-splitter-side>
   <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
 </ons-splitter>
+  </ons-page>
+</ons-template>
+
+
+
+
+
+
+<ons-template id="language.html">
+<ons-page id="language">
+<span data-bind="restext: 'name'"></span>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: Choose_language"></span></ons-list-header>
+    <ons-list-item onclick="language='en';document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="language='de';document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
+</ons-list>
+
+  </ons-page>
+</ons-template>
 
 
 
@@ -65,15 +95,8 @@ For production change content-security-policy and admob
 
 
 
-
-
-
-
-
-
-
-<template id="create.html">
-<ons-page id="tabbarPage">
+<ons-template id="create.html">
+<ons-page id="create">
 <ons-toolbar disable-auto-styling>
       <div class="left">
         <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
@@ -84,30 +107,29 @@ For production change content-security-policy and admob
         <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
       </div>
     </ons-toolbar>
+
+
+
 <ons-tabbar id="tabbar" disable-auto-styling>
-  <ons-tab label="Text" page="text.html" disable-auto-styling>
+  <ons-tab data-bind="attr: { label: Text }" page="text.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab label="Mood" page="mood.html" disable-auto-styling>
+  <ons-tab data-bind="attr: { label: Mood }" page="mood.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab label="Design" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
+  <ons-tab data-bind="attr: { label: Design }" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
   </ons-tab>
-  <ons-tab label="Share" id='share' page="share.html" disable-auto-styling>
+  <ons-tab data-bind="attr: { label: Share }" id='share' page="share.html" disable-auto-styling>
   </ons-tab>
 </ons-tabbar>
   </ons-page>
-</template>
+</ons-template>
+
 
 
 
 <template id="text.html">
   <ons-page id= "usr_text_input">
-
-
-
-
-
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header>Insert text</ons-list-header>
+    <ons-list-header><span data-bind="html: Insert_text"></span></ons-list-header>
 
 <ons-list-item>
 <textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
@@ -118,7 +140,7 @@ For production change content-security-policy and admob
 
 <ons-list-item>
 
-      <div class="center">Auto line break</div>
+      <div class="center"><span data-bind="html: Auto_line_break"></span></div>
       <div class="right"><ons-switch id="autolinebreak" checked disable-auto-styling></ons-switch></div>
 </ons-list-item>
 
@@ -126,8 +148,8 @@ For production change content-security-policy and admob
 
 <p style="text-align: center;">
 
-<button class="button button--outline download_btn" onclick="getQuote()">Random</button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('')">Clear</button>
+<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="html: Random"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="html: Clear"></span></button>
 </p>
 
 
@@ -142,14 +164,14 @@ For production change content-security-policy and admob
   <ons-page id="mood">
     <p style="text-align: center;">
   <ons-list onclick="refresh_preloaded(true)">
-    <ons-list-header>Choose mood of image</ons-list-header>
-    <ons-list-item class="mood-item" value="1" tappable>Lovely</ons-list-item>
-    <ons-list-item class="mood-item" value="1" tappable>Young</ons-list-item>
-    <ons-list-item class="mood-item" value="1" tappable>Sparkling</ons-list-item>
-    <ons-list-item class="mood-item" value="2" tappable>Serious</ons-list-item>
-    <ons-list-item class="mood-item" value="3" tappable>Cheerful</ons-list-item>
-    <ons-list-item class="mood-item" value="4" tappable>Sad</ons-list-item>
-    <ons-list-item class="mood-item active" value="0" tappable>Whatever</ons-list-item>
+    <ons-list-header><span data-bind="html: Choose_mood_of_image"></span></ons-list-header>
+    <ons-list-item class="mood-item" value="1" tappable><span data-bind="html: Lovely"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="2" tappable><span data-bind="html: Young"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="3" tappable><span data-bind="html: Sparkling"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="4" tappable><span data-bind="html: Serious"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="5" tappable><span data-bind="html: Cheerful"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="6" tappable><span data-bind="html: Sad"></span></ons-list-item>
+    <ons-list-item class="mood-item active" value="0" tappable><span data-bind="html: Anything_goes"></span></ons-list-item>
 </ons-list>
 <div id='mood_val' class='hidden'></div>
     </p>
@@ -158,7 +180,7 @@ For production change content-security-policy and admob
 
 
 
-<template id="rand_img.html">
+<ons-template id="rand_img.html">
   <ons-page  id = "image">
 
 <ons-gesture-detector>
@@ -166,7 +188,7 @@ For production change content-security-policy and admob
 
   <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
 <div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
-Swipe left to change the style
+<span data-bind="html: Swipe_left_to_change_the_design"></span>
 </div>
 
 <svg class="loader progress-circular progress-circular--indeterminate">
@@ -194,13 +216,12 @@ History Code<div id='history_code'></div><br>
     <p style="text-align: center;">
     <button id='btn_create_random_history' class="button button--outline hidden">Back</button>
     <button id='btn_create_random' class="button button--outline hidden">Next</button>
-    <button class="button button--outline" onclick="getImage();">Upload Image</button>
-    <button onclick="showPopover(this,'options')" class="button button--outline">Design Options</button>
-
+    <button class="button button--outline" onclick="getImage();"><span data-bind="html: Upload_image"></span></button>
+    <button onclick="showPopover(this,'options')" class="button button--outline"><span data-bind="html: Design_options"></span></button>
 
     </p>
   </ons-page>
-</template>
+</ons-template>
 
 
 
@@ -210,7 +231,7 @@ History Code<div id='history_code'></div><br>
     <p style="text-align: center;">
 
 <ons-list style="margin-bottom:20px">
-    <ons-list-header>Share image via apps from your phone</ons-list-header>
+    <ons-list-header><span data-bind="html: Share_image_via_apps_from_your_phone"></span></ons-list-header>
 </ons-list>
 
 <button class="button button--outline social_sharing share_btn" onclick="share('facebook')"><i class="zmdi zmdi-facebook"></i></button>
@@ -218,24 +239,24 @@ History Code<div id='history_code'></div><br>
 <button class="button button--outline social_sharing share_btn" onclick="share('whatsapp')"><i class="zmdi zmdi-whatsapp"></i></button>
 <button class="button button--outline social_sharing share_btn" onclick="share('twitter')"><i class="zmdi zmdi-twitter"></i></button>
 <button class="button button--outline social_sharing share_btn" onclick="share('snapchat')"><i class="fa fa-snapchat"></i></button>
-<button onclick="share('other')" class="button button--outline share_btn">Other</button>
+<button onclick="share('other')" class="button button--outline share_btn"><span data-bind="html: Other"></span></button>
 </p>
 <div class="progress-bar progress-bar--indeterminate hidden" id="share_progress"></div>
 
 <p style="text-align: center;">
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header>Download image</ons-list-header>
+    <ons-list-header><span data-bind="html: Download_image"></span></ons-list-header>
 </ons-list>
-<button class="button button--outline download_btn" onclick="download_image(400)">Small</button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">Medium</button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">Large</button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')">x-Large</button>
+<button class="button button--outline download_btn" onclick="download_image(400)"><span data-bind="html: Small"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: Medium"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: Large"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: X_Large"></span></button>
 </p>
 <img id='imageElement' src=''>
 <div class="progress-bar progress-bar--indeterminate hidden" id="download_progress"></div>
 <p>
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header>Print image</ons-list-header>
+    <ons-list-header><span data-bind="html: Print_image"></span></ons-list-header>
 </ons-list>
 <div class="progress-bar progress-bar--indeterminate hidden" id="print_progress"></div>
 <div id='print_products' class='hidden'></div>
@@ -251,22 +272,22 @@ History Code<div id='history_code'></div><br>
 
 
 <ons-alert-dialog id="dialog-1">
-  <div class="alert-dialog-title">Please upgrade!</div>
+  <div class="alert-dialog-title"><span data-bind="html: Please_upgrade"></span></div>
   <div class="alert-dialog-content">
-    This is only supported in the full version of inspirly. You find it in the app store &ndash; oh, and it comes completely adfree.
+  <span data-bind="html: This_is_only_supported_in_the_full_version_of_inspirly_You_find_it_in_the_app_store_oh_and_it_comes_completely_adfree">
   </div>
   <div class="alert-dialog-footer">
-    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')">OK</button>
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')"><span data-bind="html: OK"></span></button>
   </div>
 </ons-alert-dialog>
 
 <ons-alert-dialog id="dialog-2">
-  <div class="alert-dialog-title">Error!</div>
-  <div class="alert-dialog-content">
-    You can only share if you have the according app installed.
+  <div class="alert-dialog-title"><span data-bind="html: Error"></span></div>
+  <div class="alert-dialog-content"><span data-bind="html: You_can_only_share_if_you_have_the_according_app_installed"></span>
+
   </div>
   <div class="alert-dialog-footer">
-    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')">OK</button>
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')"><span data-bind="html: OK"></button>
   </div>
 </ons-alert-dialog>
 
@@ -275,50 +296,49 @@ History Code<div id='history_code'></div><br>
   <div style="padding: 10px; text-align: right;">
 <ons-list style="margin-bottom:10px">
 <ons-list-item>
-Which aspect of the image do you like? Mark what should not be changed.<br>
+<span data-bind="html: Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed"></span>
+<br>
 </ons-list-item>
 </ons-list>
 <label class="checkbox">
   <input id="font" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Fontstyle <div class="checkbox__checkmark"></div>
+  <span data-bind="html: Fontstyle"></span>
+ <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
   <input id="fontsize" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Fontsize and position <div class="checkbox__checkmark"></div>
+<span data-bind="html: Fontsize_and_position"></span> <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
   <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Fontfilling <div class="checkbox__checkmark"></div>
+<span data-bind="html: Fontfilling"></span> <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
   <input id="frame" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Frame <div class="checkbox__checkmark"></div>
+<span data-bind="html: Frame"></span> <div class="checkbox__checkmark"></div>
 </label>
 <br><label class="checkbox">
   <input id="background" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Background <div class="checkbox__checkmark"></div>
+<span data-bind="html: Background"></span> <div class="checkbox__checkmark"></div>
 </label>
 <br><label class="checkbox">
   <input id="texture" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-Texture <div class="checkbox__checkmark"></div>
+<span data-bind="html: Texture"></span> <div class="checkbox__checkmark"></div>
 </label>
 <br>
 
-  <div class="center" style="margin-top:20px">Preview quality <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
+  <div class="center" style="margin-top:20px"><span data-bind="html: Preview_quality"></span> <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
   </div>
 </ons-popover>
 
 
 
 
-
-
-
-<template id="about.html">
-  <ons-page>
+<template id="settings.html">
+  <ons-page id="settings">
 <ons-toolbar disable-auto-styling>
       <div class="left">
         <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
@@ -329,9 +349,133 @@ Texture <div class="checkbox__checkmark"></div>
         <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
       </div>
     </ons-toolbar>
-<div style='padding:20px'>
+
+Choose your language
+  <div class="center" style="margin-top:20px"><span data-bind="html: Preview_quality"></span> <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
+
+  </ons-page>
+</template>
+
+
+
+
+<template id="about.html">
+  <ons-page id="about">
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
+    </ons-toolbar>
+
+
+
+
+<div style='padding:20px' data-bind="visible: terms_de">
     <p style="text-align: center;">
-We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique inspirly design engine. The engine learns each time it creates an image to get better and better. When you like what
+    Wir von inspir.ly lieben sch&ouml;ne Bilder genauso wie du. Benutze inspir.ly und werde inspiriert. Alle Bilder werden von unseren einzigartigen <i>inspir.ly Desiger KI</i> erstellt,
+     welche mit Hilfe von k&uuml;nstlicher Intelligenz bei jedem Desing dazulernt. Manchmal braucht es noch etwas Geduld, daf&uuml;r sind die Designs umso grossartiger. Sobald dir ein Design ge&auml;llt,
+     teile es mit deinen Freunden auf Instagram und Facebook.<br><br>St&ouml;rt dich die Werbung oder willst du Bilder mit einer Aufl&ouml;sung von bis zu 4k (16MP) herunterladen? Du findest die
+     Vollversion von inspir.ly im Appstore. Danke!<br><br>Kontaktiere uns f&uuml;r Fragen, Probleme oder Ideen:<br>
+
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br><br><br><br><br>
+Inspir.ly's Produkte und Service werden von Nagel WebApps zur Verf&uuml;gung gestellt. Indem du die Webseite und Services von inspir.ly verwendest, zeigst du dich mit den Nutzungsbedingungen und Datenschutzerkl&auml;rung einverstanden.
+
+<h4>Hauptbedingungen</h4>
+<ul>
+<li>Du darfst unsere Webseite und Services nur verwenden, wenn du einen verbindlichen Vertrag mit uns eingehen kannst und du darfst die Webseite nur gem&auml;ss diesen Nutzungsbedingungen sowie anwendbarem Recht verwenden.</li>
+<li>inspir.ly erlaubt dir das posten und modifizieren von Inahlten, inklusive Bilder, Texte, Kommentare und anderem Material. Alles was du auf inspir.ly hochl&auml;dst, postest oder anders verf&uuml;gbar machst, wird als "Nutzerinhalt" verstanden. Du beh&auml;ltst alle Rechte an den Inahlten und bist selber verantwortlich f&uuml;r deinen Nutzerinhalt.</li>
+<li><b>Du r&auml;umst inspir.ly, sowie den Mitgiedern und Partnern (z.B. zazzle.com), eine nicht-exklusive, geb&uuml;hrenfreie, transferierbare und unterlizenzierbare, weltweit g&uuml;ltige Lizenz ein, um deinen Nutzerinalt zu benutzen, zu speichern, anzuzeigen, zu reproduzieren, zu modifizieren, Derivate herzustellen, auszuf&uuml;hren, zu drucken und auf inspir.ly zu verteilen</b></li>
+<li>Jeglicher Nutzerinhalt, welcher in <b>&ouml;ffentlichen Gallerien eingestellt wird, kann von den Benutzern verwendet, modifiziert und/oder nochmals eingestellt werden.</b> Sobald Nutzerinhalt von jemandem anders nochmals eingestellt wurde (ob in private oder &ouml;ffentliche Gallerie), kannst du den Inhalt nicht mehr l&ouml;schen, mit Ausnhame des eingestellten Werkes selber. Daher: <b>lade nur Inhalte (in &ouml;ffentliche Gallerien) hoch, welche du teilen m&ouml;chtest und teilen darfst!</b></li>
+<li>Inspirly wird unter anderem &uuml;ber Werbung finanziert und zeigt daf&uuml;r unter Umst&auml;nden Werbeeinblendungen und Promotionen an. Du bist damit einverstanden, dass Inspirly solche Werbung und Promotionen in Zusammenhang mit deinen Inhalten anzeigen darf.</li>
+<li>Du garantierst, dass (i) du die Rechte oder Erlaubnis f&uuml;r alle Inhalte besitzt, welche du auf inspir.ly stellst, um sie gem&auml;ss diesen Nutzungsbedingungen auf inspir.ly anderen Benutzern zur Verf&uuml;gung zu stellen, (ii) du keine Rechte (insbesonder Urheber- und Vertragsrechte) von Dritten verletzt und (iii) durch das Posting von Inhalten keine Vertr&auml;ge mit einer dritten Partei verletzt. Du willigst ein f&uuml;r alle m&ouml;glichen Geb&uuml;hren aufzukommen, welche aufgrund eines Verstosses von dir gegen oben genannte Garantien allenfalls anfallen k&ouml;nnten.</li>
+<li>Es ist nicht erlaubt anst&ouml;ssiges Material oder Texte (z.B. pornographisch, obsz&ouml;n, dirkriminierend, gewaltverherrlichend, st&ouml;rrend, etc.) zu posten</li>
+<li><b>Du darfst keine Bilder, welche mit inspir.ly gestaltet wurden in irgend einer Form (z.B. einzeln, als Teil einer Sammlung oder eines Produkts) verkaufen</b></li>
+<li>Du musst deine Account Informationen sicher aufbewahren und vor Zugang von Dritten sch&uuml;tzen</li>
+<li>Es ist nicht erlaubt andere inspir.ly Mitglieder zu missbrauchen, zu bedrohen, zu erniedrigen, einzusch&uuml;chtern oder zu imitieren.</li>
+<li>Es ist nicht erlaubt inspir.ly f&uuml;r irgendwelche illegalen oder nicht authorisierten Zwecke zu ben&uuml;tzen. Internationale Benutzer willigen ein, sich an die lokalen Gesetzen bez&uuml;glich online Verhalten und akzeptierbaren Inhalten zu halten.</li>
+<li>Es ist verboten Viren, Trojaner oder andere Sch&auml;dlinge hochzuladen sowie den Service oder die Datenbanken zu hacken.</li>
+<li>Du bist alleine f&uuml;r den Nutzerinhalt verantwortlich, welchen du auf inspir.ly zur Verf&uuml;gung stellst.</li>
+<li>Du darfst mit der Verwendung von inspir.ly keine lokalen Gesetze verletzen (speziell, aber nicht limitiert, Urheberrechte)</li>
+<li>Ein Verstoss gegen eine dieser Bedingungen f&uuml;hrt zur Schliessung deines inspir.ly Accounts. Obwohl inspir.ly solches Verhalten verbietet, verstehst du, dass inspir.ly nicht f&uuml;r die Inhalte, welche von den Mitgliedern gepostet werden verantwortlich sein kann und daher die Gefahr besteht, dass du unerw&uuml;schtem Material ausgesetzt wirst. Du ben&uuml;tzt inspir.ly auf dein eigenes Risiko.</li>
+<li>inspir.ly verwendet technische Funktionen, welche f&uuml;r das Angebot notwendig sind, inklusive aber nicht limitert auf Transcodierung und/oder Reformatierung von Nutzerinhalten.</li>
+<li>Eine Mitgliedschaft kann jederzeit in schrifftlicher Form beendet resp. widerrufen werden.</li>
+</ul>
+
+<h4>Generelle Bedingungen</h4>
+<ul>
+<li>Wir halten uns das Recht vor inspir.ly jederzeit und ohne Mitteilung abzu&auml;ndern oder zu schliessen.</li>
+<li>inspir.ly haftet nicht f&uuml;r irgendwelche Modifikationen, Aufhebung oder Einstellung von inspir.ly, insbesondere nicht f&uuml;r den Verlust von Daten. <b>Wir empfehlen dir daher dringend dein eigenes Backup von deinem Content anzufertigen.</b></li>
+<li>Wir halten uns das Recht vor diese Nutzungsbedingungen jederzeit zu &auml;ndern. Sollte eine Neuerung wessentliche &Auml;nderung der Nutzungsbedingungen bewirken, werden wir dich per Email informieren. Was eine wessentliche &Auml;nderung ist, wird ausschliesslich von inspir.ly entschieden, wobei der gesunde Menschenverstand walten soll.</li>
+<li>Wir halten uns das Recht vor jederzeit bestimmte Person aus inspir.ly ausschliessen zu d&uuml;rfen.</li>
+<li>Wir versuchen, sind aber nicht dazu gezwungen, Nutzerinhalte und Accounts zu entfernen, welche (aufgrund unserem eigenem Ermessen) gegen unsere Nutzungsbedingungen und/oder lokale Gesetze verstossen.</li>
+<li>Diese Nutzungsbedingung kann auch auf Englisch abgerufen werden. Im Zweifelsfall gilt immer der englische Wortlaut.</li>
+</ul>
+
+<h4>Datenschutzerkl&auml;rung</h4>
+<blockquote>
+  <p>Unser Versprechen: inspir.ly respektiert deine Privatsph&auml;re und handelt nicht mit deinen privaten Daten</p>
+</blockquote>
+inspirly nimmt den Schutz deiner pers&ouml;nlichen Daten ernst. Es werden weder pers&ouml;nliche Daten verkauft noch ausserhalb von inspirly verwendet, sofern nicht explizit erlaubt. Personenbezogene Daten (mit Ausnahme der IP-Adresse) werden nur
+von Usern erfasst, welche sich als Mitglied registrieren. Diese Mitgliedschaft kann jederzeit gek&uuml;ndigt werden und alle personenbezogenen Daten werden gel&ouml;scht.
+<br>
+Die Datenschutzerkl&auml;rung beschreibt welche pers&ouml;nlichen Informationen wir sammeln und verwenden. Bitte lies diese Datenschutzerkl&auml;rung sorgf&auml;ltig durch bevor du inspir.ly verwendest oder per&ouml;nliche Informationen eintr&auml;gst. Indem du inspir.ly verwendest, erkl&auml;st du dich mit den Datenschutzerkl&auml;rung einverstanden.
+Die Datenschutzerkl&auml;rung kann jederzeit ge&auml;ndert werden, wobei &Auml;nderungen hier pupliziert werden und sich diese nur auf zuk&uuml;nftige Informationen und Aktivit&auml;ten beziehen. Du solltest daher die Datenschutzbestimmungen bei jedem Besuch von inspir.ly durchlesen, damit du informiert bist, wie deine Daten verwendet werden.
+<br><br>
+<b>Sammlung von Informationen</b><br>
+Wir sammeln pers&ouml;nliche Daten wie z.B. Namen, Email Adressse etc von unseren Mitgliedern, wenn sie sich (auf freiwilliger Basis) registrieren. Diese Daten werden nur f&uuml;r den gew&uuml;nschten Zweck verwendet, ausser du erlaubst uns diese f&uuml;r einen anderen Zweck zu verwenden (z.B. Eintrag in Newsletter).
+<br><br>
+<b>Cookie/Tracking Technologie</b><br>
+Jeder Zugriff auf unsere Homepage und jeder Abruf einer auf der Homepage hinterlegten Datei werden protokolliert. Die Speicherung dient internen systembezogenen und statistischen Zwecken. Protokolliert werden: Name der abgerufenen Datei, Datum und Uhrzeit des Abrufs, &uuml;bertragene Datenmenge, Meldung &uuml;ber erfolgreichen Abruf, Webbrowser und anfragende Domain.
+Zus&auml;tzlich werden die IP Adressen der anfragenden Rechner protokolliert.<br>
+Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. (Google). Google Analytics verwendet sog. "Cookies", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie erm&ouml;glicht. Die durch den Cookie erzeugten Informationen &uuml;ber Ihre Benutzung diese Website (einschliesslich Ihrer IP-Adresse) wird an einen Server von Google in den USA &uuml;bertragen und dort gespeichert. Google wird diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports &uuml;ber die Websiteaktivit&auml;ten f&uuml;r die Websitebetreiber zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen zu erbringen. Auch wird Google diese Informationen gegebenenfalls an Dritte &uuml;bertragen, sofern dies gesetzlich vorgeschrieben oder soweit Dritte diese Daten im Auftrag von Google verarbeiten. Google wird in keinem Fall Ihre IP-Adresse mit anderen Daten der Google in Verbindung bringen. Sie k&ouml;nnen die Installation der Cookies durch eine entsprechende Einstellung Ihrer Browser Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht s&auml;mtliche Funktionen dieser Website voll umf&auml;nglich nutzen k&ouml;nnen. Durch die Nutzung dieser Website erkl&auml;ren Sie sich mit der Bearbeitung der &uuml;ber Sie erhobenen Daten durch Google in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden.
+<a href="http://www.google.com/intl//privacypolicy.html" target='blank'>Google&#39;s Datenschutzerkl&auml;rung</a>. Google bietet die M&ouml;glichkeit an, mit einem <a href="http://tools.google.com/dlpage/gaoptout?hl=en" target='blank'>Browser Plugin</a> das Tracking von Google Analytics zu umgehen.
+<br><br>
+<b>Auskunft</b><br>
+Auf schriftliche Anfrage werden wir Sie gern &uuml;ber die zu Ihrer Person gespeicherten Daten informieren. Schreiben Sie dazu an:
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br>
+Wir behalten uns das Recht vor, jederzeit &Auml;nderungen an dieser Datenschutzerkl&auml;rung auszuf&uuml;hren. Jede &Auml;nderung wird an dieser Stelle ver&ouml;ffentlicht. Diese Datenschutzerkl&auml;rung kann auch auf Englisch abgerufen werden. Im Zweifelsfall gilt immer der Englische Wortlaut.
+
+<h4>Bildquellen</h4>
+<ul>
+<li>Einige unserer Vorlagen und Hintergrundbilder sind von grossartigen K&uuml;nstlern auf <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> und <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</li>
+<li><b>Es ist ausdr&uuml;cklich verboten Werke mit diesen Bilder runter zu laden oder zu posten, sofern diese nicht signifikant anders sind als das Original. Solltest du Interesse an den Bildern haben, dann kaufe sie bitte direkt von <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> oder <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</b></li>
+<li><a href='/page/photo_credits'>Bildquellenangaben.</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div style='padding:20px' data-bind="visible: terms_en">
+    <p style="text-align: center;">
+We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique <i>inspirly design engine AI</i>. The engine learns each time it creates an image to get better and better. When you like what
 you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.
 <br><br>Don't like seeing adds or want to download your images up to 4k? Download the full version of inspirly in the app store. Thanks you!<br><br>
 Contact us for any questions, problems or ideas:<br>
@@ -413,7 +557,10 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 <ul>
 <li>Some of our template and background images are from great contributors at <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> and <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</li>
 <li><b>You may NOT post or download these images if they are not significantly different than the original. Please buy the image directly from <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> or <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</b></li>
-<li>
+</ul>
+</div>
+<div style='padding:20px'>
+<ul><li>
 <a href='http://us.fotolia.com/p/203181285'>&#169;  alekswolff - Fotolia.com</a>,
 <a href='http://us.fotolia.com/p/201646847'>&#169;  determined - Fotolia.com</a>,
 <a href='http://us.fotolia.com/p/201460406'>&#169;  Eka Panova - Fotolia.com</a>,
@@ -456,17 +603,16 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 <a href='http://de.fotolia.com/p/200822357'>&#169; Olena Pantiukh - Fotolia.com</a>,
 </li>
 </ul>
-
-
-
-
-
     </p>
 </div>
   </ons-page>
 </template>
 
-
+<div class='hidden' id ='error_connection_txt'><span data-bind="html: Please_connect_to_the_internet_and_try_again"></span></div>
+<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="html: Picture_has_beend_saved"></span></div>
+<div class='hidden' id ='Created_with_inspirly'><span data-bind="html: Created_with_inspirly"></span></div>
+<div class='hidden' id ='Get_inspired'><span data-bind="html: Get_inspired"></span></div>
+<div class='hidden' id ='Pick_an_app'><span data-bind="html: Pick_an_app"></span></div>
 
 </body>
 

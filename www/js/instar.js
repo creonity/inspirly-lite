@@ -1,31 +1,32 @@
 
+//Set parameters
+var version = "1.0L";
+var language = "de";
+var locale = "sv";
+
+//helpers
+show_counter=0;
+var device_id = false;
+var error_connection_txt = $("#error_connection_txt").html();
+var admobid = {};
+var image_url;
+if(language == "de"){var language_model = "";}
+if(language == "en"){var language_model = "";}
+
+
 $(document).ready(function(){
-//window.plugins.orientationLock.lock("portrait");
+//Apply
+ko.applyBindings(language_model);
+
 
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
 })
 
-var version = "l1.0";
 
-var error_connection_txt = "Please connect to the internet.";
-var device_id = false;
 
-var showDialog = function (id) {
-  document
-    .getElementById(id)
-    .show();
-};
 
-var hideDialog = function (id) {
-  document
-    .getElementById(id)
-    .hide();
-};
-
-show_counter=0;
-var admobid = {};
 if( /(android)/i.test(navigator.userAgent) ) {
 	admobid = { // for Android
 					banner: 'ca-app-pub-3176168089117396/9768598254',
@@ -42,10 +43,9 @@ if( /(android)/i.test(navigator.userAgent) ) {
 
 function initApp() {
 screen.orientation.lock('portrait');
-    if (AdMob) {
-create_bannerAd();
-create_interstitial();
-    }
+//Prepare adds
+if (AdMob) {create_bannerAd();create_interstitial();}
+
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
@@ -55,8 +55,6 @@ $(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(
 if (page.matches("#share")) {create_banner();}
 })
 
-
-
 $(document).on("hide", function( event ) {
 var page = event.target;
 if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
@@ -64,16 +62,7 @@ if (page.matches("#share")) {$("#print_products").hide();}
 AdMob.hideBanner();
 })
 
-
 device_id = device.uuid;
-/*
-AdMob.prepareRewardVideoAd( {
-license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
-isTesting: true,
-adId:admobid.reward,
-autoShow:false
-});
-*/
 }
 
 function create_bannerAd()
@@ -104,7 +93,7 @@ autoShow:false
 
 
 
-var image_url;
+
 
 var showPopover = function(target,id) {document.getElementById(id).show(target);};
 //var hidePopover = function(target,id) {document.getElementById(id).show(target);};
@@ -125,26 +114,38 @@ window.fn.load = function(page) {
 
 
 $(document).on("init", function( event ) {
+console.log("init");
 var page = event.target;
-if (page.matches("#home")) {
-$("#create_btn").on("click", function(){fn.load("create.html");});
-$("#features_btn").on("click", function(){fn.load("features.html");});
-$("#about_btn").on("click", function(){fn.load("about.html");});
-}
+//apply knockout model to pages
+/*
+if (page.matches("#create")) {ko.applyBindings(germanLanguageModel,document.getElementById("create"));}
+if (page.matches("#image")) {ko.applyBindings(germanLanguageModel,document.getElementById("image"));}
+if (page.matches("#share")) {ko.applyBindings(germanLanguageModel,document.getElementById("share"));}
+if (page.matches("#mood")) {ko.applyBindings(germanLanguageModel,document.getElementById("mood"));}
+if (page.matches("#usr_text_input")) {ko.applyBindings(germanLanguageModel,document.getElementById("usr_text_input"));}
+if (page.matches("#about")) {ko.applyBindings(germanLanguageModel,document.getElementById("about"));}
+if (page.matches("#settings")) {ko.applyBindings(germanLanguageModel,document.getElementById("settings"));}
+if (page.matches("#mySplitter")) {ko.applyBindings(germanLanguageModel,document.getElementById("mySplitter"));}
+if (page.matches("#language")) {ko.applyBindings(germanLanguageModel,document.getElementById("language"));}
+*/
+//Add text
+
+//if (page.matches("#language")) {getQuote(true);show_image();}
+
+
 
 if (page.matches("#mood")) {
 $(".mood-item").on("click", function(){
-console.log($(this).attr("value"));
 $("#mood_val").html($(this).attr("value"));
 document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 });
 }
 
 if (page.matches("#image")) {
-show_loader(true);show_image();
+console.log("init image");getQuote();
 $("#detect-area").css("height", $(window).width());
-$("#btn_create_random").on("click", function(){show_image();});
-$("#btn_create_random_history").on("click", function(){show_image(true);});
+//$("#btn_create_random").on("click", function(){show_image();});
+//$("#btn_create_random_history").on("click", function(){show_image(true);});
 //$("#btn_image_menu").on("click", function(){create_random($("#user_txt").val());});
 $("#detect-area").on('swipeleft', function(event) {show_image();$(".tutorial").fadeOut();});
 $("#detect-area").on('swiperight', function(event) {if($("#history_code").html()!=""){show_image(true);}});
@@ -153,6 +154,10 @@ $(".tutorial").on('click', function(){$(".tutorial").fadeOut();})
 $("#autolinebreak").on('change',function(){refresh_preloaded(true)});
 $("#preview_quality").on('change',function(){refresh_preloaded()});
 }
+
+
+
+
 });
 
 function show_loader(loader)
@@ -184,7 +189,7 @@ $("#current_image").html($("#history_image").html());
 
 $("#history_code").html("");
 $("#history_image").html("");
-}else if($("#preloaded_code").html()!=""){
+}else if($("#preloaded_code").html()){
 console.log("Load preloaded image");
 //Show preloaded image
 $("#btn_create_random_history").prop("disabled", false);
@@ -197,12 +202,18 @@ $("#current_image").html($("#preloaded_image").html());
 
 $("#preloaded_code").html("");
 $("#preloaded_image").html("");
+//Preload next image
+console.log("create preoloaded image");
+create_random(true);
 }
 else
 {
 //generate new image and show
+console.log("create new");
 create_random();
 }
+
+
 
 if($("#current_image").html()!="")
 {
@@ -211,17 +222,13 @@ $("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"
 $("#download_image").fadeIn();$(".loader").hide();
 }
 
-if($("#preloaded_image").html()=="")
-{
-//Preload next image
-create_random(true);
-}
+
 }
 
 
 function refresh_preloaded(all_new)
 {
-console.log("refrehed");
+console.log("refreshed");
 $("#preloaded_code").html("");
 $("#preloaded_image").html("");
 //Preload next image with new settings
@@ -306,7 +313,7 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+$("#code").html()+"&version="+version+"&device_id="+device_id+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+var datatosend = "code="+$("#code").html()+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+$("#mood_val").html()+"&preview_quality="+$("#preview_quality").children().is(':checked')+"&user_txt="+user_txt+"&user_img="+$("#user_img").html()+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
@@ -509,7 +516,7 @@ function file_transfer(fileEntry, uri) {
         fileURL,
         function (entry) {
         console.log("Picture has been saved."+entry.toURL());
-        ons.notification.toast({message: "Picture has been saved.", timeout: 2000});
+        ons.notification.toast({message: $("#Picture_has_beend_saved").html(), timeout: 2000});
 
 
  window.galleryRefresh.refresh(entry.toURL(),function(success){ console.log(success); },function(error){ console.log(error); });
@@ -555,18 +562,18 @@ $.ajax({
 
 var share_options;
 share_options = {
-  message: 'Created with inspir.ly #inspirly', // not supported on some apps (Facebook, Instagram)
-  subject: 'Get inspired', // fi. for email
+  message: $("#Created_with_inspirly ").html()+'#inspirly', // not supported on some apps (Facebook, Instagram)
+  subject: $("#Get_inspired").html(), // fi. for email
   files: [data.image_url], // an array of filenames either locally or remotely
   url: 'https://www.inspir.ly',
-  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+  chooserTitle: $("#Pick_an_app").html() // Android only, you can override the default share sheet title
 }
 
 
-if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook('Created with inspir.ly #inspirly',  data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
-if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram('Created with inspir.ly #inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
-if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
-if(platform == "twitter"){window.plugins.socialsharing.shareViaTwitter('Created with inspir.ly #inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook($("#Created_with_inspirly. ").html()+' #inspirly',  data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram($("#Created_with_inspirly. ").html()+'#inspirly', data.image_url, function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp($("#Created_with_inspirly ").html()+'#inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "twitter"){window.plugins.socialsharing.shareViaTwitter($("#Created_with_inspirly ").html()+'#inspirly', data.image_url, 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
 if(platform == "snapchat"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 if(platform == "other"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
 
@@ -679,15 +686,8 @@ function _getLocalImagePathWithoutPrefix(url) {
 function getQuote(default_txt) {
 var author = randomKey(quote_array);
 var quote = quote_array[author];
-
-//var string = $('textarea').val();
-var encoded_quote = quote;
-
-$("#user_txt").val(encoded_quote);
-if(!default_txt)
-{
-refresh_preloaded(true);delete_history();
-}
+$("#user_txt").val(quote);
+if(!default_txt){refresh_preloaded(true);delete_history();}
 }
 
 
@@ -709,7 +709,7 @@ quote_array["Albert Einstein"] = ["Two things are infinite: the universe and hum
 quote_array["Frank Zappa"] = ["So many books, so little time."];
 quote_array["William W. Purkey"] = ["You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth."];
 quote_array["Marcus Tullius Cicero"] = ["A room without books is like a body without a soul."];
-quote_array["Mae West"] = ["You only live once, but if you do it right, once is enough."];
+quote_array["Mae West"] = ["You only live once, but if you do it right, onceis enough."];
 quote_array["Mahatma Gandhi"] = ["Be the change that you wish to see in the world."];
 quote_array["J.K. Rowling"] = ["If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals."];
 quote_array["Mark Twain"] = ["If you tell the truth, you don't have to remember anything."];
@@ -782,3 +782,6 @@ function randomKey(obj) {
            ret = key;
     return ret;
 }
+
+var showDialog = function (id) {document.getElementById(id).show();};
+var hideDialog = function (id) {document.getElementById(id).hide();};
