@@ -61,7 +61,7 @@ function initApp() {
 screen.orientation.lock('portrait');
 //Prepare adds
 if (AdMob) {create_bannerAd();create_interstitial();}
-
+/*
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
@@ -78,6 +78,7 @@ AdMob.hideBanner();
 })
 
 device_id = device.uuid;
+*/
 }
 
 function create_bannerAd()
