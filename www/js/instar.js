@@ -377,7 +377,6 @@ user_txt = user_txt_structured;
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
 var datatosend = "code="+window.localStorage.getItem("code")+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
-//"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
