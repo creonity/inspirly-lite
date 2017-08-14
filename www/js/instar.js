@@ -24,6 +24,14 @@ window.localStorage.removeItem("code");
 window.localStorage.removeItem("current_text");
 window.localStorage.setItem("autolinebreak", "true");
 window.localStorage.setItem("mood", 0);
+window.localStorage.removeItem("font");
+window.localStorage.removeItem("fontfilling");
+window.localStorage.removeItem("frame");
+window.localStorage.removeItem("background");
+window.localStorage.removeItem("texture");
+window.localStorage.removeItem("fontsize");
+
+
 
 
 $(document).ready(function(){
@@ -368,7 +376,9 @@ user_txt = user_txt_structured;
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+window.localStorage.getItem("code")+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+var datatosend = "code="+window.localStorage.getItem("code")+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
+//"&fontfilling="+$("#fontfilling:checked").val()+"&frame="+$("#frame:checked").val()+"&font="+$("#font:checked").val()+"&background="+$("#background:checked").val()+"&texture="+$("#texture:checked").val()+"&fontsize="+$("#fontsize:checked").val();
+
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
   type: "POST",
@@ -382,7 +392,7 @@ $.ajax({
 else{
 $([data.image_url]).preload();
 //$("#next_image").html(data.image_url);
-window.localStorage.setItem("preloaded_code", data.image_url);
+window.localStorage.setItem("preloaded_code", data.code);
 //$("#preloaded_code").html(data.code);
 window.localStorage.setItem("preloaded_image", data.image_url);
 //$("#preloaded_image").html(data.image_url);
@@ -660,8 +670,10 @@ ons.notification.alert(error_connection_txt);}
 
 function create_banner()
 {
+console.log("create_banner");
 if(window.localStorage.getItem("current_banner_image")!=window.localStorage.getItem("current_image"))
 {
+console.log("current_banner_image");
 //get the product image
 $("#print_progress").fadeIn();
 
@@ -742,8 +754,8 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 function getQuote(default_txt) {
-var author = randomKey(quote_array);
-var quote = quote_array[author];
+var author = randomKey(quote_array[locale]);
+var quote = quote_array[locale][author];
 $("#user_txt").val(quote);
 window.localStorage.setItem('current_text', quote);
 if(!default_txt){refresh_preloaded(true);delete_history();}
@@ -751,86 +763,152 @@ if(!default_txt){refresh_preloaded(true);delete_history();}
 
 
 var quote_array = [];
+quote_array["en"] = [];
+quote_array["de"] = [];
 //quote_array[""] = [""];
-quote_array["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
-quote_array["Proverbs"] = ["Live today for tomorrow it will all be history."];
-quote_array["Proverbs"] = ["Before you embark on a journey of revenge, dig two graves."];
-quote_array["Proverbs"] = ["Live today for tomorrow it will all be history."];
-quote_array["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
-quote_array["Lao Tzu"] = ["If you are depressed you are living in the past. If you are anxious you are living in the future. If you are at peace you are living in the present."];
-quote_array["Soren Kierkegaard"] = ["Life is not a problem to be solved, but a reality to be experienced."];
-quote_array["Jack London"] = ["Life is not always a matter of holding good cards, but sometimes, playing a poor hand well."];
-quote_array["Marcus Aurelius"] = ["Dwell on the beauty of life. Watch the stars, and see yourself running with them."];
-quote_array["Unknown"] = ["The best time to plant a tree is twenty-five years ago. The second best time is today."];
-quote_array["Dr. Seuss"] = ["Don't cry because it's over, smile because it happened."];
-quote_array["Oscar Wilde"] = ["Be yourself; everyone else is already taken."];
-quote_array["Albert Einstein"] = ["Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."];
-quote_array["Frank Zappa"] = ["So many books, so little time."];
-quote_array["William W. Purkey"] = ["You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth."];
-quote_array["Marcus Tullius Cicero"] = ["A room without books is like a body without a soul."];
-quote_array["Mae West"] = ["You only live once, but if you do it right, onceis enough."];
-quote_array["Mahatma Gandhi"] = ["Be the change that you wish to see in the world."];
-quote_array["J.K. Rowling"] = ["If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals."];
-quote_array["Mark Twain"] = ["If you tell the truth, you don't have to remember anything."];
-quote_array["Elbert Hubbard"] = ["A friend is someone who knows all about you and still loves you."];
-quote_array["Mahatma Gandhi"] = ["Live as if you were to die tomorrow. Learn as if you were to live forever."];
-quote_array["Oscar Wilde"] = ["To live is the rarest thing in the world. Most people exist, that is all."];
-quote_array["Martin Luther King Jr."] = ["Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that."];
-quote_array["Oscar Wilde"] = ["I am so clever that sometimes I don't understand a single word of what I am saying."];
-quote_array["Anonymous"] = ["Insanity is doing the same thing, over and over again, but expecting different results."];
-quote_array["J.K. Rowling"] = ["I do believe something magical can happen when you read a good book."];
-quote_array["Winston Churchill"] = ["The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees The Opportunity In Every Difficulty."];
-quote_array["Will Rogers"] = ["Don't Let Yesterday Take Up Too Much Of Today."];
-quote_array["Steve Jobs"] = ["If You Are Working On Something That You Really Care About, You Don't Have To Be Pushed. The Vision Pulls You."];
-quote_array["Rob Siltanen"] = ["People Who Are Crazy Enough To Think They Can Change The World, Are The Ones Who Do."];
-quote_array["Ernest Hemingway"] = ["The world breaks everyone, and afterward, some are strong at the broken places."];
-quote_array["Walt Disney"] = ["If you can dream it, you can do it."];
-quote_array["Eleanor Roosevelt"] = ["The future belongs to those who believe in the beauty of their dreams."];
-quote_array["W. Clement Stone"] = ["Aim for the moon. If you miss, you may hit a star."];
-quote_array["Yoko Ono"] = ["Smile in the mirror. Do that every morning and you'll start to see a big difference in your life."];
-quote_array["Mother Teresa"] = ["Peace begins with a smile."];
-quote_array["Andy Rooney"] = ["If you smile when no one else is around, you really mean it."];
-quote_array["Charlie Chaplin"] = ["You'll find that life is still worthwhile, if you just smile."];
-quote_array["Unknown"] = ["I look at you and see the rest of my life in front of my eyes."];
-quote_array["Leo Tolstoy"] = ["All, everything that I understand, I only understand because I love."];
-quote_array["Unknown"] = ["I'm much more me when I'm with you."];
-quote_array["Salvador Dali"] = ["I don't do drugs, I am drugs."];
-quote_array["Jim Morrison"] = ["Actually I don't remember being born, it must have happened during one of my black outs."];
-quote_array["Unknown"] = ["I didn't fall. The floor just needed a hug."];
-quote_array["Unknown"] = ["Sleep all day. Party all night. Never grow old. Never die."];
-quote_array["Unknown"] = ["Happiness is not having what you want. It is appreciating what you have."];
-quote_array["Unknown"] = ["We fall in love by chance, we stay in love by choice."];
-quote_array["Unknown"] = ["You can't change yesterday, but you can ruin today by worrying about tomorrow."];
-quote_array["Unknown"] = ["Silence isn't empty. It's full of answers."];
-quote_array["Unknown"] = ["The goal is to die with memories, not dreams."];
-quote_array["Alyssa Knight"] = ["Count your rainbows, not your thunderstorms."];
-quote_array["Robert A. Heinlein"] = ["Love is that condition in which the happiness of another person is essential to your own."];
-quote_array["Mahatma Gandhi"] = ["Happiness is when what you think, what you say, and what you do are in harmony."];
-quote_array["Winnie the Pooh"] = ["Nobody can be uncheered with a balloon."];
-quote_array["Confucius"] = ["What you do not want done to yourself, do not do to others."];
-quote_array["Aristotle"] = ["Happiness depends upon ourselves."];
-quote_array[""] = ["Be the best version of YOU"];
-quote_array[""] = ["If it is important, you'll find a way. If not you'll find an excuse."];
-quote_array[""] = ["Your only limit is YOU"];
-quote_array[""] = ["Hard work beats talent when talent doesn't work hard"];
-quote_array[""] = ["Do more of what makes you happy"];
-quote_array[""] = ["stop wishing. start doing."];
-quote_array[""] = ["I'm not here to be average. I'm here to be awesome."];
-quote_array[""] = ["Be fearless in the pursuit of what sets your soul on fire."];
-quote_array["Oprah Winfrey"] = ["Think like a queen."];
-quote_array[""] = ["A little progress each day adds up to big results"];
-quote_array[""] = ["Hope is the only thing stronger than fear"];
-quote_array[""] = ["Believe in yourself"];
-quote_array[""] = ["Make your dreams happen"];
-quote_array[""] = ["I'm going to make you so proud - not to self"];
-quote_array[""] = ["Be stronger than your excuses"];
-quote_array["Steve Martin"] = ["Be so good they can't ignore you"];
-quote_array[""] = ["Sweat is your fat crying"];
-quote_array[""] = ["If you're tired of starting over STOP giving up"];
-quote_array[""] = ["Wake up. Kick ass. Repeat."];
-quote_array[""] = ["Be happy. Be bright. Be you."];
-quote_array[""] = ["I'm donig this for ME"];
-
+quote_array["en"]["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
+quote_array["en"]["Proverbs"] = ["Live today for tomorrow it will all be history."];
+quote_array["en"]["Proverbs"] = ["Before you embark on a journey of revenge, dig two graves."];
+quote_array["en"]["Proverbs"] = ["Live today for tomorrow it will all be history."];
+quote_array["en"]["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
+quote_array["en"]["Lao Tzu"] = ["If you are depressed you are living in the past. If you are anxious you are living in the future. If you are at peace you are living in the present."];
+quote_array["en"]["Soren Kierkegaard"] = ["Life is not a problem to be solved, but a reality to be experienced."];
+quote_array["en"]["Jack London"] = ["Life is not always a matter of holding good cards, but sometimes, playing a poor hand well."];
+quote_array["en"]["Marcus Aurelius"] = ["Dwell on the beauty of life. Watch the stars, and see yourself running with them."];
+quote_array["en"]["Unknown"] = ["The best time to plant a tree is twenty-five years ago. The second best time is today."];
+quote_array["en"]["Dr. Seuss"] = ["Don't cry because it's over, smile because it happened."];
+quote_array["en"]["Oscar Wilde"] = ["Be yourself; everyone else is already taken."];
+quote_array["en"]["Albert Einstein"] = ["Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."];
+quote_array["en"]["Frank Zappa"] = ["So many books, so little time."];
+quote_array["en"]["William W. Purkey"] = ["You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth."];
+quote_array["en"]["Marcus Tullius Cicero"] = ["A room without books is like a body without a soul."];
+quote_array["en"]["Mae West"] = ["You only live once, but if you do it right, onceis enough."];
+quote_array["en"]["Mahatma Gandhi"] = ["Be the change that you wish to see in the world."];
+quote_array["en"]["J.K. Rowling"] = ["If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals."];
+quote_array["en"]["Mark Twain"] = ["If you tell the truth, you don't have to remember anything."];
+quote_array["en"]["Elbert Hubbard"] = ["A friend is someone who knows all about you and still loves you."];
+quote_array["en"]["Mahatma Gandhi"] = ["Live as if you were to die tomorrow. Learn as if you were to live forever."];
+quote_array["en"]["Oscar Wilde"] = ["To live is the rarest thing in the world. Most people exist, that is all."];
+quote_array["en"]["Martin Luther King Jr."] = ["Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that."];
+quote_array["en"]["Oscar Wilde"] = ["I am so clever that sometimes I don't understand a single word of what I am saying."];
+quote_array["en"]["Anonymous"] = ["Insanity is doing the same thing, over and over again, but expecting different results."];
+quote_array["en"]["J.K. Rowling"] = ["I do believe something magical can happen when you read a good book."];
+quote_array["en"]["Winston Churchill"] = ["The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees The Opportunity In Every Difficulty."];
+quote_array["en"]["Will Rogers"] = ["Don't Let Yesterday Take Up Too Much Of Today."];
+quote_array["en"]["Steve Jobs"] = ["If You Are Working On Something That You Really Care About, You Don't Have To Be Pushed. The Vision Pulls You."];
+quote_array["en"]["Rob Siltanen"] = ["People Who Are Crazy Enough To Think They Can Change The World, Are The Ones Who Do."];
+quote_array["en"]["Ernest Hemingway"] = ["The world breaks everyone, and afterward, some are strong at the broken places."];
+quote_array["en"]["Walt Disney"] = ["If you can dream it, you can do it."];
+quote_array["en"]["Eleanor Roosevelt"] = ["The future belongs to those who believe in the beauty of their dreams."];
+quote_array["en"]["W. Clement Stone"] = ["Aim for the moon. If you miss, you may hit a star."];
+quote_array["en"]["Yoko Ono"] = ["Smile in the mirror. Do that every morning and you'll start to see a big difference in your life."];
+quote_array["en"]["Mother Teresa"] = ["Peace begins with a smile."];
+quote_array["en"]["Andy Rooney"] = ["If you smile when no one else is around, you really mean it."];
+quote_array["en"]["Charlie Chaplin"] = ["You'll find that life is still worthwhile, if you just smile."];
+quote_array["en"]["Unknown"] = ["I look at you and see the rest of my life in front of my eyes."];
+quote_array["en"]["Leo Tolstoy"] = ["All, everything that I understand, I only understand because I love."];
+quote_array["en"]["Unknown"] = ["I'm much more me when I'm with you."];
+quote_array["en"]["Salvador Dali"] = ["I don't do drugs, I am drugs."];
+quote_array["en"]["Jim Morrison"] = ["Actually I don't remember being born, it must have happened during one of my black outs."];
+quote_array["en"]["Unknown"] = ["I didn't fall. The floor just needed a hug."];
+quote_array["en"]["Unknown"] = ["Sleep all day. Party all night. Never grow old. Never die."];
+quote_array["en"]["Unknown"] = ["Happiness is not having what you want. It is appreciating what you have."];
+quote_array["en"]["Unknown"] = ["We fall in love by chance, we stay in love by choice."];
+quote_array["en"]["Unknown"] = ["You can't change yesterday, but you can ruin today by worrying about tomorrow."];
+quote_array["en"]["Unknown"] = ["Silence isn't empty. It's full of answers."];
+quote_array["en"]["Unknown"] = ["The goal is to die with memories, not dreams."];
+quote_array["en"]["Alyssa Knight"] = ["Count your rainbows, not your thunderstorms."];
+quote_array["en"]["Robert A. Heinlein"] = ["Love is that condition in which the happiness of another person is essential to your own."];
+quote_array["en"]["Mahatma Gandhi"] = ["Happiness is when what you think, what you say, and what you do are in harmony."];
+quote_array["en"]["Winnie the Pooh"] = ["Nobody can be uncheered with a balloon."];
+quote_array["en"]["Confucius"] = ["What you do not want done to yourself, do not do to others."];
+quote_array["en"]["Aristotle"] = ["Happiness depends upon ourselves."];
+quote_array["en"][""] = ["Be the best version of YOU"];
+quote_array["en"][""] = ["If it is important, you'll find a way. If not you'll find an excuse."];
+quote_array["en"][""] = ["Your only limit is YOU"];
+quote_array["en"][""] = ["Hard work beats talent when talent doesn't work hard"];
+quote_array["en"][""] = ["Do more of what makes you happy"];
+quote_array["en"][""] = ["Love the life you live, live the life you love!"];
+quote_array["en"][""] = ["Fuck this world... I'm going to Wonderland..."];
+quote_array["en"][""] = ["stop wishing. start doing."];
+quote_array["en"][""] = ["I'm not here to be average. I'm here to be awesome."];
+quote_array["en"][""] = ["Be fearless in the pursuit of what sets your soul on fire."];
+quote_array["en"]["Oprah Winfrey"] = ["Think like a queen."];
+quote_array["en"][""] = ["A little progress each day adds up to big results"];
+quote_array["en"][""] = ["Hope is the only thing stronger than fear"];
+quote_array["en"][""] = ["Believe in yourself"];
+quote_array["en"][""] = ["Make your dreams happen"];
+quote_array["en"][""] = ["I'm going to make you so proud - not to self"];
+quote_array["en"][""] = ["Be stronger than your excuses"];
+quote_array["en"]["Steve Martin"] = ["Be so good they can't ignore you"];
+quote_array["en"][""] = ["Sweat is your fat crying"];
+quote_array["en"][""] = ["If you're tired of starting over STOP giving up"];
+quote_array["en"][""] = ["Wake up. Kick ass. Repeat."];
+quote_array["en"][""] = ["Be happy. Be bright. Be you."];
+quote_array["en"][""] = ["I'm donig this for ME"];
+quote_array["de"][""] = ["Ein Ziel ist ein Traum mit Termin."];
+quote_array["de"][""] = ["Der Wille ist der Schlüssel, der Weg nur das Schloss, und der Mut die Klinke."];
+quote_array["de"]["Antoine de Saint-Exupery"] = ["Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar."];
+quote_array["de"]["Antoine de Saint-Exupery"] = ["Wenn du ein Schiff bauen willst, so trommle nicht Männer zusammen um Holz zu beschaffen, Werkzeuge vorzubereiten, Aufgaben zu vergeben und die Arbeit einzuteilen, sondern lehre die Männer die Sehnsucht nach dem weiten endlosen Meer."];
+quote_array["de"]["Winston Churchill"] = ["Erfolg ist die Fähigkeit, von einem Misserfolg zum anderen zu gehen, ohne seine Begeisterung zu verlieren."];
+quote_array["de"]["Theodor Heuss"] = ["Der einzige Mist, auf dem nichts wächst, ist der Pessimist."];
+quote_array["de"]["Zarko Petan"] = ["Mit leerem Kopf nickt es sich leichter."];
+quote_array["de"]["Unbekannt"] = ["Wenn der Mensch kein Ziel hat, ist ihm jeder Weg zu weit."];
+quote_array["de"]["George Bernard Shaw"] = ["Man ist nur unglücklich, weil man Zeit hat, zu überlegen, ob man unglücklich ist oder nicht."];
+quote_array["de"]["Henry Ford"] = ["Wenn alles gegen dich zu laufen scheint, erinnere dich daran, dass das Flugzeug gegen den Wind abhebt, nicht mit ihm."];
+quote_array["de"]["Henry Ford"] = ["Wer immer tut, was er schon kann, bleibt immer das, was er schon ist."];
+quote_array["de"]["Mark Twain"] = ["Gib jedem Tag die Chance, der schönste deines Lebens zu werden."];
+quote_array["de"]["Euripides"] = ["Man soll sich nicht über Dinge ärgern. Denn das ist ihnen völlig egal."];
+quote_array["de"]["Franz Kafka"] = ["Wege entstehen dadurch, dass wir sie gehen."];
+quote_array["de"]["Augustinus"] = ["Nur wer selbst brennt, kann Feuer in anderen entfachen."];
+quote_array["de"][""] = ["Die Zukunft gehört denen, die sie verändern."];
+quote_array["de"]["Albert Schweitzer"] = ["Das Glück ist das einzige, was sich verdoppelt, wenn man es teilt."];
+quote_array["de"][""] = ["Gib jedem Tag die Chance, der Schönste deines Lebens zu werden."];
+quote_array["de"][""] = ["Schliesse die Augen. Klettere mit mir auf den Regenbogen. Auf einen Sonnenstrahl. Hinauf zu den Sternen. In die Unendlichkeit."];
+quote_array["de"][""] = ["Die Augen sind der Spiegel der Seele."];
+quote_array["de"]["Carolyn Wells"] = ["Glück ist die Fähigkeit, es zu erkennen."];
+quote_array["de"][""] = ["glücklich steht dir gut"];
+quote_array["de"][""] = ["Glück ist nicht das Ziel der Reise, sondern die Art wie man reist."];
+quote_array["de"]["Goethe"] = ["Erfolg hat drei Buchstaben: TUN!"];
+quote_array["de"][""] = ["Erfolg ist eine Treppe, keine Tür."];
+quote_array["de"][""] = ["Irgendwann hört man auf zu warten und beginnt zu vergessen..."];
+quote_array["de"][""] = ["Perfekt ist das Leben nie. Aber es gibt Menschen, die es perfekt machen."];
+quote_array["de"][""] = ["Hat das Blümchen einen knick, war der Schmetterling zu dick."];
+quote_array["de"][""] = ["Für bestimmte Menschen gehe ich bis ans Ende der Wel! Für andere, nicht mal ans Telefon..."];
+quote_array["de"][""] = ["Das ist aber ganz schön viel Meinung für so wenig Ahnung."];
+quote_array["de"][""] = ["habe keinen Bock mehr. bin zaubern."];
+quote_array["de"][""] = ["Alle verrückt hier. Komm Einhorn, wir gehen."];
+quote_array["de"][""] = ["Wahre Prinzen töten für dich keinen Drachen, sondern lieben dich, wenn du mal einer bist."];
+quote_array["de"][""] = ["Ich schnarche nicht Ich schnure"];
+quote_array["de"][""] = ["Ich könnte jetzt wirklich dringend einen Zauberstab gebrauchen."];
+quote_array["de"][""] = ["Falls jemand zu dir sagt, das geht nicht, denk daran, es sind seine Grenzen, nicht deine."];
+quote_array["de"][""] = ["Eine Hütte, in der man lacht, ist besser als ein Palast, in dem man weint."];
+quote_array["de"]["Einstein"] = ["Die besten Dinge im Leben sind nicht die, für die man Geld bekommt."];
+quote_array["de"][""] = ["Wenn eine Schraube locker ist, hat das Leben etwas Speil."];
+quote_array["de"][""] = ["Die schönsten Erinnerungen sammelt man immer zu zweit."];
+quote_array["de"][""] = ["Das sind keine Stirnfalten. Das ist ein Sixpack vom Denken."];
+quote_array["de"][""] = ["Auf dem Boder der Tatsachen liegt eindeutig zu wenig Glitzer."];
+quote_array["de"][""] = ["Heute ist mein Lieblingstag"];
+quote_array["de"][""] = ["Läuft bei mir. Zwar rückwärts. Und bergab. Aber läuft."];
+quote_array["de"][""] = ["Der Strand hat angerufen und gefragt wor ihr bleibt!?"];
+quote_array["de"][""] = ["vielleicht wird alles vielleichter"];
+quote_array["de"][""] = ["Falls ihr mich sucht, ich bin etwas zu weit gegangen."];
+quote_array["de"][""] = ["Ein Leben ohne Kekse ist zwar möglich aber sinnlos."];
+quote_array["de"][""] = ["Schön, dass es dich gibt"];
+quote_array["de"][""] = ["Ich würde dich auch umarmen, wenn du ein Kaktus wärst und ich ein Luftballon."];
+quote_array["de"][""] = ["Schuhe sind Rudeltiere"];
+quote_array["de"][""] = ["Lachen ist die schönste Sprache der Welt"];
+quote_array["de"][""] = ["Träume nicht dein Leben. Lebe deinen Traum!"];
+quote_array["de"][""] = ["Hinfallen, aufstehen, Krone richten, weitergehen"];
+quote_array["de"][""] = ["Die Pflicht ruft! Sag ihr ich rufe sie zurück."];
+quote_array["de"][""] = ["Lesen gefährdet die Dummheit"];
+quote_array["de"][""] = ["Not Your Ernst."];
+quote_array["de"][""] = ["Ich bin gerade wie ich bin, weil ich mich genau jetzt so brauche."];
+quote_array["de"][""] = ["Mein Wunsch ist es nicht, perfekt zu sein, sondern gut genug für dich."];
+quote_array["de"][""] = ["Du willst wissen, in wen ich mich verliebt habe? Dann lies das erste Wort nochmals..."];
+quote_array["de"][""] = ["Deine Ecken passen gut zu meinen Kanten."];
+quote_array["de"][""] = ["Glück findest du nicht, wenn du es suchst, sondern wenn du zulässt dass es DICH findet..."];
+quote_array["de"][""] = ["Du bist nicht alles, aber ohne dich ist alles nichts."];
 
 
 function randomKey(obj) {

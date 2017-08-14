@@ -231,35 +231,35 @@ For production change content-security-policy and admob
 </ons-list>
 <label class="checkbox">
 <span data-bind="reshtml: 'Fontstyle'"></span>
-  <input id="font" type="checkbox" class="checkbox__input" onchange="">
+  <input id="font" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('font', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
 <span data-bind="reshtml: 'Fontsize_and_position'"></span>
-  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontsize', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
 <span data-bind="reshtml: 'Fontfilling'"></span>
-  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontfilling', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br>
 <label class="checkbox">
 <span data-bind="reshtml: 'Frame'"></span>
-  <input id="frame" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+  <input id="frame" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('frame', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br><label class="checkbox">
 <span data-bind="reshtml: 'Background'"></span>
-  <input id="background" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+  <input id="background" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('background', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br><label class="checkbox">
 <span data-bind="reshtml: 'Texture'"></span>
-  <input id="texture" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+  <input id="texture" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('texture', $(this).is(':checked'));refresh_preloaded()">
  <div class="checkbox__checkmark"></div>
 </label>
 <br></div>
