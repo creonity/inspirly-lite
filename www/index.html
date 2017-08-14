@@ -35,6 +35,7 @@ For production change content-security-policy and admob
     <script src="js/language_model.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/instar.js"></script>
+    <script src="js/ko.localizationbinding.js"></script>
 
 
     
@@ -46,7 +47,8 @@ For production change content-security-policy and admob
 
 
 <body>
-<ons-navigator id="myNavigator" page="language.html"></ons-navigator>
+<ons-navigator id="myNavigator" page="mySplitter.html"></ons-navigator>
+
 
 
 <ons-template id="mySplitter.html">
@@ -56,19 +58,23 @@ For production change content-security-policy and admob
     <ons-page>
       <ons-list>
         <ons-list-item onclick="fn.load('create.html')" tappable>
-          <span data-bind="html: Design"></span>
+          <span data-bind="reshtml: 'Design'"></span>
         </ons-list-item>
            <ons-list-item onclick="fn.load('settings.html')" tappable>
-          <span data-bind="html: Settings"></span>
+          <span data-bind="reshtml: 'Settings'"></span>
         </ons-list-item>
         <ons-list-item onclick="fn.load('about.html')" tappable>
-          <span data-bind="html: About"></span>
+          <span data-bind="reshtml: 'About'"></span>
         </ons-list-item>
       </ons-list>
     </ons-page>
   </ons-splitter-side>
   <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
 </ons-splitter>
+
+
+
+
   </ons-page>
 </ons-template>
 
@@ -79,11 +85,10 @@ For production change content-security-policy and admob
 
 <ons-template id="language.html">
 <ons-page id="language">
-<span data-bind="restext: 'name'"></span>
 <ons-list>
-    <ons-list-header><span data-bind="reshtml: Choose_language"></span></ons-list-header>
-    <ons-list-item onclick="language='en';document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
-    <ons-list-item onclick="language='de';document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
+    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
 </ons-list>
 
   </ons-page>
@@ -109,15 +114,22 @@ For production change content-security-policy and admob
     </ons-toolbar>
 
 
+<div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
+<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
+<div class='hidden' id ='Created_with_inspirly'><span data-bind="reshtml: 'Created_with_inspirly'"></span></div>
+<div class='hidden' id ='Get_inspired'><span data-bind="reshtml: 'Get_inspired'"></span></div>
+<div class='hidden' id ='Pick_an_app'><span data-bind="reshtml: 'Pick_an_app'"></span></div>
+
+
 
 <ons-tabbar id="tabbar" disable-auto-styling>
-  <ons-tab data-bind="attr: { label: Text }" page="text.html" disable-auto-styling>
+  <ons-tab data-bind="resattr: { label: 'Text' }" page="text.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab data-bind="attr: { label: Mood }" page="mood.html" disable-auto-styling>
+  <ons-tab data-bind="resattr: { label: 'Mood' }" page="mood.html" disable-auto-styling>
   </ons-tab>
-  <ons-tab data-bind="attr: { label: Design }" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
+  <ons-tab data-bind="resattr: { label: 'Design' }" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
   </ons-tab>
-  <ons-tab data-bind="attr: { label: Share }" id='share' page="share.html" disable-auto-styling>
+  <ons-tab data-bind="resattr: { label: 'Share' }" id='share' page="share.html" disable-auto-styling>
   </ons-tab>
 </ons-tabbar>
   </ons-page>
@@ -129,10 +141,10 @@ For production change content-security-policy and admob
 <template id="text.html">
   <ons-page id= "usr_text_input">
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="html: Insert_text"></span></ons-list-header>
+    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
 
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="refresh_preloaded(true);delete_history();"></textarea>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.val());refresh_preloaded(true);delete_history();"></textarea>
 </ons-list-item>
 
 
@@ -140,16 +152,16 @@ For production change content-security-policy and admob
 
 <ons-list-item>
 
-      <div class="center"><span data-bind="html: Auto_line_break"></span></div>
-      <div class="right"><ons-switch id="autolinebreak" checked disable-auto-styling></ons-switch></div>
+      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
+      <div class="right" id="autolinebreak_switch"></div>
 </ons-list-item>
 
 </ons-list>
 
 <p style="text-align: center;">
 
-<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="html: Random"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="html: Clear"></span></button>
+<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="reshtml: 'Clear'"></span></button>
 </p>
 
 
@@ -164,16 +176,15 @@ For production change content-security-policy and admob
   <ons-page id="mood">
     <p style="text-align: center;">
   <ons-list onclick="refresh_preloaded(true)">
-    <ons-list-header><span data-bind="html: Choose_mood_of_image"></span></ons-list-header>
-    <ons-list-item class="mood-item" value="1" tappable><span data-bind="html: Lovely"></span></ons-list-item>
-    <ons-list-item class="mood-item" value="2" tappable><span data-bind="html: Young"></span></ons-list-item>
-    <ons-list-item class="mood-item" value="3" tappable><span data-bind="html: Sparkling"></span></ons-list-item>
-    <ons-list-item class="mood-item" value="4" tappable><span data-bind="html: Serious"></span></ons-list-item>
-    <ons-list-item class="mood-item" value="5" tappable><span data-bind="html: Cheerful"></span></ons-list-item>
-    <ons-list-item class="mood-item" value="6" tappable><span data-bind="html: Sad"></span></ons-list-item>
-    <ons-list-item class="mood-item active" value="0" tappable><span data-bind="html: Anything_goes"></span></ons-list-item>
+    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
+    <ons-list-item class="mood-item" value="1" tappable><span data-bind="reshtml: 'Lovely'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="2" tappable><span data-bind="reshtml: 'Young'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="3" tappable><span data-bind="reshtml: 'Sparkling'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="4" tappable><span data-bind="reshtml: 'Serious'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="5" tappable><span data-bind="reshtml: 'Cheerful'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="6" tappable><span data-bind="reshtml: 'Sad'"></span></ons-list-item>
+    <ons-list-item class="mood-item active" value="0" tappable><span data-bind="reshtml: 'Anything_goes'"></span></ons-list-item>
 </ons-list>
-<div id='mood_val' class='hidden'></div>
     </p>
   </ons-page>
 </template>
@@ -188,7 +199,7 @@ For production change content-security-policy and admob
 
   <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
 <div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
-<span data-bind="html: Swipe_left_to_change_the_design"></span>
+<span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
 </div>
 
 <svg class="loader progress-circular progress-circular--indeterminate">
@@ -199,27 +210,62 @@ For production change content-security-policy and admob
 
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
 
-<div id='debug_console' style='display:none'>
 
-User image<div id='user_img'></div><br>
-Preloaded image<div id='preloaded_image'></div><br>
-Current image<div id='current_image'></div><br>
-Current banner image<div id='current_banner_image'></div><br>
-History image<div id='history_image'></div><br>
-Preloaded Code <div id='preloaded_code'></div><br>
-Code <div id='code'></div><br>
-History Code<div id='history_code'></div><br>
-</div>
   </div>
 </ons-gesture-detector>
 
     <p style="text-align: center;">
     <button id='btn_create_random_history' class="button button--outline hidden">Back</button>
     <button id='btn_create_random' class="button button--outline hidden">Next</button>
-    <button class="button button--outline" onclick="getImage();"><span data-bind="html: Upload_image"></span></button>
-    <button onclick="showPopover(this,'options')" class="button button--outline"><span data-bind="html: Design_options"></span></button>
-
+    <button class="button button--outline" onclick="getImage();"><span data-bind="reshtml: 'Upload_image'"></span></button>
+    <button onclick="showPopover(this,'options');" class="button button--outline"><span data-bind="reshtml: 'Design_options'"></span></button>
     </p>
+
+
+<ons-popover direction="up" cancelable id="options">
+  <div style="padding: 10px; text-align: right;">
+<ons-list style="margin-bottom:10px; background-color:rgba(0,0,0,0)">
+<ons-list-item>
+<span data-bind="reshtml: 'Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed'"></span>
+</ons-list-item>
+</ons-list>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontstyle'"></span>
+  <input id="font" type="checkbox" class="checkbox__input" onchange="">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontsize_and_position'"></span>
+  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontfilling'"></span>
+  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Frame'"></span>
+  <input id="frame" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Background'"></span>
+  <input id="background" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Texture'"></span>
+  <input id="texture" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br></div>
+</ons-popover>
+
+
   </ons-page>
 </ons-template>
 
@@ -231,7 +277,7 @@ History Code<div id='history_code'></div><br>
     <p style="text-align: center;">
 
 <ons-list style="margin-bottom:20px">
-    <ons-list-header><span data-bind="html: Share_image_via_apps_from_your_phone"></span></ons-list-header>
+    <ons-list-header><span data-bind="reshtml: 'Share_image_via_apps_from_your_phone'"></span></ons-list-header>
 </ons-list>
 
 <button class="button button--outline social_sharing share_btn" onclick="share('facebook')"><i class="zmdi zmdi-facebook"></i></button>
@@ -239,24 +285,24 @@ History Code<div id='history_code'></div><br>
 <button class="button button--outline social_sharing share_btn" onclick="share('whatsapp')"><i class="zmdi zmdi-whatsapp"></i></button>
 <button class="button button--outline social_sharing share_btn" onclick="share('twitter')"><i class="zmdi zmdi-twitter"></i></button>
 <button class="button button--outline social_sharing share_btn" onclick="share('snapchat')"><i class="fa fa-snapchat"></i></button>
-<button onclick="share('other')" class="button button--outline share_btn"><span data-bind="html: Other"></span></button>
+<button onclick="share('other')" class="button button--outline share_btn"><span data-bind="reshtml: 'Other'"></span></button>
 </p>
 <div class="progress-bar progress-bar--indeterminate hidden" id="share_progress"></div>
 
 <p style="text-align: center;">
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="html: Download_image"></span></ons-list-header>
+    <ons-list-header><span data-bind="reshtml: 'Download_image'"></span></ons-list-header>
 </ons-list>
-<button class="button button--outline download_btn" onclick="download_image(400)"><span data-bind="html: Small"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: Medium"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: Large"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="html: X_Large"></span></button>
+<button class="button button--outline download_btn" onclick="download_image(400)"><span data-bind="reshtml: 'Small'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Medium'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Large'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'X_Large'"></span></button>
 </p>
 <img id='imageElement' src=''>
 <div class="progress-bar progress-bar--indeterminate hidden" id="download_progress"></div>
 <p>
 <ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="html: Print_image"></span></ons-list-header>
+    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
 </ons-list>
 <div class="progress-bar progress-bar--indeterminate hidden" id="print_progress"></div>
 <div id='print_products' class='hidden'></div>
@@ -265,74 +311,37 @@ History Code<div id='history_code'></div><br>
 
 <div id='download_prev'></div>
 
+
+<ons-alert-dialog id="dialog-1">
+  <div class="alert-dialog-title"><span data-bind="reshtml: 'Please_upgrade'"></span></div>
+  <div class="alert-dialog-content">
+  <span data-bind="reshtml: 'This_is_only_supported_in_the_full_version_of_inspirly_You_find_it_in_the_app_store_oh_and_it_comes_completely_adfree'"></span>
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')"><span data-bind="reshtml: 'OK'"></span></button>
+  </div>
+</ons-alert-dialog>
+
+<ons-alert-dialog id="dialog-2">
+  <div class="alert-dialog-title"><span data-bind="reshtml: 'Error'"></span></div>
+  <div class="alert-dialog-content"><span data-bind="reshtml: 'You_can_only_share_if_you_have_the_according_app_installed'"></span>
+
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')"><span data-bind="reshtml: 'OK'"></button>
+  </div>
+</ons-alert-dialog>
+
   </ons-page>
 </template>
 
 
 
 
-<ons-alert-dialog id="dialog-1">
-  <div class="alert-dialog-title"><span data-bind="html: Please_upgrade"></span></div>
-  <div class="alert-dialog-content">
-  <span data-bind="html: This_is_only_supported_in_the_full_version_of_inspirly_You_find_it_in_the_app_store_oh_and_it_comes_completely_adfree">
-  </div>
-  <div class="alert-dialog-footer">
-    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')"><span data-bind="html: OK"></span></button>
-  </div>
-</ons-alert-dialog>
-
-<ons-alert-dialog id="dialog-2">
-  <div class="alert-dialog-title"><span data-bind="html: Error"></span></div>
-  <div class="alert-dialog-content"><span data-bind="html: You_can_only_share_if_you_have_the_according_app_installed"></span>
-
-  </div>
-  <div class="alert-dialog-footer">
-    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')"><span data-bind="html: OK"></button>
-  </div>
-</ons-alert-dialog>
 
 
-<ons-popover direction="up" cancelable id="options">
-  <div style="padding: 10px; text-align: right;">
-<ons-list style="margin-bottom:10px">
-<ons-list-item>
-<span data-bind="html: Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed"></span>
-<br>
-</ons-list-item>
-</ons-list>
-<label class="checkbox">
-  <input id="font" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-  <span data-bind="html: Fontstyle"></span>
- <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-<span data-bind="html: Fontsize_and_position"></span> <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-<span data-bind="html: Fontfilling"></span> <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-  <input id="frame" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-<span data-bind="html: Frame"></span> <div class="checkbox__checkmark"></div>
-</label>
-<br><label class="checkbox">
-  <input id="background" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-<span data-bind="html: Background"></span> <div class="checkbox__checkmark"></div>
-</label>
-<br><label class="checkbox">
-  <input id="texture" type="checkbox" class="checkbox__input" onchange="refresh_preloaded()">
-<span data-bind="html: Texture"></span> <div class="checkbox__checkmark"></div>
-</label>
-<br>
 
-  <div class="center" style="margin-top:20px"><span data-bind="html: Preview_quality"></span> <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
-  </div>
-</ons-popover>
+
 
 
 
@@ -350,8 +359,21 @@ History Code<div id='history_code'></div><br>
       </div>
     </ons-toolbar>
 
-Choose your language
-  <div class="center" style="margin-top:20px"><span data-bind="html: Preview_quality"></span> <ons-switch id="preview_quality" checked disable-auto-styling style="margin-left:0px"></ons-switch></div>
+
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="preview_quality_switch"></div>
+    </ons-list-item>
+</ons-list>
+
 
   </ons-page>
 </template>
@@ -375,7 +397,7 @@ Choose your language
 
 
 
-<div style='padding:20px' data-bind="visible: terms_de">
+<div style='padding:20px' data-bind="visible: 'terms_de'">
     <p style="text-align: center;">
     Wir von inspir.ly lieben sch&ouml;ne Bilder genauso wie du. Benutze inspir.ly und werde inspiriert. Alle Bilder werden von unseren einzigartigen <i>inspir.ly Desiger KI</i> erstellt,
      welche mit Hilfe von k&uuml;nstlicher Intelligenz bei jedem Desing dazulernt. Manchmal braucht es noch etwas Geduld, daf&uuml;r sind die Designs umso grossartiger. Sobald dir ein Design ge&auml;llt,
@@ -473,7 +495,7 @@ Wir behalten uns das Recht vor, jederzeit &Auml;nderungen an dieser Datenschutze
 
 
 
-<div style='padding:20px' data-bind="visible: terms_en">
+<div style='padding:20px' data-bind="visible: 'terms_en'">
     <p style="text-align: center;">
 We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique <i>inspirly design engine AI</i>. The engine learns each time it creates an image to get better and better. When you like what
 you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.
@@ -608,11 +630,6 @@ We reserve the right to make changes to this policy. Any changes to this policy 
   </ons-page>
 </template>
 
-<div class='hidden' id ='error_connection_txt'><span data-bind="html: Please_connect_to_the_internet_and_try_again"></span></div>
-<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="html: Picture_has_beend_saved"></span></div>
-<div class='hidden' id ='Created_with_inspirly'><span data-bind="html: Created_with_inspirly"></span></div>
-<div class='hidden' id ='Get_inspired'><span data-bind="html: Get_inspired"></span></div>
-<div class='hidden' id ='Pick_an_app'><span data-bind="html: Pick_an_app"></span></div>
 
 </body>
 
