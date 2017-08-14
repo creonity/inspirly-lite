@@ -43,5 +43,11 @@
       "android",
       "ios"
     ]
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-changed": "^3.1.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-uglify": "^3.0.0"
   }
 }
