@@ -187,6 +187,24 @@ For production change content-security-policy and admob
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <ons-template id="rand_img.html">
   <ons-page  id = "image">
 
@@ -198,17 +216,24 @@ For production change content-security-policy and admob
 <span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
 </div>
 
-<svg class="loader progress-circular progress-circular--indeterminate">
-  <circle class="progress-circular__background"/>
-  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
-  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
-</svg>
+<img src='img/logo_sq.png' class='loader'>
+
+
 
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
-
-
-  </div>
+</div>
 </ons-gesture-detector>
+
+<div id="trainer_mode_ui">
+<p style="text-align: center; marign-top:10px">
+<span data-bind="reshtml: 'Messed_up'"></span>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
+<span data-bind="reshtml: 'Loving_it'"></span>
+
+</p>
+</div>
 
     <p style="text-align: center;">
     <button id='btn_create_random_history' class="button button--outline hidden">Back</button>
@@ -264,6 +289,19 @@ For production change content-security-policy and admob
 
   </ons-page>
 </ons-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -369,7 +407,17 @@ For production change content-security-policy and admob
   <div class="center" style="margin-top:0px" id="preview_quality_switch"></div>
     </ons-list-item>
 </ons-list>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Trainer_mode_help_our_inspirly_Designer_AI_to_become_better'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="trainer_switch"></div>
+    </ons-list-item>
+</ons-list>
 
+
+<p style="text-align: center;margin-top:10px">
+<button class="button button--outline" onclick="fn.load('create.html')"><span data-bind="reshtml: 'Go_back'"></span></button>
+</p>
 
   </ons-page>
 </template>

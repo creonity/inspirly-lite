@@ -55,7 +55,11 @@ Get_inspired : "Inspiration f&uuml;r dich",
 Pick_an_app : "W&auml;hle eine App aus",
 terms_en : ko.observable(false),
 terms_de : ko.observable(true),
-High_preview_quality_switch_off_if_images_load_slowly : "Hohe Qualit&auml;t der Vorschaubilder - Ausschalten falls Bilder langsam geladen werden",
+High_preview_quality_switch_off_if_images_load_slowly : "Hohe Qualit&auml;t der Vorschaubilder - Ausschalten falls Bilder nur langsam geladen werden",
+Go_back : "Zur&uuml;ck",
+Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainingsmodus - Hilf unserer inspirly Designer KI besser zu werden",
+Messed_up : "Nicht sch&ouml;n",
+Loving_it : "Ganz toll",
     };
 
 $.each(german_lang, function(index, value) {
@@ -118,6 +122,10 @@ Pick_an_app : "Pick an app",
 terms_en : ko.observable(true),
 terms_de : ko.observable(false),
 High_preview_quality_switch_off_if_images_load_slowly : "High preview quality - switch off if images load slowly",
+Go_back : "Go back",
+Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainer mode - help our inspirly Designer AI to become better",
+Messed_up : "Messed up",
+Loving_it : "Loving it",
     };
 
 $.each(english_lang, function(index, value) {

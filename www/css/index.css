@@ -36,13 +36,49 @@ background:rgba(249,245,230,0.6);
 margin-bottom:20px;
 }
 
-.loader {
-display:none;
-margin-top:170px;
-}
 
 .mood-item.active {background: rgba(81,152,219,1); color:white}
 
 .hidden {display:none}
 
 .social_sharing {width:38px}
+.trainer_button {width:48px}
+
+@keyframes flickerAnimation {
+  0%   { opacity:0.6; }
+  25%  { opacity:0; }
+  50% { opacity:0.6; }
+  75% { opacity:0; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:0.6; }
+  25%  { opacity:0; }
+  50% { opacity:0.6; }
+  75% { opacity:0; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:0.6; }
+  25%  { opacity:0; }
+  50% { opacity:0.6; }
+  75% { opacity:0; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:0.6; }
+  25%  { opacity:0; }
+  50% { opacity:0.6; }
+  75% { opacity:0; }
+}
+.loader {
+position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+display:none;
+width:200px;
+   -webkit-animation: flickerAnimation 4s infinite;
+   -moz-animation: flickerAnimation 4s infinite;
+   -o-animation: flickerAnimation 4s infinite;
+    animation: flickerAnimation 4s infinite;
+}
