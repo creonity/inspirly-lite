@@ -12,11 +12,24 @@ var image_url;
 var locale = window.localStorage.getItem("locale");
 var language = locale;
 var init_once = 0;
+var performance = {};
+var duration_loaded = {};
+var duration_calculated = {};
+var duration = 0;
+var duration_calculated_current_image = 0;
 
 //Clear local storage
 window.localStorage.removeItem("user_img");
 window.localStorage.removeItem("preloaded_image");
+window.localStorage.removeItem("preloaded_guess");
+window.localStorage.removeItem("preloaded_image_id");
+window.localStorage.removeItem("preloaded_time_calculated");
+window.localStorage.removeItem("preloaded_time_loaded");
 window.localStorage.removeItem("current_image");
+window.localStorage.removeItem("current_image_id");
+window.localStorage.removeItem("current_guess");
+window.localStorage.removeItem("current_time_calculated");
+window.localStorage.removeItem("current_time_loaded");
 window.localStorage.removeItem("current_banner_image");
 window.localStorage.removeItem("history_image");
 window.localStorage.removeItem("preloaded_code");
@@ -24,6 +37,7 @@ window.localStorage.removeItem("code");
 window.localStorage.removeItem("current_text");
 window.localStorage.setItem("autolinebreak", "true");
 window.localStorage.setItem("mood", 0);
+window.localStorage.setItem("sleeptime", 500);
 window.localStorage.removeItem("font");
 window.localStorage.removeItem("fontfilling");
 window.localStorage.removeItem("frame");
@@ -67,7 +81,7 @@ device_id = device.uuid;
 
 function create_bannerAd()
 {
-console.log("hallo "+admobid.banner);
+if(typeof AdMob !== 'undefined') {
   AdMob.createBanner( {
     license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
     adId: admobid.banner,
@@ -78,16 +92,19 @@ console.log("hallo "+admobid.banner);
     bgColor: 'black',
     autoShow : false
   } );
+  }
 }
 
 function create_interstitial()
 {
+if(typeof AdMob !== 'undefined') {
 AdMob.prepareInterstitial( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
 isTesting: true,
 adId:admobid.interstitial,
 autoShow:false
 });
+}
 }
 
 
@@ -226,7 +243,6 @@ console.log(show_counter);
 if(show_counter>=20){
 if(typeof AdMob !== 'undefined'){AdMob.showInterstitial();}
 console.log("show add");
-
 create_interstitial();
 show_counter = 0;
 }
@@ -236,18 +252,12 @@ console.log("Load from history");
 $("#btn_create_random_history").prop("disabled", true);
 
 window.localStorage.setItem("preloaded_code", window.localStorage.getItem("code"));
-//$("#preloaded_code").html($("#code").html());
 window.localStorage.setItem("preloaded_image", window.localStorage.getItem("current_image"));
-//$("#preloaded_image").html($("#current_image").html());
 window.localStorage.setItem("code", window.localStorage.getItem("history_code"));
-//$("#code").html($("#history_code").html());
 window.localStorage.setItem("current_image", window.localStorage.getItem("history_image"));
-//$("#current_image").html($("#history_image").html());
 
 window.localStorage.removeItem("history_code");
-//$("#history_code").html("");
 window.localStorage.removeItem("history_image");
-//$("#history_image").html("");
 }
 else if(current){
 //Show current image
@@ -259,9 +269,19 @@ window.localStorage.setItem("history_code", window.localStorage.getItem("code"))
 window.localStorage.setItem("history_image", window.localStorage.getItem("current_image"));
 window.localStorage.setItem("code", window.localStorage.getItem("preloaded_code"));
 window.localStorage.setItem("current_image", window.localStorage.getItem("preloaded_image"));
+window.localStorage.setItem("current_image_id", window.localStorage.getItem("preloaded_image_id"));
+window.localStorage.setItem("current_guess", window.localStorage.getItem("preloaded_guess"));
+window.localStorage.setItem("current_time_calculated", window.localStorage.getItem("preloaded_time_calculated"));
+window.localStorage.setItem("current_time_loaded", window.localStorage.getItem("preloaded_time_loaded"));
+
+
 
 window.localStorage.removeItem("preloaded_code");
 window.localStorage.removeItem("preloaded_image");
+window.localStorage.removeItem("preloaded_image_id");
+window.localStorage.removeItem("preloaded_guess");
+window.localStorage.removeItem("preloaded_time_calculated");
+window.localStorage.removeItem("preloaded_time_loaded");
 console.log("create preoloaded image");
 create_random(true,rating);
 }
@@ -285,10 +305,16 @@ else
 {
 show_loader(true);
 $("#detect-area").off('swipeleft');
-await sleep(500);
+await sleep(window.localStorage.getItem("sleeptime"));
 preloadImages(image_url, function() {
 $("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_url+"'>");
 show_loader(false);
+
+$("#best_guess").html("("+window.localStorage.getItem("current_guess")+"%)");
+$("#time_calculated").html("("+Math.round(window.localStorage.getItem("current_time_calculated")/100)/10+"s)");
+$("#time_loaded").html("("+Math.round(window.localStorage.getItem("current_time_loaded")/100)/10+"s)");
+
+
 $("#detect-area").on('swipeleft', swiepelefthandler);
 });
 }
@@ -296,7 +322,9 @@ $("#detect-area").on('swipeleft', swiepelefthandler);
 }
 }
 
+
 var swiepelefthandler = function(event) {show_image();$(".tutorial").fadeOut();}
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -307,15 +335,11 @@ function refresh_preloaded(all_new)
 {
 console.log("refreshed");
 window.localStorage.removeItem("preloaded_code");
-//$("#preloaded_code").html("");
 window.localStorage.removeItem("preloaded_image");
-//$("#preloaded_image").html("");
 //Preload next image with new settings
 if(all_new){
 window.localStorage.removeItem("code");
-//$("#code").html("");
 window.localStorage.removeItem("current_image");
-//$("#current_image").html("");
 
 show_loader(true);
 show_image();
@@ -323,18 +347,25 @@ show_image();
 else{create_random(true);}
 }
 
+
+
+
 function delete_history()
 {
 $("#btn_create_random_history").prop("disabled", true);
 window.localStorage.removeItem("history_code");
-//$("#history_code").html("");
 window.localStorage.removeItem("history_image");
-//$("#history_image").html("");
 window.localStorage.removeItem("code");
-//$("#code").html("");
 window.localStorage.removeItem("current_image");
-//$("#current_image").html("");
 }
+
+
+
+
+
+
+
+
 
 
 function create_random(preload,rating)
@@ -363,13 +394,20 @@ user_txt = user_txt_structured;
 }
 
 
-
-
+var duration_calculated_str = JSON.stringify(duration_calculated);
+$.each(duration_calculated, function(index, value) {
+if(value){delete duration_calculated[index];}
+});
+var duration_loaded_str = JSON.stringify(duration_loaded);
+$.each(duration_loaded, function(index, value) {
+if(value){delete duration_loaded[index];}
+});
 
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "code="+window.localStorage.getItem("code")+"&rating="+rating+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
-
+var datatosend = "code="+window.localStorage.getItem("code")+"&performance_calculated="+duration_calculated_str+"&performance_loaded="+duration_loaded_str+"&rating="+rating+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
+var time_sent= Date.now();
+performance[time_sent]= time_sent;
 $.ajax({
   url: "https://www.inspir.ly/user_img/create_random.php",
   type: "POST",
@@ -379,15 +417,24 @@ $.ajax({
    // console.log(msg.replace(/\\/g, ''));
    console.log(msg);
     var data = JSON.parse(msg);
-    if(data.error){ons.notification.alert(data.error);}
+window.localStorage.setItem("sleeptime",data.sleeptime);
+if(data.error){ons.notification.alert(data.error);}
 else{
-preloadImages(data.image_url, function() {console.log("DONE"+data.image_url);});
+//Performance
+duration_calculated[data.image_id] = Date.now() - performance[time_sent];
+window.localStorage.setItem("preloaded_time_calculated", duration_calculated[data.image_id]);
+preloadImages(data.image_url, function() {duration_loaded[data.image_id] = Date.now() - performance[time_sent];delete performance[time_sent];
 
-//$("#next_image").html(data.image_url);
+if(window.localStorage.getItem("current_image_id")==data.image_id){
+window.localStorage.setItem("current_time_loaded", duration_loaded[data.image_id]);
+$("#time_loaded").html("("+Math.round(duration_loaded[data.image_id]/100)/10+"s)");}else{window.localStorage.setItem("preloaded_time_loaded", duration_loaded[data.image_id]);}
+
+});
+//Set results
 window.localStorage.setItem("preloaded_code", data.code);
-//$("#preloaded_code").html(data.code);
 window.localStorage.setItem("preloaded_image", data.image_url);
-//$("#preloaded_image").html(data.image_url);
+window.localStorage.setItem("preloaded_guess", data.best_guess);
+window.localStorage.setItem("preloaded_image_id", data.image_id);
 if(!preload){show_image();}
 }
 },
@@ -774,7 +821,7 @@ quote_array["en"]["Albert Einstein"] = ["Two things are infinite: the universe a
 quote_array["en"]["Frank Zappa"] = ["So many books, so little time."];
 quote_array["en"]["William W. Purkey"] = ["You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth."];
 quote_array["en"]["Marcus Tullius Cicero"] = ["A room without books is like a body without a soul."];
-quote_array["en"]["Mae West"] = ["You only live once, but if you do it right, onceis enough."];
+quote_array["en"]["Mae West"] = ["You only live once, but if you do it right, once is enough."];
 quote_array["en"]["Mahatma Gandhi"] = ["Be the change that you wish to see in the world."];
 quote_array["en"]["J.K. Rowling"] = ["If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals."];
 quote_array["en"]["Mark Twain"] = ["If you tell the truth, you don't have to remember anything."];

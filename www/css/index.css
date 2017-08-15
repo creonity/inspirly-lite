@@ -42,7 +42,7 @@ margin-bottom:20px;
 .hidden {display:none}
 
 .social_sharing {width:38px}
-.trainer_button {width:48px}
+.trainer_button {width:38px;color:rgb(255,204,0)}
 
 @keyframes flickerAnimation {
   0%   { opacity:0.6; }

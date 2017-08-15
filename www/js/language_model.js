@@ -58,8 +58,7 @@ terms_de : ko.observable(true),
 High_preview_quality_switch_off_if_images_load_slowly : "Hohe Qualit&auml;t der Vorschaubilder - Ausschalten falls Bilder nur langsam geladen werden",
 Go_back : "Zur&uuml;ck",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainingsmodus - Hilf unserer inspirly Designer KI besser zu werden",
-Messed_up : "Nicht sch&ouml;n",
-Loving_it : "Ganz toll",
+How_do_you_like_it : "Wie gef&auml;llt es dir?",
     };
 
 $.each(german_lang, function(index, value) {
@@ -124,8 +123,7 @@ terms_de : ko.observable(false),
 High_preview_quality_switch_off_if_images_load_slowly : "High preview quality - switch off if images load slowly",
 Go_back : "Go back",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainer mode - help our inspirly Designer AI to become better",
-Messed_up : "Messed up",
-Loving_it : "Loving it",
+How_do_you_like_it : "Do you like it? Please rate.",
     };
 
 $.each(english_lang, function(index, value) {

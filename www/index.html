@@ -140,7 +140,7 @@ For production change content-security-policy and admob
     <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
 
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.val());refresh_preloaded(true);delete_history();"></textarea>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.value);refresh_preloaded(true);delete_history();"></textarea>
 </ons-list-item>
 
 
@@ -225,14 +225,17 @@ For production change content-security-policy and admob
 </ons-gesture-detector>
 
 <div id="trainer_mode_ui">
-<p style="text-align: center; marign-top:10px">
-<span data-bind="reshtml: 'Messed_up'"></span>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
-<span data-bind="reshtml: 'Loving_it'"></span>
 
-</p>
+<div style='padding:10px; padding-bottom:0px'>
+<div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
+<div style='float:left; width:50%; text-align:center'>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half-o"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
+</div>
+<div style='width:25%; float:left; text-align:right; font-size:14px; line-height:14px'> <div id='best_guess' style='color:rgba(0,0,0,0.2)'></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div></div>
+<div style='clear:both'></div>
+</div>
 </div>
 
     <p style="text-align: center;">
