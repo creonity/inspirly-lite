@@ -47,7 +47,7 @@ For production change content-security-policy and admob
 
 
 <body>
-<ons-navigator id="myNavigator" page="mySplitter.html"></ons-navigator>
+<ons-navigator id="myNavigator" page="language.html"></ons-navigator>
 
 
 
@@ -71,10 +71,6 @@ For production change content-security-policy and admob
   </ons-splitter-side>
   <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
 </ons-splitter>
-
-
-
-
   </ons-page>
 </ons-template>
 
@@ -363,8 +359,8 @@ For production change content-security-policy and admob
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
-    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
+    <ons-list-item onclick="locale='en';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
 </ons-list>
 
 <ons-list>

@@ -61,7 +61,7 @@ function initApp() {
 screen.orientation.lock('portrait');
 //Prepare adds
 if (AdMob) {create_bannerAd();create_interstitial();}
-/*
+
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {if (AdMob) {AdMob.removeBanner();create_bannerAd();}}
@@ -78,7 +78,6 @@ AdMob.hideBanner();
 })
 
 device_id = device.uuid;
-*/
 }
 
 function create_bannerAd()
@@ -137,7 +136,7 @@ $(document).on("init", function( event ) {
 console.log("init");
 var page = event.target;
 
-if (page.matches("#mySplitter")) {if(window.localStorage.getItem("locale")){locale=window.localStorage.getItem("locale")}else{locale = default_lang;document.querySelector('#myNavigator').pushPage('language.html')}}
+if (page.matches("#language")) {if(window.localStorage.getItem("locale")){locale=window.localStorage.getItem("locale");document.querySelector('#myNavigator').pushPage('mySplitter.html')}}
 
 if (page.matches("#mySplitter") && init_once == 0) {ko.applyBindings(languageModel,document.getElementById("mySplitter"));init_once=1;}
 if (page.matches("#create")) {ko.applyBindings(languageModel,document.getElementById("create"));}
