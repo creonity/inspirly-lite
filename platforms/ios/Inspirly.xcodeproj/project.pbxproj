@@ -62,6 +62,12 @@
 		86CEA68A667347839B7B3C1D /* CDVGlobalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 6668B75BBE2C4DF1BDF2263A /* CDVGlobalization.m */; };
 		F67F583771F34B4FB9A3EE1B /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D91CDAE2745BAA162E5A7 /* CDVInAppBrowser.m */; };
 		984EE0B6F54942908B14950E /* CDVAppRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 255F656E63784F4C84FBB4EE /* CDVAppRate.m */; };
+		0BAC6FDC85A24536A77B3E9C /* UniversalAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E4F849027C44BEB41F302B /* UniversalAnalyticsPlugin.m */; };
+		24CD61F606674473B488BB01 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 740082E9DDD54D2AA5F4F608 /* libGoogleAnalyticsServices.a */; };
+		05414FEE0D9D4D1DAA4FE310 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DE65DB8F614DBE954B4E10 /* libAdIdAccess.a */; };
+		FF061D946CC742829792BE44 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 069471E794064131827D7497 /* CoreData.framework */; };
+		C445AC04C2C24F7B8E714F99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AA318EA4AE43B6BA5AEFFC /* libz.dylib */; };
+		8C7C99239E23457ABA79196B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C83E632EF624E49BE845BC1 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +176,23 @@
 		771CA209F8C14621B44C00A7 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		255F656E63784F4C84FBB4EE /* CDVAppRate.m */ = {isa = PBXFileReference; name = "CDVAppRate.m"; path = "cordova-plugin-apprate/CDVAppRate.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		B09076E371E04F398346BF26 /* CDVAppRate.h */ = {isa = PBXFileReference; name = "CDVAppRate.h"; path = "cordova-plugin-apprate/CDVAppRate.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		22E4F849027C44BEB41F302B /* UniversalAnalyticsPlugin.m */ = {isa = PBXFileReference; name = "UniversalAnalyticsPlugin.m"; path = "cordova-plugin-google-analytics/UniversalAnalyticsPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		740082E9DDD54D2AA5F4F608 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; name = "libGoogleAnalyticsServices.a"; path = "Inspirly/Plugins/cordova-plugin-google-analytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		C5DE65DB8F614DBE954B4E10 /* libAdIdAccess.a */ = {isa = PBXFileReference; name = "libAdIdAccess.a"; path = "Inspirly/Plugins/cordova-plugin-google-analytics/libAdIdAccess.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F01AF2F7D0FD4517B1EC294F /* UniversalAnalyticsPlugin.h */ = {isa = PBXFileReference; name = "UniversalAnalyticsPlugin.h"; path = "cordova-plugin-google-analytics/UniversalAnalyticsPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		A714407E50DE4620AE7CCE43 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; name = "GAIDictionaryBuilder.h"; path = "cordova-plugin-google-analytics/GAIDictionaryBuilder.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		BF27D6EE754D414BBA8A3B6A /* GAIFields.h */ = {isa = PBXFileReference; name = "GAIFields.h"; path = "cordova-plugin-google-analytics/GAIFields.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5905E9F04C4540D48FD70549 /* GAILogger.h */ = {isa = PBXFileReference; name = "GAILogger.h"; path = "cordova-plugin-google-analytics/GAILogger.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		4FAF4C621D354F3DB40AFA0F /* GAITrackedViewController.h */ = {isa = PBXFileReference; name = "GAITrackedViewController.h"; path = "cordova-plugin-google-analytics/GAITrackedViewController.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		32C44040E7D240BB931BE0CB /* GAI.h */ = {isa = PBXFileReference; name = "GAI.h"; path = "cordova-plugin-google-analytics/GAI.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		BAF2EB15E53245B9AF87DAF4 /* GAITracker.h */ = {isa = PBXFileReference; name = "GAITracker.h"; path = "cordova-plugin-google-analytics/GAITracker.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F6DCD009D917431894D9C681 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; name = "GAIEcommerceFields.h"; path = "cordova-plugin-google-analytics/GAIEcommerceFields.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		47A5043290EE4C4E924F1A57 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; name = "GAIEcommerceProduct.h"; path = "cordova-plugin-google-analytics/GAIEcommerceProduct.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		7105EC95DACC4A6AADBC2436 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; name = "GAIEcommerceProductAction.h"; path = "cordova-plugin-google-analytics/GAIEcommerceProductAction.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F5069D715520417B89BA8D4F /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; name = "GAIEcommercePromotion.h"; path = "cordova-plugin-google-analytics/GAIEcommercePromotion.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		069471E794064131827D7497 /* CoreData.framework */ = {isa = PBXFileReference; name = "CoreData.framework"; path = "System/Library/Frameworks/CoreData.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		90AA318EA4AE43B6BA5AEFFC /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		0C83E632EF624E49BE845BC1 /* libsqlite3.dylib */ = {isa = PBXFileReference; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +227,11 @@
 				8AC274A00F284BABA09C9DAD /* ImageIO.framework in Frameworks */,
 				B63CABA303B242CFBB2CE416 /* Social.framework in Frameworks */,
 				855667AC869142E0A595B186 /* libz.tbd in Frameworks */,
+				24CD61F606674473B488BB01 /* libGoogleAnalyticsServices.a in Frameworks */,
+				05414FEE0D9D4D1DAA4FE310 /* libAdIdAccess.a in Frameworks */,
+				FF061D946CC742829792BE44 /* CoreData.framework in Frameworks */,
+				C445AC04C2C24F7B8E714F99 /* libz.dylib in Frameworks */,
+				8C7C99239E23457ABA79196B /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +329,11 @@
 				D9EB74193C22426F8622E0F8 /* ImageIO.framework */,
 				DBA25DC12DDC480185B56C6D /* Social.framework */,
 				DFEC4BF2F6A149C08AF9BACE /* libz.tbd */,
+				740082E9DDD54D2AA5F4F608 /* libGoogleAnalyticsServices.a */,
+				C5DE65DB8F614DBE954B4E10 /* libAdIdAccess.a */,
+				069471E794064131827D7497 /* CoreData.framework */,
+				90AA318EA4AE43B6BA5AEFFC /* libz.dylib */,
+				0C83E632EF624E49BE845BC1 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -367,6 +400,18 @@
 				771CA209F8C14621B44C00A7 /* CDVInAppBrowser.h */,
 				255F656E63784F4C84FBB4EE /* CDVAppRate.m */,
 				B09076E371E04F398346BF26 /* CDVAppRate.h */,
+				22E4F849027C44BEB41F302B /* UniversalAnalyticsPlugin.m */,
+				F01AF2F7D0FD4517B1EC294F /* UniversalAnalyticsPlugin.h */,
+				A714407E50DE4620AE7CCE43 /* GAIDictionaryBuilder.h */,
+				BF27D6EE754D414BBA8A3B6A /* GAIFields.h */,
+				5905E9F04C4540D48FD70549 /* GAILogger.h */,
+				4FAF4C621D354F3DB40AFA0F /* GAITrackedViewController.h */,
+				32C44040E7D240BB931BE0CB /* GAI.h */,
+				BAF2EB15E53245B9AF87DAF4 /* GAITracker.h */,
+				F6DCD009D917431894D9C681 /* GAIEcommerceFields.h */,
+				47A5043290EE4C4E924F1A57 /* GAIEcommerceProduct.h */,
+				7105EC95DACC4A6AADBC2436 /* GAIEcommerceProductAction.h */,
+				F5069D715520417B89BA8D4F /* GAIEcommercePromotion.h */,
 			);
 			name = Plugins;
 			path = "Inspirly/Plugins";
@@ -499,6 +544,7 @@
 				86CEA68A667347839B7B3C1D /* CDVGlobalization.m in Sources */,
 				F67F583771F34B4FB9A3EE1B /* CDVInAppBrowser.m in Sources */,
 				984EE0B6F54942908B14950E /* CDVAppRate.m in Sources */,
+				0BAC6FDC85A24536A77B3E9C /* UniversalAnalyticsPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +583,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-extension\"",
+					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-google-analytics\"",
+					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-google-analytics\"",
 				);
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,6 +615,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-extension\"",
+					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-google-analytics\"",
+					"\"$(SRCROOT)/Inspirly/Plugins/cordova-plugin-google-analytics\"",
 				);
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

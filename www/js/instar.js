@@ -79,7 +79,8 @@ if(typeof AdMob !== 'undefined') {create_bannerAd();create_interstitial();}
 device_id = device.uuid;
 
 
-
+//In your 'deviceready' handler, set up your Analytics tracker:
+window.ga.startTrackerWithId('UA-104693442-1', 30)
 
 
 AppRate.preferences = {
@@ -394,6 +395,7 @@ window.localStorage.removeItem("current_image");
 
 function create_random(preload,rating)
 {
+window.ga.trackEvent('Image', 'Create random');
 show_counter = show_counter +1;
 user_txt = window.localStorage.getItem("current_text");
 if(user_txt.length==0){getQuote(true);user_txt = $("#user_txt").val();}

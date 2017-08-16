@@ -313,6 +313,15 @@ module.exports = [
         "file": "plugins/cordova-plugin-apprate/www/locales.js",
         "pluginId": "cordova-plugin-apprate",
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-google-analytics.UniversalAnalytics",
+        "file": "plugins/cordova-plugin-google-analytics/www/analytics.js",
+        "pluginId": "cordova-plugin-google-analytics",
+        "clobbers": [
+            "analytics",
+            "ga"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -333,7 +342,8 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.3",
     "cordova-plugin-globalization": "1.0.7",
     "cordova-plugin-inappbrowser": "1.7.1",
-    "cordova-plugin-apprate": "1.3.0"
+    "cordova-plugin-apprate": "1.3.0",
+    "cordova-plugin-google-analytics": "1.8.3"
 };
 // BOTTOM OF METADATA
 });

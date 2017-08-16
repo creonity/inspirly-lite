@@ -42,6 +42,9 @@
         },
         "cordova-plugin-apprate": {
             "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-google-analytics": {
+            "PACKAGE_NAME": "ly.inspir.lite"
         }
     },
     "dependent_plugins": {
