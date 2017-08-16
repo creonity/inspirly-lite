@@ -39,10 +39,22 @@
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-apprate": {
+            "PACKAGE_NAME": "ly.inspir.lite"
         }
     },
     "dependent_plugins": {
         "es6-promise-plugin": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "ly.inspir.lite"
         }
     }

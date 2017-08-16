@@ -266,6 +266,53 @@ module.exports = [
         "clobbers": [
             "device"
         ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification",
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-globalization.GlobalizationError",
+        "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+        "pluginId": "cordova-plugin-globalization",
+        "clobbers": [
+            "window.GlobalizationError"
+        ]
+    },
+    {
+        "id": "cordova-plugin-globalization.globalization",
+        "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+        "pluginId": "cordova-plugin-globalization",
+        "clobbers": [
+            "navigator.globalization"
+        ]
+    },
+    {
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "id": "cordova-plugin-apprate.AppRate",
+        "file": "plugins/cordova-plugin-apprate/www/AppRate.js",
+        "pluginId": "cordova-plugin-apprate",
+        "clobbers": [
+            "AppRate"
+        ]
+    },
+    {
+        "id": "cordova-plugin-apprate.locales",
+        "file": "plugins/cordova-plugin-apprate/www/locales.js",
+        "pluginId": "cordova-plugin-apprate",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -282,7 +329,11 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.2",
     "es6-promise-plugin": "4.1.0",
     "cordova-plugin-x-socialsharing": "5.1.8",
-    "cordova-plugin-device": "1.1.6"
+    "cordova-plugin-device": "1.1.6",
+    "cordova-plugin-dialogs": "1.3.3",
+    "cordova-plugin-globalization": "1.0.7",
+    "cordova-plugin-inappbrowser": "1.7.1",
+    "cordova-plugin-apprate": "1.3.0"
 };
 // BOTTOM OF METADATA
 });
