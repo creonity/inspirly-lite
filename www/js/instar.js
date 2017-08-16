@@ -395,7 +395,7 @@ window.localStorage.removeItem("current_image");
 
 function create_random(preload,rating)
 {
-window.ga.trackEvent('Image', 'Create random');
+if(typeof ga !== 'undefined'){window.ga.trackEvent('Image', 'Create random');}
 show_counter = show_counter +1;
 user_txt = window.localStorage.getItem("current_text");
 if(user_txt.length==0){getQuote(true);user_txt = $("#user_txt").val();}
