@@ -68,6 +68,7 @@
 		FF061D946CC742829792BE44 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 069471E794064131827D7497 /* CoreData.framework */; };
 		C445AC04C2C24F7B8E714F99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AA318EA4AE43B6BA5AEFFC /* libz.dylib */; };
 		8C7C99239E23457ABA79196B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C83E632EF624E49BE845BC1 /* libsqlite3.dylib */; };
+		94504F46BFD64762ACB414D2 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 620C5D0675304C7288F5662B /* IonicKeyboard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +194,8 @@
 		069471E794064131827D7497 /* CoreData.framework */ = {isa = PBXFileReference; name = "CoreData.framework"; path = "System/Library/Frameworks/CoreData.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		90AA318EA4AE43B6BA5AEFFC /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
 		0C83E632EF624E49BE845BC1 /* libsqlite3.dylib */ = {isa = PBXFileReference; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		620C5D0675304C7288F5662B /* IonicKeyboard.m */ = {isa = PBXFileReference; name = "IonicKeyboard.m"; path = "ionic-plugin-keyboard/IonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		2859FF1BA18A4630B9BDF064 /* IonicKeyboard.h */ = {isa = PBXFileReference; name = "IonicKeyboard.h"; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,6 +415,8 @@
 				47A5043290EE4C4E924F1A57 /* GAIEcommerceProduct.h */,
 				7105EC95DACC4A6AADBC2436 /* GAIEcommerceProductAction.h */,
 				F5069D715520417B89BA8D4F /* GAIEcommercePromotion.h */,
+				620C5D0675304C7288F5662B /* IonicKeyboard.m */,
+				2859FF1BA18A4630B9BDF064 /* IonicKeyboard.h */,
 			);
 			name = Plugins;
 			path = "Inspirly/Plugins";
@@ -545,6 +550,7 @@
 				F67F583771F34B4FB9A3EE1B /* CDVInAppBrowser.m in Sources */,
 				984EE0B6F54942908B14950E /* CDVAppRate.m in Sources */,
 				0BAC6FDC85A24536A77B3E9C /* UniversalAnalyticsPlugin.m in Sources */,
+				94504F46BFD64762ACB414D2 /* IonicKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

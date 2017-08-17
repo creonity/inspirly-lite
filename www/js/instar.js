@@ -170,12 +170,18 @@ if (page.matches("#image")) {
 if(window.localStorage.getItem("trainer_mode")=="true"){$("#trainer_mode_ui").show();}else{$("#trainer_mode_ui").hide();}
 if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
 }
-if (page.matches("#usr_text_input")) {if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
+if (page.matches("#usr_text_input")) {
+$("#user_txt").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
+$("#user_txt").on("blur",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};window.localStorage.setItem('current_text', this.value);delete_history();});
+if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#mood")) {$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==window.localStorage.getItem("mood")){$(this).addClass("active");}});if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#share")) {create_banner();}
 if (page.matches("#own_image")) {
 $("#crop_image_area").css("height",$(".ons-tabbar__content").height());
-$container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});$("#search_pic").keyup(function(event){if(event.keyCode == 13){search_pic($("#search_pic").val());}});show_images_from_folder();
+$container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
+$("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
+$("#search_pic").keyup(function(event){if(event.keyCode == 13){
+if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});show_images_from_folder();
 }
 
 
@@ -406,10 +412,7 @@ var imageData = $('#image_to_crop').cropper('getImageData');
   ready: function () {
 
   },
-  
-
 });
-
 }
 
 function crop_image()
@@ -431,6 +434,7 @@ console.log(stretch_factor_width+" "+stretch_factor_height);
 window.localStorage.setItem("crop_image", JSON.stringify({"width":new_width,"height":new_height,"left":new_left,"top":new_top}));
 console.log(window.localStorage.getItem("crop_image"));
 refresh_preloaded(true);
+$('#crop_wrapper').hide();$('#image_to_crop').cropper('destroy')
 document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 }
 
