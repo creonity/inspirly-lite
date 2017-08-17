@@ -422,9 +422,10 @@ var image_data = $('#image_to_crop').cropper('getImageData');
 //console.log(crop_data.x+" "+image_data.width);
 //console.log("width="+crop_data.width/image_data.naturalWidth*100+"%;left="+crop_data.x/image_data.naturalWidth*100+"%");
 //console.log("height="+crop_data.height/image_data.naturalHeight*100+"%;top="+crop_data.y/image_data.naturalHeight*100+"%");
+var no_stretch = image_data.naturalWidth;if(image_data.naturalHeight<no_stretch){no_stretch=image_data.naturalHeight;}
 
-var stretch_factor_width = (400/crop_data.width);
-var stretch_factor_height = (400/crop_data.height);
+var stretch_factor_width = (no_stretch/crop_data.width);
+var stretch_factor_height = (no_stretch/crop_data.height);
 var new_width =Math.round(image_data.naturalWidth*stretch_factor_width);
 var new_height =Math.round(image_data.naturalHeight*stretch_factor_height);
 var new_left = (new_width/2)-(crop_data.x*stretch_factor_width);
