@@ -163,6 +163,7 @@ window.fn.load = function(page) {
 
 
 
+
 $(document).on("show", function( event ) {
 var page = event.target;
 if (page.matches("#image")) {
@@ -172,9 +173,7 @@ if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
 if (page.matches("#usr_text_input")) {if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#mood")) {$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==window.localStorage.getItem("mood")){$(this).addClass("active");}});if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#share")) {create_banner();}
-if (page.matches("#own_image")) {
-$container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
-$("#search_pic").keyup(function(event){if(event.keyCode == 13){search_pic($("#search_pic").val());}});}
+if (page.matches("#own_image")) {$container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});$("#search_pic").keyup(function(event){if(event.keyCode == 13){search_pic($("#search_pic").val());}});show_images_from_folder();}
 })
 
 $(document).on("hide", function( event ) {
@@ -305,6 +304,38 @@ var $items = getItems();
 $container.masonryImagesReveal( $items );
 });
 
+
+
+
+function getItems() {
+var items = '';
+$.each(data, function(index, value) {
+var item = "<div onclick='uploadPhoto(\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+items += item;
+});
+  return $( items );
+}
+}
+
+function show_images_from_folder()
+{
+var local_images = ["13553443228vDLFBsmmsWVgO6edwhu.jpg","1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344364flUg9SBs1L5fkvKO84v9.jpg","1355344366gQWnjVMq2FNQ95A7V8j3.jpg","1355344368dMVIPKuEOnhVVyR5IoHZ.jpg","1355344370eQX2FMOFRz81FQbMKoSG.jpg","1355344371f7nZl1yxmnBnm3TqUJjE.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344404bvAXybnLLbC2SCGjij7T.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344376WqXbXLYtylBvjkz96vT1.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344382vI8OvaGMhxTd9QJOFm7V.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344390wfNNarTmUyhepOAyOXyk.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344392X24tTFKxv2p5pfmz1hS5.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","1355344396EM9WExJE6QlWA84xD8vS.jpg","1355344397IfjiapI6ppzLAfBuZDxs.jpg","13553443984ujp9trfNo7CNQpZ63qY.jpg","1355344398Gal68ymZG5A8XIAFWGm3.jpg","1355344399I89VwcxfpDM3i2OsWcGV.jpg","13553444006C3VJj87mL4CmuhN92mJ.png","1355344402igaAcIt1bGyvtrKV3ZOK.jpg","1355344408qK7KFLXnwDQXZhcWF6Nx.jpg","1355344410IX6Pu4eIuPXr2UVh7njp.png","1355344412Em23mkiNxYJFGFRXvjsD.png","1355344414ASZ1WU58VWHWyFGQItX9.png","checkers_bg.jpg","vintage_bg.jpg"];
+$container.masonry( 'remove',$(".img_preview")).masonry('layout');
+$( function() {var $items = getItemsLocal(local_images);
+console.log($items);
+$container.masonryImagesReveal( $items );});
+}
+
+function getItemsLocal(local_images) {
+var items = '';
+$.each(local_images, function(index, value) {
+var item = "<div onclick='window.localStorage.setItem(\"user_img\",\"img/background_preview/"+value+"\");show_crop()' class='img_preview' style='background-image: url(img/background_preview/"+value+"); height:"+$(window).width()/3+"px;'></div>";
+items += item;
+});
+return $( items );
+}
+
+
 $.fn.masonryImagesReveal = function( $items ) {
   var msnry = this.data('masonry');
 
@@ -324,20 +355,30 @@ $.fn.masonryImagesReveal = function( $items ) {
     $item.show();
     // masonry does its thing
     msnry.appended( $item );
+    var height = $(window).height()-$("#toparea").height()-$(".toolbar").height()-$(".ons-tabbar__footer").height()-10;
+    $('#image_area').css("height", height);
   });
   return this;
 };
 
 
-function getItems() {
-var items = '';
-$.each(data, function(index, value) {
-var item = "<div onclick='uploadPhoto("+value.webformatURL+")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
-items += item;
+
+function show_crop()
+{
+console.log("showed");
+$(".ons-tabbar__content").prepend("<div class='crop_image' style='height:"+$(".ons-tabbar__content").height()+"px;'><div style='display: table-cell; vertical-align: middle'><div><img id='image_to_crop' src='"+window.localStorage.getItem("user_img")+"'></div></div></div>");
+$('#image_to_crop').cropper({
+  aspectRatio: 1 / 1,
+  autoCropArea: 1,
+  cropBoxResizable: false,
+  cropBoxMovable: false,
+  toggleDragModeOnDblclick: false,
+  dragMode: 'move',
+  crop: function(e) {
+    // Output the result data for cropping image.
+    console.log(e.width+" "+e.height+" "+e.x+" "+e.y);
+  }
 });
-  // return jQuery object
-  return $( items );
-}
 }
 
 
@@ -580,8 +621,6 @@ function onFail(message) {
         }
 
         function uploadPhoto(imageURI) {
-
-
 
             var options = new FileUploadOptions();
             options.fileKey="file";
