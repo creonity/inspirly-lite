@@ -60,6 +60,14 @@ High_preview_quality_switch_off_if_images_load_slowly : "Hohe Qualit&auml;t der 
 Go_back : "Zur&uuml;ck",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainingsmodus - Hilf unserer inspirly Designer KI besser zu werden",
 How_do_you_like_it : "Wie gef&auml;llt es dir?",
+Rate_app : "Bewerte %@",
+Rate_msg : "Gef&auml;llt dir %@? Wir w&uuml;rden uns &uuml;ber deine Bewertung sehr freuen! Es geht ganz schnell. Vielen Dank!",
+Rate_later: "Ein anderes Mal",
+Rate_cancel : "Nein, Danke",
+Rate_btn : "Jetzt bewerten",
+Crop_image : "Bild zuschneiden",
+Crop : "Zuschneiden",
+Cancel : "Abbrechen",
     };
 
 $.each(german_lang, function(index, value) {
@@ -126,6 +134,14 @@ High_preview_quality_switch_off_if_images_load_slowly : "High preview quality - 
 Go_back : "Go back",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainer mode - help our inspirly Designer AI to become better",
 How_do_you_like_it : "Do you like it? Please rate.",
+Rate_app : "Rate %@",
+Rate_msg : "If you enjoy using %@, would you mind taking a moment to rate it? It won’t take more than a minute. Thanks for your support!",
+Rate_later: "No, Thanks",
+Rate_cancel : "Remind Me Later",
+Rate_btn : "Rate It Now",
+Crop_image : "Crop image",
+Crop : "Crop",
+Cancel : "Cancel",
     };
 
 $.each(english_lang, function(index, value) {

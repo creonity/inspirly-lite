@@ -121,14 +121,19 @@ For production change content-security-policy and admob
 <div class='hidden' id ='Created_with_inspirly'><span data-bind="reshtml: 'Created_with_inspirly'"></span></div>
 <div class='hidden' id ='Get_inspired'><span data-bind="reshtml: 'Get_inspired'"></span></div>
 <div class='hidden' id ='Pick_an_app'><span data-bind="reshtml: 'Pick_an_app'"></span></div>
+<div class='hidden' id ='rate_title'><span data-bind="reshtml: 'Rate_app'"></span></div>
+<div class='hidden' id ='rate_message'><span data-bind="reshtml: 'Rate_msg'"></span></div>
+<div class='hidden' id ='rate_later'><span data-bind="reshtml: 'Rate_later'"></span></div>
+<div class='hidden' id ='rate_cancel'><span data-bind="reshtml: 'Rate_cancel'"></span></div>
+<div class='hidden' id ='rate_btn'><span data-bind="reshtml: 'Rate_btn'"></span></div>
 
 
 
 <ons-tabbar id="tabbar" disable-auto-styling>
   <ons-tab data-bind="resattr: { label: 'Text' }" icon="fa-quote-left" page="text.html" disable-auto-styling></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling active></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling ></ons-tab>
   <ons-tab data-bind="resattr: { label: 'Template' }" icon="fa-heart" page="mood.html" disable-auto-styling></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling ></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling active></ons-tab>
   <ons-tab data-bind="resattr: { label: 'Share' }" icon="fa-share-square" id='share' page="share.html" disable-auto-styling</ons-tab>
 </ons-tabbar>
   </ons-page>
@@ -175,6 +180,16 @@ For production change content-security-policy and admob
 
 <template id="own_image.html">
   <ons-page id= "own_image">
+<div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
+</ons-list>
+<div><img id='image_to_crop'></div>
+<div style="float:right; padding:5px">
+<button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
+<button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
+</div>
+</div></div></div>
 <div id='toparea' style='padding:5px'>
 <input type="search" id="search_pic" value="" placeholder="Search image on Pixabay" class="search-input" style="width: 60%; margin-top:7px">
 <div style='float:right'>
