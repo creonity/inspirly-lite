@@ -36,6 +36,9 @@ For production change content-security-policy and admob
     <script src="js/functions.js"></script>
     <script src="js/instar.js"></script>
     <script src="js/ko.localizationbinding.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+
 
 
 
@@ -58,7 +61,7 @@ For production change content-security-policy and admob
     <ons-page>
       <ons-list>
         <ons-list-item onclick="fn.load('create.html')" tappable>
-          <span data-bind="reshtml: 'Design'"></span>
+          <span data-bind="reshtml: 'Designer'"></span>
         </ons-list-item>
            <ons-list-item onclick="fn.load('settings.html')" tappable>
           <span data-bind="reshtml: 'Settings'"></span>
@@ -119,14 +122,11 @@ For production change content-security-policy and admob
 
 
 <ons-tabbar id="tabbar" disable-auto-styling>
-  <ons-tab data-bind="resattr: { label: 'Text' }" page="text.html" disable-auto-styling>
-  </ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Mood' }" page="mood.html" disable-auto-styling>
-  </ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Design' }" id='btn_image_menu' page="rand_img.html" disable-auto-styling active>
-  </ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Share' }" id='share' page="share.html" disable-auto-styling>
-  </ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Text' }" icon="fa-quote-left" page="text.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling active></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Template' }" icon="fa-heart" page="mood.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling ></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Share' }" icon="fa-share-square" id='share' page="share.html" disable-auto-styling</ons-tab>
 </ons-tabbar>
   </ons-page>
 </ons-template>
@@ -140,7 +140,7 @@ For production change content-security-policy and admob
     <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
 
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.value);refresh_preloaded(true);delete_history();"></textarea>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.value);delete_history();"></textarea>
 </ons-list-item>
 
 
@@ -164,6 +164,47 @@ For production change content-security-policy and admob
 
   </ons-page>
 </template>
+
+
+
+
+
+
+<template id="own_image.html">
+  <ons-page id= "own_image">
+
+
+    <div style="padding:10px;text-align:center">
+    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
+    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
+    </div>
+
+
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header>Search Image on Pixabay</ons-list-header>
+<ons-list-item>
+<input type="search" id="search_pic" value="" placeholder="Search free image on Pixabay" class="search-input" style="width: 280px;">
+</ons-list-item>
+</ons-list>
+
+<div id='image_area' style='width:100%'>
+
+</div>
+<div style='clear:both'></div>
+
+<p style="text-align: center;">
+
+<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+
+
+
+  </ons-page>
+</template>
+
+
+
 
 
 
@@ -219,8 +260,11 @@ For production change content-security-policy and admob
 <img src='img/logo_sq.png' class='loader'>
 
 
-
+<div id='download_image_holder' style="display:none">
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
+    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-heart"></i></button>
+    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
+</div>
 </div>
 </ons-gesture-detector>
 
@@ -238,12 +282,7 @@ For production change content-security-policy and admob
 </div>
 </div>
 
-    <p style="text-align: center;">
-    <button id='btn_create_random_history' class="button button--outline hidden">Back</button>
-    <button id='btn_create_random' class="button button--outline hidden">Next</button>
-    <button class="button button--outline" onclick="getImage();"><span data-bind="reshtml: 'Upload_image'"></span></button>
-    <button onclick="showPopover(this,'options');" class="button button--outline"><span data-bind="reshtml: 'Design_options'"></span></button>
-    </p>
+
 
 
 <ons-popover direction="up" cancelable id="options">

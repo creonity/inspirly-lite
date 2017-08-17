@@ -175,9 +175,6 @@ if (page.matches("#share")) {create_banner();}
 if (page.matches("#own_image")) {
 $container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
 $("#search_pic").keyup(function(event){if(event.keyCode == 13){search_pic($("#search_pic").val());}});}
-
-
-
 })
 
 $(document).on("hide", function( event ) {
@@ -185,6 +182,7 @@ var page = event.target;
 if (page.matches("#usr_text_input") || page.matches("#mood")) {refresh_preloaded(true);}
 if (page.matches("#share")) {$("#print_products").hide();}
 if(typeof AdMob !== 'undefined'){AdMob.hideBanner();}
+if (page.matches("#own_image")) {$('#image_area').masonry('destroy');}
 })
 
 
@@ -278,13 +276,28 @@ else{$("#download_image_holder").fadeIn(500,function(){$(".loader").hide();})}
 
 function search_pic(key)
 {
+if(localStorage[key]){
+console.log("loaded from cache");
+load_image_from_pixabay(JSON.parse(localStorage[key]))}else
+{
 //$("#image_area").html("");
 $.ajax({
   url: "https://pixabay.com/api/?key=6189766-fbdbc18f705acb44bca36ab6b&q="+encodeURI(key)+"&editors_choice=true&image_type=photo&per_page=100&lang="+locale,
   type: "POST",
   global: false,
   success: function(msg, error) {
-  var data = msg.hits;
+localStorage[key] = JSON.stringify(msg);
+load_image_from_pixabay(msg)
+},
+error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
+    });
+}
+}
+
+function load_image_from_pixabay(json)
+{
+console.log(json);
+var data = json.hits;
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $("#tabbar").append("<div class='pixabay'><img style='width:100px; display: block;' src='img/pixabay.png'></img></div>");
 $( function() {
@@ -300,7 +313,7 @@ $.fn.masonryImagesReveal = function( $items ) {
   $items.hide();
   // append to container
   this.append( $items );
-  
+
 
   $items.imagesLoaded({ background: true }).progress( function( imgLoad, image ) {
     // get item
@@ -319,20 +332,12 @@ $.fn.masonryImagesReveal = function( $items ) {
 function getItems() {
 var items = '';
 $.each(data, function(index, value) {
-var item = "<div onclick='"+uploadPhoto(value.webformatURL)+"' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div onclick='uploadPhoto("+value.webformatURL+")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
 items += item;
-//$('#image_area').append("<div class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/4+"px;'></div>");
-//$container.masonryImagesReveal($(items));
 });
   // return jQuery object
   return $( items );
 }
-
-
-
-},
-error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
-    });
 }
 
 
