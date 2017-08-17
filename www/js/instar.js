@@ -2,6 +2,12 @@
 //Set parameters
 var version = "1.0L";
 var default_lang = "en";
+window.localStorage.setItem("autolinebreak", "true");
+window.localStorage.setItem("mood", 0);
+window.localStorage.setItem("sleeptime", 500);
+window.localStorage.setItem("autolinebreak",true);
+if(!window.localStorage.getItem){window.localStorage.getItem("preview_quality",true);}
+if(!window.localStorage.getItem){window.localStorage.getItem("trainer_mode",false);}
 
 //helpers
 show_counter=0;
@@ -17,6 +23,7 @@ var duration_loaded = {};
 var duration_calculated = {};
 var duration = 0;
 var duration_calculated_current_image = 0;
+var $container;
 
 //Clear local storage
 window.localStorage.removeItem("user_img");
@@ -35,9 +42,6 @@ window.localStorage.removeItem("history_image");
 window.localStorage.removeItem("preloaded_code");
 window.localStorage.removeItem("code");
 window.localStorage.removeItem("current_text");
-window.localStorage.setItem("autolinebreak", "true");
-window.localStorage.setItem("mood", 0);
-window.localStorage.setItem("sleeptime", 500);
 window.localStorage.removeItem("font");
 window.localStorage.removeItem("fontfilling");
 window.localStorage.removeItem("frame");
@@ -101,7 +105,7 @@ AppRate.preferences = {
   }
 };
 
-AppRate.promptForRating();
+AppRate.promptForRating(false);
 }
 
 function create_bannerAd()
@@ -168,11 +172,17 @@ if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
 if (page.matches("#usr_text_input")) {if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#mood")) {$(".mood-item").removeClass("active");$(".mood-item").each(function(index){if($(this).attr("value")==window.localStorage.getItem("mood")){$(this).addClass("active");}});if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
 if (page.matches("#share")) {create_banner();}
+if (page.matches("#own_image")) {
+$container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
+$("#search_pic").keyup(function(event){if(event.keyCode == 13){search_pic($("#search_pic").val());}});}
+
+
+
 })
 
 $(document).on("hide", function( event ) {
 var page = event.target;
-if (page.matches("#usr_text_input") || page.matches("#mood")) {console.log("hide");}
+if (page.matches("#usr_text_input") || page.matches("#mood")) {refresh_preloaded(true);}
 if (page.matches("#share")) {$("#print_products").hide();}
 if(typeof AdMob !== 'undefined'){AdMob.hideBanner();}
 })
@@ -212,7 +222,7 @@ document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 
 if (page.matches("#image")) {
 console.log("init image");
-if(!window.localStorage.getItem("current_text")){getQuote();}else{show_image(false,true)}
+if(!window.localStorage.getItem("current_text")){getQuote();show_image(false,false);}else{show_image(false,true)}
 $("#detect-area").css("height", $(window).width());
 //$("#btn_create_random").on("click", function(){show_image();});
 //$("#btn_create_random_history").on("click", function(){show_image(true);});
@@ -226,9 +236,12 @@ $(".tutorial").on('click', function(){$(".tutorial").fadeOut();})
 if (page.matches("#usr_text_input")) {
 
 //add switch
-if(window.localStorage.getItem("autolinebreak")=="false"){
-$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' disable-auto-styling style='margin-left:0px'></ons-switch>");}
-else{$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' checked disable-auto-styling style='margin-left:0px'></ons-switch>");}
+if(window.localStorage.getItem("autolinebreak")=="true"){
+$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' checked disable-auto-styling style='margin-left:0px'></ons-switch>");
+}
+else{
+$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' disable-auto-styling style='margin-left:0px'></ons-switch>");
+}
 $("#autolinebreak").on('change',function(){
 window.localStorage.setItem("autolinebreak", $("#autolinebreak").children().is(':checked'));
 refresh_preloaded(true);
@@ -237,28 +250,89 @@ refresh_preloaded(true);
 
 if (page.matches("#settings")) {
 //add quality switch
-if(window.localStorage.getItem("preview_quality")=="false"){
-$("#preview_quality_switch").html("<ons-switch id='preview_quality' disable-auto-styling style='margin-left:0px'></ons-switch>");}
-else{$("#preview_quality_switch").html("<ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch>");}
+if(window.localStorage.getItem("preview_quality")=="true"){
+$("#preview_quality_switch").html("<ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch>");
+}
+else{$("#preview_quality_switch").html("<ons-switch id='preview_quality' disable-auto-styling style='margin-left:0px'></ons-switch>");}
 $("#preview_quality").on('change',function(){
 window.localStorage.setItem("preview_quality", $("#preview_quality").children().is(':checked'));
 refresh_preloaded();});
 
 //add trainer switch
-if(window.localStorage.getItem("trainer_mode")=="false"){
-$("#trainer_switch").html("<ons-switch id='trainer_mode' disable-auto-styling style='margin-left:0px'></ons-switch>");}
-else{$("#trainer_switch").html("<ons-switch id='trainer_mode' checked disable-auto-styling style='margin-left:0px'></ons-switch>");}
+if(window.localStorage.getItem("trainer_mode")=="true"){$("#trainer_switch").html("<ons-switch id='trainer_mode' checked disable-auto-styling style='margin-left:0px'></ons-switch>");}
+else{$("#trainer_switch").html("<ons-switch id='trainer_mode' disable-auto-styling style='margin-left:0px'></ons-switch>");}
 $("#trainer_mode").on('change',function(){window.localStorage.setItem("trainer_mode", $("#trainer_mode").children().is(':checked'));});
 }
 
 });
 
+
+
+
 function show_loader(loader)
 {
-if(loader){$(".loader").show();$("#download_image").fadeOut(200);}
-else{$("#download_image").fadeIn(500,function(){$(".loader").hide();})}
-//if(loader){$("#download_image").hide();$(".loader").show();}
-//else{$("#download_image").show();$(".loader").hide();}
+if(loader){$(".loader").show();$("#download_image_holder").fadeOut(200);}
+else{$("#download_image_holder").fadeIn(500,function(){$(".loader").hide();})}
+}
+
+
+function search_pic(key)
+{
+//$("#image_area").html("");
+$.ajax({
+  url: "https://pixabay.com/api/?key=6189766-fbdbc18f705acb44bca36ab6b&q="+encodeURI(key)+"&editors_choice=true&image_type=photo&per_page=100&lang="+locale,
+  type: "POST",
+  global: false,
+  success: function(msg, error) {
+  var data = msg.hits;
+$container.masonry( 'remove',$(".img_preview")).masonry('layout');
+$("#tabbar").append("<div class='pixabay'><img style='width:100px; display: block;' src='img/pixabay.png'></img></div>");
+$( function() {
+var $items = getItems();
+$container.masonryImagesReveal( $items );
+});
+
+$.fn.masonryImagesReveal = function( $items ) {
+  var msnry = this.data('masonry');
+
+  var itemSelector = msnry.options.itemSelector;
+  // hide by default
+  $items.hide();
+  // append to container
+  this.append( $items );
+  
+
+  $items.imagesLoaded({ background: true }).progress( function( imgLoad, image ) {
+    // get item
+    // image is imagesLoaded class, not <img>, <img> is image.img
+    console.log(itemSelector);
+    var $item = $( image.element );
+    // un-hide item
+    $item.show();
+    // masonry does its thing
+    msnry.appended( $item );
+  });
+  return this;
+};
+
+
+function getItems() {
+var items = '';
+$.each(data, function(index, value) {
+var item = "<div onclick='"+uploadPhoto(value.webformatURL)+"' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+items += item;
+//$('#image_area').append("<div class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/4+"px;'></div>");
+//$container.masonryImagesReveal($(items));
+});
+  // return jQuery object
+  return $( items );
+}
+
+
+
+},
+error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
+    });
 }
 
 
@@ -398,7 +472,7 @@ function create_random(preload,rating)
 if(typeof ga !== 'undefined'){window.ga.trackEvent('Image', 'Create random');}
 show_counter = show_counter +1;
 user_txt = window.localStorage.getItem("current_text");
-if(user_txt.length==0){getQuote(true);user_txt = $("#user_txt").val();}
+if(user_txt.length==0){getQuote();user_txt = $("#user_txt").val();}
 str_length = user_txt.length;
 
 if(window.localStorage.getItem("autolinebreak")=="true")
@@ -475,46 +549,23 @@ $('<img>').attr('src', image).on("load",function() {callback();});
 }
 
 
-/*
-  function getImage() {
-navigator.camera.getPicture(uploadPhoto, function(message) {
- alert('get picture failed');
- }, {
- quality: 100,
- destinationType: navigator.camera.DestinationType.FILE_URI,
- sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
- });
+
+function takeImage() {
+navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 100,
+    destinationType: Camera.DestinationType.FILE_URI });
+
+
+function onFail(message) {
+    alert('Failed because: ' + message);
+}
 }
 
-
-function uploadPhoto(imageURI) {
- var options = new FileUploadOptions();
- options.fileKey = "file";
- options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
- options.mimeType = "image/jpeg";
- console.log(options.fileName);
- var params = new Object();
- params.value1 = "test";
- params.value2 = "param";
- options.params = params;
- options.chunkedMode = false;
-
-var ft = new FileTransfer();
- ft.upload(imageURI, "https://www.inspir.ly/user_img/user_img_upload.php", function(result){
- console.log("success");
- }, function(error){
- console.log("error:"+error);
- }, options);
- }
-*/
 
      function getImage() {
             // Retrieve image file location from specified source
             console.log("upload_initiated");
             show_loader(true);
-            navigator.camera.getPicture(uploadPhoto, function(message) {
-			console.log('get picture failed');
-		},{
+            navigator.camera.getPicture(uploadPhoto, function(message) {console.log('get picture failed');},{
 			quality: 100,
 			destinationType: navigator.camera.DestinationType.FILE_URI,
 			sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
@@ -542,8 +593,6 @@ var ft = new FileTransfer();
 
             var ft = new FileTransfer();
             ft.upload(imageURI, "https://www.inspir.ly/user_img/user_img_upload.php", win, fail, options);
-
-
         }
 
         function win(r) {
@@ -818,12 +867,11 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 
-function getQuote(default_txt) {
+function getQuote() {
 var author = randomKey(quote_array[locale]);
 var quote = quote_array[locale][author];
 $("#user_txt").val(quote);
 window.localStorage.setItem('current_text', quote);
-if(!default_txt){refresh_preloaded(true);delete_history();}
 }
 
 

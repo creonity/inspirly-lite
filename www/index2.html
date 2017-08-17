@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below.
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+     Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+For production change content-security-policy and admob
+ -->
+
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-eval' 'unsafe-inline'" />  -->
+
+
+
+
+    <link rel="stylesheet" href="css/onsenui.css">
+    <link rel="stylesheet" href="css/onsen-css-components.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/onsenui.min.js"></script>
+    <script src="js/knockout-3.4.2.js"></script>
+    <script src="js/language_model.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/instar.js"></script>
+    <script src="js/ko.localizationbinding.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    
+
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+
+
+    <title>inspirly LITE</title>
+</head>
+
+
+<body>
+<ons-navigator id="myNavigator" page="language.html"></ons-navigator>
+
+
+
+<ons-template id="mySplitter.html">
+<ons-page id="mySplitter">
+<ons-splitter>
+  <ons-splitter-side id="menu" side="left" width="220px" collapse>
+    <ons-page>
+      <ons-list>
+        <ons-list-item onclick="fn.load('create.html')" tappable>
+          <span data-bind="reshtml: 'Designer'"></span>
+        </ons-list-item>
+           <ons-list-item onclick="fn.load('settings.html')" tappable>
+          <span data-bind="reshtml: 'Settings'"></span>
+        </ons-list-item>
+        <ons-list-item onclick="fn.load('about.html')" tappable>
+          <span data-bind="reshtml: 'About'"></span>
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-splitter-side>
+  <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
+</ons-splitter>
+  </ons-page>
+</ons-template>
+
+
+
+
+
+
+<ons-template id="language.html">
+<ons-page id="language">
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
+</ons-list>
+
+  </ons-page>
+</ons-template>
+
+
+
+
+
+
+
+<ons-template id="create.html">
+<ons-page id="create">
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
+    </ons-toolbar>
+
+
+<div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
+<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
+<div class='hidden' id ='Created_with_inspirly'><span data-bind="reshtml: 'Created_with_inspirly'"></span></div>
+<div class='hidden' id ='Get_inspired'><span data-bind="reshtml: 'Get_inspired'"></span></div>
+<div class='hidden' id ='Pick_an_app'><span data-bind="reshtml: 'Pick_an_app'"></span></div>
+
+
+
+<ons-tabbar id="tabbar" disable-auto-styling>
+  <ons-tab data-bind="resattr: { label: 'Text' }" icon="fa-quote-left" page="text.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling active></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Template' }" icon="fa-heart" page="mood.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling ></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Share' }" icon="fa-share-square" id='share' page="share.html" disable-auto-styling</ons-tab>
+</ons-tabbar>
+  </ons-page>
+</ons-template>
+
+
+
+
+<template id="text.html">
+  <ons-page id= "usr_text_input">
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
+
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt' onblur="window.localStorage.setItem('current_text', this.value);delete_history();"></textarea>
+</ons-list-item>
+
+
+
+
+<ons-list-item>
+
+      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
+      <div class="right" id="autolinebreak_switch"></div>
+</ons-list-item>
+
+</ons-list>
+
+<p style="text-align: center;">
+
+<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+
+
+
+  </ons-page>
+</template>
+
+
+
+
+
+
+<template id="own_image.html">
+  <ons-page id= "own_image">
+
+
+    <div style="padding:10px;text-align:center">
+    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
+    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
+    </div>
+    
+
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header>Search Image on Pixabay</ons-list-header>
+<ons-list-item>
+<input type="search" id="search_pic" value="" placeholder="Search free image on Pixabay" class="search-input" style="width: 280px;">
+</ons-list-item>
+</ons-list>
+
+<div id='image_area' style='width:100%'>
+
+</div>
+<div style='clear:both'></div>
+
+<p style="text-align: center;">
+
+<button class="button button--outline download_btn" onclick="getQuote()"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('')"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+
+
+
+  </ons-page>
+</template>
+
+
+
+
+
+
+
+<template id="mood.html">
+  <ons-page id="mood">
+    <p style="text-align: center;">
+  <ons-list onclick="refresh_preloaded(true)">
+    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
+    <ons-list-item class="mood-item" value="1" tappable><span data-bind="reshtml: 'Lovely'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="2" tappable><span data-bind="reshtml: 'Young'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="3" tappable><span data-bind="reshtml: 'Sparkling'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="4" tappable><span data-bind="reshtml: 'Serious'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="5" tappable><span data-bind="reshtml: 'Cheerful'"></span></ons-list-item>
+    <ons-list-item class="mood-item" value="6" tappable><span data-bind="reshtml: 'Sad'"></span></ons-list-item>
+    <ons-list-item class="mood-item active" value="0" tappable><span data-bind="reshtml: 'Anything_goes'"></span></ons-list-item>
+</ons-list>
+    </p>
+  </ons-page>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ons-template id="rand_img.html">
+  <ons-page  id = "image">
+
+<ons-gesture-detector>
+
+
+  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
+<div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
+<span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
+</div>
+
+<img src='img/logo_sq.png' class='loader'>
+
+
+<div id='download_image_holder' style="display:none">
+<div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
+    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-heart"></i></button>
+    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
+</div>
+</div>
+</ons-gesture-detector>
+
+<div id="trainer_mode_ui">
+
+<div style='padding:10px; padding-bottom:0px'>
+<div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
+<div style='float:left; width:50%; text-align:center'>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half-o"></i></button>
+<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
+</div>
+<div style='width:25%; float:left; text-align:right; font-size:14px; line-height:14px'> <div id='best_guess' style='color:rgba(0,0,0,0.2)'></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div></div>
+<div style='clear:both'></div>
+</div>
+</div>
+
+
+
+
+<ons-popover direction="up" cancelable id="options">
+  <div style="padding: 10px; text-align: right;">
+<ons-list style="margin-bottom:10px; background-color:rgba(0,0,0,0)">
+<ons-list-item>
+<span data-bind="reshtml: 'Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed'"></span>
+</ons-list-item>
+</ons-list>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontstyle'"></span>
+  <input id="font" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('font', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontsize_and_position'"></span>
+  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontsize', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontfilling'"></span>
+  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontfilling', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Frame'"></span>
+  <input id="frame" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('frame', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Background'"></span>
+  <input id="background" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('background', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Texture'"></span>
+  <input id="texture" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('texture', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br></div>
+</ons-popover>
+
+
+  </ons-page>
+</ons-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template id="share.html">
+  <ons-page id="share">
+
+    <p style="text-align: center;">
+
+<ons-list style="margin-bottom:20px">
+    <ons-list-header><span data-bind="reshtml: 'Share_image_via_apps_from_your_phone'"></span></ons-list-header>
+</ons-list>
+
+<button class="button button--outline social_sharing share_btn" onclick="share('facebook')"><i class="zmdi zmdi-facebook"></i></button>
+<button class="button button--outline social_sharing share_btn" onclick="share('instagram')"><i class="zmdi zmdi-instagram"></i></button>
+<button class="button button--outline social_sharing share_btn" onclick="share('whatsapp')"><i class="zmdi zmdi-whatsapp"></i></button>
+<button class="button button--outline social_sharing share_btn" onclick="share('twitter')"><i class="zmdi zmdi-twitter"></i></button>
+<button class="button button--outline social_sharing share_btn" onclick="share('snapchat')"><i class="fa fa-snapchat"></i></button>
+<button onclick="share('other')" class="button button--outline share_btn"><span data-bind="reshtml: 'Other'"></span></button>
+</p>
+<div class="progress-bar progress-bar--indeterminate hidden" id="share_progress"></div>
+
+<p style="text-align: center;">
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Download_image'"></span></ons-list-header>
+</ons-list>
+<button class="button button--outline download_btn" onclick="download_image(400)"><span data-bind="reshtml: 'Small'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Medium'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Large'"></span></button>
+<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'X_Large'"></span></button>
+</p>
+<img id='imageElement' src=''>
+<div class="progress-bar progress-bar--indeterminate hidden" id="download_progress"></div>
+<p>
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
+</ons-list>
+<div class="progress-bar progress-bar--indeterminate hidden" id="print_progress"></div>
+<div id='print_products' class='hidden'></div>
+    </p>
+
+
+<div id='download_prev'></div>
+
+
+<ons-alert-dialog id="dialog-1">
+  <div class="alert-dialog-title"><span data-bind="reshtml: 'Please_upgrade'"></span></div>
+  <div class="alert-dialog-content">
+  <span data-bind="reshtml: 'This_is_only_supported_in_the_full_version_of_inspirly_You_find_it_in_the_app_store_oh_and_it_comes_completely_adfree'"></span>
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-1')"><span data-bind="reshtml: 'OK'"></span></button>
+  </div>
+</ons-alert-dialog>
+
+<ons-alert-dialog id="dialog-2">
+  <div class="alert-dialog-title"><span data-bind="reshtml: 'Error'"></span></div>
+  <div class="alert-dialog-content"><span data-bind="reshtml: 'You_can_only_share_if_you_have_the_according_app_installed'"></span>
+
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-2')"><span data-bind="reshtml: 'OK'"></button>
+  </div>
+</ons-alert-dialog>
+
+  </ons-page>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+<template id="settings.html">
+  <ons-page id="settings">
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
+    </ons-toolbar>
+
+
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
+    <ons-list-item onclick="locale='en';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="preview_quality_switch"></div>
+    </ons-list-item>
+</ons-list>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Trainer_mode_help_our_inspirly_Designer_AI_to_become_better'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="trainer_switch"></div>
+    </ons-list-item>
+</ons-list>
+
+
+<p style="text-align: center;margin-top:10px">
+<button class="button button--outline" onclick="fn.load('create.html')"><span data-bind="reshtml: 'Go_back'"></span></button>
+</p>
+
+  </ons-page>
+</template>
+
+
+
+
+<template id="about.html">
+  <ons-page id="about">
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
+    </ons-toolbar>
+
+
+
+
+<div style='padding:20px' data-bind="visible: 'terms_de'">
+    <p style="text-align: center;">
+    Wir von inspir.ly lieben sch&ouml;ne Bilder genauso wie du. Benutze inspir.ly und werde inspiriert. Alle Bilder werden von unseren einzigartigen <i>inspir.ly Desiger KI</i> erstellt,
+     welche mit Hilfe von k&uuml;nstlicher Intelligenz bei jedem Desing dazulernt. Manchmal braucht es noch etwas Geduld, daf&uuml;r sind die Designs umso grossartiger. Sobald dir ein Design ge&auml;llt,
+     teile es mit deinen Freunden auf Instagram und Facebook.<br><br>St&ouml;rt dich die Werbung oder willst du Bilder mit einer Aufl&ouml;sung von bis zu 4k (16MP) herunterladen? Du findest die
+     Vollversion von inspir.ly im Appstore. Danke!<br><br>Kontaktiere uns f&uuml;r Fragen, Probleme oder Ideen:<br>
+
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br><br><br><br><br>
+Inspir.ly's Produkte und Service werden von Nagel WebApps zur Verf&uuml;gung gestellt. Indem du die Webseite und Services von inspir.ly verwendest, zeigst du dich mit den Nutzungsbedingungen und Datenschutzerkl&auml;rung einverstanden.
+
+<h4>Hauptbedingungen</h4>
+<ul>
+<li>Du darfst unsere Webseite und Services nur verwenden, wenn du einen verbindlichen Vertrag mit uns eingehen kannst und du darfst die Webseite nur gem&auml;ss diesen Nutzungsbedingungen sowie anwendbarem Recht verwenden.</li>
+<li>inspir.ly erlaubt dir das posten und modifizieren von Inahlten, inklusive Bilder, Texte, Kommentare und anderem Material. Alles was du auf inspir.ly hochl&auml;dst, postest oder anders verf&uuml;gbar machst, wird als "Nutzerinhalt" verstanden. Du beh&auml;ltst alle Rechte an den Inahlten und bist selber verantwortlich f&uuml;r deinen Nutzerinhalt.</li>
+<li><b>Du r&auml;umst inspir.ly, sowie den Mitgiedern und Partnern (z.B. zazzle.com), eine nicht-exklusive, geb&uuml;hrenfreie, transferierbare und unterlizenzierbare, weltweit g&uuml;ltige Lizenz ein, um deinen Nutzerinalt zu benutzen, zu speichern, anzuzeigen, zu reproduzieren, zu modifizieren, Derivate herzustellen, auszuf&uuml;hren, zu drucken und auf inspir.ly zu verteilen</b></li>
+<li>Jeglicher Nutzerinhalt, welcher in <b>&ouml;ffentlichen Gallerien eingestellt wird, kann von den Benutzern verwendet, modifiziert und/oder nochmals eingestellt werden.</b> Sobald Nutzerinhalt von jemandem anders nochmals eingestellt wurde (ob in private oder &ouml;ffentliche Gallerie), kannst du den Inhalt nicht mehr l&ouml;schen, mit Ausnhame des eingestellten Werkes selber. Daher: <b>lade nur Inhalte (in &ouml;ffentliche Gallerien) hoch, welche du teilen m&ouml;chtest und teilen darfst!</b></li>
+<li>Inspirly wird unter anderem &uuml;ber Werbung finanziert und zeigt daf&uuml;r unter Umst&auml;nden Werbeeinblendungen und Promotionen an. Du bist damit einverstanden, dass Inspirly solche Werbung und Promotionen in Zusammenhang mit deinen Inhalten anzeigen darf.</li>
+<li>Du garantierst, dass (i) du die Rechte oder Erlaubnis f&uuml;r alle Inhalte besitzt, welche du auf inspir.ly stellst, um sie gem&auml;ss diesen Nutzungsbedingungen auf inspir.ly anderen Benutzern zur Verf&uuml;gung zu stellen, (ii) du keine Rechte (insbesonder Urheber- und Vertragsrechte) von Dritten verletzt und (iii) durch das Posting von Inhalten keine Vertr&auml;ge mit einer dritten Partei verletzt. Du willigst ein f&uuml;r alle m&ouml;glichen Geb&uuml;hren aufzukommen, welche aufgrund eines Verstosses von dir gegen oben genannte Garantien allenfalls anfallen k&ouml;nnten.</li>
+<li>Es ist nicht erlaubt anst&ouml;ssiges Material oder Texte (z.B. pornographisch, obsz&ouml;n, dirkriminierend, gewaltverherrlichend, st&ouml;rrend, etc.) zu posten</li>
+<li><b>Du darfst keine Bilder, welche mit inspir.ly gestaltet wurden in irgend einer Form (z.B. einzeln, als Teil einer Sammlung oder eines Produkts) verkaufen</b></li>
+<li>Du musst deine Account Informationen sicher aufbewahren und vor Zugang von Dritten sch&uuml;tzen</li>
+<li>Es ist nicht erlaubt andere inspir.ly Mitglieder zu missbrauchen, zu bedrohen, zu erniedrigen, einzusch&uuml;chtern oder zu imitieren.</li>
+<li>Es ist nicht erlaubt inspir.ly f&uuml;r irgendwelche illegalen oder nicht authorisierten Zwecke zu ben&uuml;tzen. Internationale Benutzer willigen ein, sich an die lokalen Gesetzen bez&uuml;glich online Verhalten und akzeptierbaren Inhalten zu halten.</li>
+<li>Es ist verboten Viren, Trojaner oder andere Sch&auml;dlinge hochzuladen sowie den Service oder die Datenbanken zu hacken.</li>
+<li>Du bist alleine f&uuml;r den Nutzerinhalt verantwortlich, welchen du auf inspir.ly zur Verf&uuml;gung stellst.</li>
+<li>Du darfst mit der Verwendung von inspir.ly keine lokalen Gesetze verletzen (speziell, aber nicht limitiert, Urheberrechte)</li>
+<li>Ein Verstoss gegen eine dieser Bedingungen f&uuml;hrt zur Schliessung deines inspir.ly Accounts. Obwohl inspir.ly solches Verhalten verbietet, verstehst du, dass inspir.ly nicht f&uuml;r die Inhalte, welche von den Mitgliedern gepostet werden verantwortlich sein kann und daher die Gefahr besteht, dass du unerw&uuml;schtem Material ausgesetzt wirst. Du ben&uuml;tzt inspir.ly auf dein eigenes Risiko.</li>
+<li>inspir.ly verwendet technische Funktionen, welche f&uuml;r das Angebot notwendig sind, inklusive aber nicht limitert auf Transcodierung und/oder Reformatierung von Nutzerinhalten.</li>
+<li>Eine Mitgliedschaft kann jederzeit in schrifftlicher Form beendet resp. widerrufen werden.</li>
+</ul>
+
+<h4>Generelle Bedingungen</h4>
+<ul>
+<li>Wir halten uns das Recht vor inspir.ly jederzeit und ohne Mitteilung abzu&auml;ndern oder zu schliessen.</li>
+<li>inspir.ly haftet nicht f&uuml;r irgendwelche Modifikationen, Aufhebung oder Einstellung von inspir.ly, insbesondere nicht f&uuml;r den Verlust von Daten. <b>Wir empfehlen dir daher dringend dein eigenes Backup von deinem Content anzufertigen.</b></li>
+<li>Wir halten uns das Recht vor diese Nutzungsbedingungen jederzeit zu &auml;ndern. Sollte eine Neuerung wessentliche &Auml;nderung der Nutzungsbedingungen bewirken, werden wir dich per Email informieren. Was eine wessentliche &Auml;nderung ist, wird ausschliesslich von inspir.ly entschieden, wobei der gesunde Menschenverstand walten soll.</li>
+<li>Wir halten uns das Recht vor jederzeit bestimmte Person aus inspir.ly ausschliessen zu d&uuml;rfen.</li>
+<li>Wir versuchen, sind aber nicht dazu gezwungen, Nutzerinhalte und Accounts zu entfernen, welche (aufgrund unserem eigenem Ermessen) gegen unsere Nutzungsbedingungen und/oder lokale Gesetze verstossen.</li>
+<li>Diese Nutzungsbedingung kann auch auf Englisch abgerufen werden. Im Zweifelsfall gilt immer der englische Wortlaut.</li>
+</ul>
+
+<h4>Datenschutzerkl&auml;rung</h4>
+<blockquote>
+  <p>Unser Versprechen: inspir.ly respektiert deine Privatsph&auml;re und handelt nicht mit deinen privaten Daten</p>
+</blockquote>
+inspirly nimmt den Schutz deiner pers&ouml;nlichen Daten ernst. Es werden weder pers&ouml;nliche Daten verkauft noch ausserhalb von inspirly verwendet, sofern nicht explizit erlaubt. Personenbezogene Daten (mit Ausnahme der IP-Adresse) werden nur
+von Usern erfasst, welche sich als Mitglied registrieren. Diese Mitgliedschaft kann jederzeit gek&uuml;ndigt werden und alle personenbezogenen Daten werden gel&ouml;scht.
+<br>
+Die Datenschutzerkl&auml;rung beschreibt welche pers&ouml;nlichen Informationen wir sammeln und verwenden. Bitte lies diese Datenschutzerkl&auml;rung sorgf&auml;ltig durch bevor du inspir.ly verwendest oder per&ouml;nliche Informationen eintr&auml;gst. Indem du inspir.ly verwendest, erkl&auml;st du dich mit den Datenschutzerkl&auml;rung einverstanden.
+Die Datenschutzerkl&auml;rung kann jederzeit ge&auml;ndert werden, wobei &Auml;nderungen hier pupliziert werden und sich diese nur auf zuk&uuml;nftige Informationen und Aktivit&auml;ten beziehen. Du solltest daher die Datenschutzbestimmungen bei jedem Besuch von inspir.ly durchlesen, damit du informiert bist, wie deine Daten verwendet werden.
+<br><br>
+<b>Sammlung von Informationen</b><br>
+Wir sammeln pers&ouml;nliche Daten wie z.B. Namen, Email Adressse etc von unseren Mitgliedern, wenn sie sich (auf freiwilliger Basis) registrieren. Diese Daten werden nur f&uuml;r den gew&uuml;nschten Zweck verwendet, ausser du erlaubst uns diese f&uuml;r einen anderen Zweck zu verwenden (z.B. Eintrag in Newsletter).
+<br><br>
+<b>Cookie/Tracking Technologie</b><br>
+Jeder Zugriff auf unsere Homepage und jeder Abruf einer auf der Homepage hinterlegten Datei werden protokolliert. Die Speicherung dient internen systembezogenen und statistischen Zwecken. Protokolliert werden: Name der abgerufenen Datei, Datum und Uhrzeit des Abrufs, &uuml;bertragene Datenmenge, Meldung &uuml;ber erfolgreichen Abruf, Webbrowser und anfragende Domain.
+Zus&auml;tzlich werden die IP Adressen der anfragenden Rechner protokolliert.<br>
+Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. (Google). Google Analytics verwendet sog. "Cookies", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie erm&ouml;glicht. Die durch den Cookie erzeugten Informationen &uuml;ber Ihre Benutzung diese Website (einschliesslich Ihrer IP-Adresse) wird an einen Server von Google in den USA &uuml;bertragen und dort gespeichert. Google wird diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports &uuml;ber die Websiteaktivit&auml;ten f&uuml;r die Websitebetreiber zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen zu erbringen. Auch wird Google diese Informationen gegebenenfalls an Dritte &uuml;bertragen, sofern dies gesetzlich vorgeschrieben oder soweit Dritte diese Daten im Auftrag von Google verarbeiten. Google wird in keinem Fall Ihre IP-Adresse mit anderen Daten der Google in Verbindung bringen. Sie k&ouml;nnen die Installation der Cookies durch eine entsprechende Einstellung Ihrer Browser Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht s&auml;mtliche Funktionen dieser Website voll umf&auml;nglich nutzen k&ouml;nnen. Durch die Nutzung dieser Website erkl&auml;ren Sie sich mit der Bearbeitung der &uuml;ber Sie erhobenen Daten durch Google in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden.
+<a href="http://www.google.com/intl//privacypolicy.html" target='blank'>Google&#39;s Datenschutzerkl&auml;rung</a>. Google bietet die M&ouml;glichkeit an, mit einem <a href="http://tools.google.com/dlpage/gaoptout?hl=en" target='blank'>Browser Plugin</a> das Tracking von Google Analytics zu umgehen.
+<br><br>
+<b>Auskunft</b><br>
+Auf schriftliche Anfrage werden wir Sie gern &uuml;ber die zu Ihrer Person gespeicherten Daten informieren. Schreiben Sie dazu an:
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br>
+Wir behalten uns das Recht vor, jederzeit &Auml;nderungen an dieser Datenschutzerkl&auml;rung auszuf&uuml;hren. Jede &Auml;nderung wird an dieser Stelle ver&ouml;ffentlicht. Diese Datenschutzerkl&auml;rung kann auch auf Englisch abgerufen werden. Im Zweifelsfall gilt immer der Englische Wortlaut.
+
+<h4>Bildquellen</h4>
+<ul>
+<li>Einige unserer Vorlagen und Hintergrundbilder sind von grossartigen K&uuml;nstlern auf <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> und <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</li>
+<li><b>Es ist ausdr&uuml;cklich verboten Werke mit diesen Bilder runter zu laden oder zu posten, sofern diese nicht signifikant anders sind als das Original. Solltest du Interesse an den Bildern haben, dann kaufe sie bitte direkt von <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> oder <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</b></li>
+<li><a href='/page/photo_credits'>Bildquellenangaben.</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div style='padding:20px' data-bind="visible: 'terms_en'">
+    <p style="text-align: center;">
+We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique <i>inspirly design engine AI</i>. The engine learns each time it creates an image to get better and better. When you like what
+you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.
+<br><br>Don't like seeing adds or want to download your images up to 4k? Download the full version of inspirly in the app store. Thanks you!<br><br>
+Contact us for any questions, problems or ideas:<br>
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br><br><br><br><br>
+Inspir.ly's products and services are provided by Nagel WebApps. By using the inspir.ly website and inspir.ly sevice you agree to be bound by these Terms and by our Privacy Policy.
+
+
+<h4>Basic Terms</h4>
+<ul>
+<li>You may use our products and services only if you can form a binding contract with inspir.ly, and only in compliance with these Terms and all applicable laws.</li>
+<li>inspir.ly allows you to post and modify content, including images, texts, comments, and other materials. Anything that you upload, post or otherwise make available on inspir.ly is referred to as "User Content." You retain all rights in, and are solely responsible for, the User Content you post to inspir.ly.</li>
+<li><b>You grant inspir.ly, its users and its partners (eg. zazzle.com) a non-exclusive, royalty-free, transferable, sublicensable, worldwide license to use, store, display, reproduce, modify, create derivative works, perform, print and distribute your User Content on inspir.ly</b></li>
+<li>Any User Content posted into inspir.ly's <b>public galleries can be used, modified and/or reposted by its users</b>. Once reposted (into a public or private gallery) you won't be able to delete your User Content anymore with exception of your posted image. Therefore, <b>only upload and post content you are allowed and willing to share!</b></li>
+<li>Some of the inspir.ly products and services are supported by advertising revenue and may display advertisements and promotions, and you hereby agree that inspir.ly may place such advertising and promotions on the inspir.ly products and services or on, about, or in conjunction with your content.</li>
+<li>You represent and warrant that: (i) you own the content posted by you on or through the inspir.ly products and services or otherwise have the right to grant the license set forth in this section, (ii) the posting and use of your content on or through the inspir.ly products and services does not violate the privacy rights, publicity rights, copyrights, contract rights, intellectual property rights or any other rights of any person, and (iii) the posting of your content on the inspir.ly does not result in a breach of contract between you and a third party. You agree to pay for all royalties, fees, and any other monies owing any person by reason of Content you post on or through the inspir.ly Services.</li>
+<li>You may NOT post any offending material or texts (eg. pornographic, obscene, discriminatory, glorification of violence, etc.)</li>
+<li><b>You may NOT sell any image created with inspir.ly in any form (eg. individually, part of a collection or product).</b></li>
+<li>You must keep your account details secure.</li>
+<li>You may not abuse, threaten, harass, intimidate or impersonate other inpir.ly users.</li>
+<li>You may not use inspir.ly for any illegal or unauthorized purpose. International users agree to comply with all local laws regarding online conduct and acceptable content.</li>
+<li>You may not upload any malware to inspir.ly or hack our service or database.</li>
+<li>You are solely responsible for your conduct and any data, text, information, screen names, graphics, photos, profiles, links ("User Content") that you submit, upload, post, and display on inspir.ly.</li>
+<li>You must not, in the use of inspir.ly, violate any laws in your jurisdiction (including but not limited to copyright laws).</li>
+<li>Violation of any of these agreements will result in the termination of your inspir.ly account. While inspir.ly prohibits such conduct and content on its site, you understand and agree that inspir.ly cannot be responsible for the Content posted on its web site and you nonetheless may be exposed to such materials and that you use inspir.ly service at your own risk.</li>
+<li>inspir.ly performs technical functions necessary to offer the inspir.ly products and services, including but not limited to transcoding and/or reformatting User Content to allow its use throughout the inspir.ly products and services.</li>
+<li>You may cancel your membership anytime in a written form.</li>
+</ul>
+
+<h4>General Conditions</h4>
+<ul>
+<li>We reserve the right to modify or terminate the inspir.ly service for any reason, without notice at any time.</li>
+<li>inspir.ly will not be liable to you for any modification, suspension, or discontinuation of the inspir.ly services, or the loss of any content. <b>inspir.ly strongly encourages you to maintain your own backup of your content.</b></li>
+<li>We reserve the right to alter these Terms of Use at any time. If the alterations constitute a material change to the Terms of Use, we will notify you via internet mail according to the preference expressed on your account. What constitutes a "material change" will be determined at our sole discretion, in good faith and using common sense and reasonable judgement.</li>
+<li>We reserve the right to refuse service to anyone for any reason at any time.</li>
+<li>We may, but have no obligation to, remove User Content and accounts containing User Content that we determine in our sole discretion are unlawful, offensive, threatening, libelous, defamatory, obscene or otherwise objectionable or violates any party's intellectual property or these Terms of Use.</li>
+</ul>
+
+<blockquote>
+  <p>Our promise: inspir.ly respects your privacy and doesn't trade with your private data</p>
+</blockquote>
+This privacy policy tells you how we use personal information collected at inspir.ly. Please read this privacy policy before using the site or submitting any personal information. By using the site, you are accepting the practices described in this privacy policy. These practices may be changed, but any changes will be posted and changes will only apply to activities and information on a going forward, not retroactive basis. You are encouraged to review the privacy policy whenever you visit the site to make sure that you understand how any personal information you provide will be used.
+<br><br>
+<b>Collection of Information</b><br>
+We collect personally identifiable information, like names, email addresses, etc., when voluntarily submitted by our visitors to become member. The information you provide is used to fulfill you specific request. This information is only used to fulfill your specific request, unless you give us permission to use it in another manner, for example to add you to one of our mailing lists.
+<br><br>
+<b>Cookie/Tracking Technology</b><br>
+This website uses Google Analytics, a web analytics service provided by Google, Inc. ("Google").  Google Analytics uses "cookies", which are text files placed on your computer, to help the website analyze how users use the site. The information generated by the cookie about your use of the website (including your IP address) will be transmitted to and stored by Google on servers in the United States . Google will use this information for the purpose of evaluating your use of the website, compiling reports on website activity for website operators and providing other services relating to website activity and internet usage.  Google may also transfer this information to third parties where required to do so by law, or where such third parties process the information on Google&#39s behalf. Google will not associate your IP address with any other data held by Google.  You may refuse the use of cookies by selecting the appropriate settings on your browser, however please note that if you do this you may not be able to use the full functionality of this website.  By using this website, you consent to the processing of data about you by Google in the manner and for the purposes set out above. <a href="http://www.google.com/intl//privacypolicy.html" target='blank'>You can view Google&#39;s privacy policy here</a>. Google offers a <a href="http://tools.google.com/dlpage/gaoptout?hl=en" target='blank'>browser plugin</a> to opt-out of all Google Analytics tracking.
+<br><br>
+<b>Distribution of Information</b><br>
+We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when: (1) permitted or required by law; or, (2) trying to protect against or prevent actual or potential fraud or unauthorized transactions; or, (3) investigating fraud which has already taken place. The information is not provided to these companies for marketing purposes.
+<br><br>
+<b>Commitment to Data Security</b><br>
+Your personally identifiable information is kept secure. Only authorized employees, agents and contractors (who have agreed to keep information secure and confidential) have access to this information. All emails and newsletters from this site allow you to opt out of further mailings.
+<br><br>
+<b>Privacy Contact Information</b><br>
+If you have any questions, concerns, or comments about our privacy policy you may contact us using the information below:
+<br><br>
+<address>
+  <strong>Nagel WebApps</strong><br>
+  Lukas Nagel<br>
+  Wilen 3<br>
+  CH-6313 Finstersee<br>
+  Switzerland<br><br>
+  <a href="mailto:contact@inspir.ly">contact@inspir.ly</a><br>
+</address>
+<br><br>
+We reserve the right to make changes to this policy. Any changes to this policy will be posted.
+
+
+<h4>Image template sources</h4>
+<ul>
+<li>Some of our template and background images are from great contributors at <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> and <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</li>
+<li><b>You may NOT post or download these images if they are not significantly different than the original. Please buy the image directly from <a href='http://www.fotolia.com/'>fotolia</a>, <a href='http://www.mediafocus.com/'>mediafocus</a> or <a href='http://www.texturequalitypro.com/'>texturequalitypro</a>.</b></li>
+</ul>
+</div>
+<div style='padding:20px'>
+<ul><li>
+<a href='http://us.fotolia.com/p/203181285'>&#169;  alekswolff - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201646847'>&#169;  determined - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201460406'>&#169;  Eka Panova - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201776095'>&#169; genotar1 - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/51783'>&#169; javarman - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200371899'>&#169; Kundra - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200822904'>&#169; meschike - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200885719'>&#169; MR.LIGHTMAN - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201715243'>&#169; mythja - Fotolia.com</a>,
+<a href='http://us.fotolia.com/id/32646381'>&#169; nadil - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201060573'>&#169; Natutik - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/202316842'>&#169; Nik_Merkulov - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200460681'>&#169; olly - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201245900'>&#169; Patryk Kosmider - Fotolia.com</a>,
+<a href='http://us.fotolia.com/id/37321190'>&#169; PrintingSociety - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/202014406'>&#169; rangizzz - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/36224'>&#169; Sergej Seemann - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200581001'>&#169; tuja66 - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200904110'>&#169; ultramarin - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201176734'>&#169; Vidady - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200755737'>&#169; wenani - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/203353810'>&#169; xiebiyun - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201950831'>&#169; hoverfly - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200878168'>&#169; Ruth Black - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200878168'>&#169; Gennadiy Poznyakov - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200490861'>&#169; Microstockfish - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200609588'>&#169; Maksim Samasiuk - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/203723487'>&#169; egonzitter - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/22487'>&#169; Katrina Brown - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/227983'>&#169; annette shaff - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/217055'>&#169; Willee Cole - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201956056'>&#169; Katia25 - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/203129963'>&#169; varijanta - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/200843069'>&#169; avian - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/202765393'>&#169; paseven - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/203424171'>&#169; Flowerz - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/217055'>&#169; Willee Cole - Fotolia.com</a>,
+<a href='http://us.fotolia.com/p/201907884'>&#169; fotowebbox - Fotolia.com</a>,
+<a href='http://us.fotolia.com/'>&#169; Yuri Arcurs - Fotolia.com</a>,
+<a href='http://de.fotolia.com/p/200822357'>&#169; Olena Pantiukh - Fotolia.com</a>,
+</li>
+</ul>
+    </p>
+</div>
+  </ons-page>
+</template>
+
+
+</body>
+
+<script>
+document.addEventListener('deviceready', initApp, false);
+</script>
+</html>
