@@ -297,7 +297,7 @@ function search_pixabay(key)
 {
 //$("#image_area").html("");
 $.ajax({
-  url: "https://pixabay.com/api/?key=6189766-fbdbc18f705acb44bca36ab6b&q="+encodeURI(key)+"&editors_choice=true&image_type=photo&per_page=100&lang="+locale,
+  url: "https://pixabay.com/api/?key=6189766-fbdbc18f705acb44bca36ab6b&q="+encodeURI(key)+"&response_group=high_resolution&editors_choice=true&image_type=photo&per_page=100&lang="+locale,
   type: "POST",
   global: false,
   success: function(msg, error) {
@@ -317,17 +317,17 @@ var data = json.hits;
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $("#tabbar").append("<div class='pixabay'><img style='width:100px; display: block;' src='img/pixabay.png'></img></div>");
 $( function() {
-var $items = getItems();
+var $items = getItems(data);
 $container.masonryImagesReveal( $items );
 });
 
 
 
 
-function getItems() {
+function getItems(data) {
 var items = '';
 $.each(data, function(index, value) {
-var item = "<div onclick='uploadPhoto(\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div onclick='uploadPhoto(\""+value.imageURL+"\",\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
 items += item;
 });
   return $( items );
@@ -339,14 +339,13 @@ function show_images_from_folder()
 var local_images = ["13553443228vDLFBsmmsWVgO6edwhu.jpg","1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344364flUg9SBs1L5fkvKO84v9.jpg","1355344366gQWnjVMq2FNQ95A7V8j3.jpg","1355344368dMVIPKuEOnhVVyR5IoHZ.jpg","1355344370eQX2FMOFRz81FQbMKoSG.jpg","1355344371f7nZl1yxmnBnm3TqUJjE.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344404bvAXybnLLbC2SCGjij7T.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344376WqXbXLYtylBvjkz96vT1.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344382vI8OvaGMhxTd9QJOFm7V.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344390wfNNarTmUyhepOAyOXyk.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344392X24tTFKxv2p5pfmz1hS5.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","1355344396EM9WExJE6QlWA84xD8vS.jpg","1355344397IfjiapI6ppzLAfBuZDxs.jpg","13553443984ujp9trfNo7CNQpZ63qY.jpg","1355344398Gal68ymZG5A8XIAFWGm3.jpg","1355344399I89VwcxfpDM3i2OsWcGV.jpg","13553444006C3VJj87mL4CmuhN92mJ.png","1355344402igaAcIt1bGyvtrKV3ZOK.jpg","1355344408qK7KFLXnwDQXZhcWF6Nx.jpg","1355344410IX6Pu4eIuPXr2UVh7njp.png","1355344412Em23mkiNxYJFGFRXvjsD.png","1355344414ASZ1WU58VWHWyFGQItX9.png","checkers_bg.jpg","vintage_bg.jpg"];
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $( function() {var $items = getItemsLocal(local_images);
-console.log($items);
 $container.masonryImagesReveal( $items );});
 }
 
 function getItemsLocal(local_images) {
 var items = '';
 $.each(local_images, function(index, value) {
-var item = "<div onclick='window.localStorage.setItem(\"user_img\",\"img/background_preview/"+value+"\");show_crop()' class='img_preview' style='background-image: url(img/background_preview/"+value+"); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div onclick='window.localStorage.setItem(\"user_img_local\",\"img/background_preview/"+value+"\");window.localStorage.setItem(\"user_img\",\"inspirly/"+value+"\");show_crop()' class='img_preview' style='background-image: url(img/background_preview/"+value+"); height:"+$(window).width()/3+"px;'></div>";
 items += item;
 });
 return $( items );
@@ -383,7 +382,7 @@ $.fn.masonryImagesReveal = function( $items ) {
 function show_crop()
 {
 console.log("showed");
-$("#image_to_crop").attr("src",window.localStorage.getItem("user_img"));
+$("#image_to_crop").attr("src",window.localStorage.getItem("user_img_local"));
 $("#crop_wrapper").fadeIn();
 
 
@@ -678,7 +677,40 @@ function onFail(message) {
 
         }
 
-        function uploadPhoto(imageURI) {
+        function uploadPhoto(imageURI,imageURIsmall) {
+
+
+//save image localy in temp folder
+var url = imageURI;
+if(imageURIsmall){var url = imageURIsmall;}
+var filePath = cordova.file.dataDirectory + '/own.jpg';
+var fileTransfer = new FileTransfer();
+var uri = encodeURI(url);
+
+fileTransfer.download(
+    uri,
+    filePath,
+    function(entry) {
+        window.localStorage.setItem("user_img_local", entry.toURL());
+        console.log("download complete: " + entry.fullPath);
+    },
+    function(error) {
+        console.log("download error source " + error.source);
+        console.log("download error target " + error.target);
+        console.log("upload error code" + error.code);
+    },
+    false,
+    {
+        headers: {
+        }
+    }
+);
+
+
+
+
+
+
 
             var options = new FileUploadOptions();
             options.fileKey="file";
@@ -686,13 +718,16 @@ function onFail(message) {
             options.fileName="user_img.jpg";
             options.mimeType="image/jpeg";
 
-            var params = new Object();
-            params.value1 = "test";
-            params.value2 = "param";
+      //      var params = new Object();
+      //      params.value1 = "test";
+      //      params.value2 = "param";
 
             options.params = params;
             options.chunkedMode = false;
             options.headers = {Connection: "close"};
+
+
+
 
             var ft = new FileTransfer();
             ft.upload(imageURI, "https://www.inspir.ly/user_img/user_img_upload.php", win, fail, options);
@@ -703,13 +738,14 @@ function onFail(message) {
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             console.log(r);
-            window.localStorage.setItem("user_img", r.response.replace(/['"]+/g, ''));
+            window.localStorage.setItem("user_img", "own/"+r.response.replace(/['"]+/g, ''));
       //      $("#user_img").html(r.response.replace(/['"]+/g, ''));
           //  refresh_preloaded(true);
           show_crop();
         }
 
         function fail(error) {
+        window.localStorage.removeItem("user_img_local");
         console.log(error);
         show_loader(false);
             ons.notification.alert("An error has occurred: Code = "+error.code);
