@@ -178,6 +178,7 @@ if (page.matches("#mood")) {$(".mood-item").removeClass("active");$(".mood-item"
 if (page.matches("#share")) {create_banner();}
 if (page.matches("#own_image")) {
 $("#crop_image_area").css("height",$(".ons-tabbar__content").height());
+$("#upload_loader").css("height",$(".ons-tabbar__content").height());
 $container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
 $("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
 $("#search_pic").keyup(function(event){if(event.keyCode == 13){
@@ -380,6 +381,7 @@ $.fn.masonryImagesReveal = function( $items ) {
 function show_crop()
 {
 console.log("showed");
+$("#upload_loader_wrapper").fadeOut();
 $("#image_to_crop").attr("src",window.localStorage.getItem("user_img_local"));
 $("#crop_wrapper").fadeIn();
 
@@ -676,7 +678,7 @@ function onFail(message) {
         }
 
         function uploadPhoto(imageURI,imageURIsmall) {
-
+$("#upload_loader_wrapper").show();
 
 //save image localy in temp folder
 var url = imageURI;
@@ -696,6 +698,7 @@ fileTransfer.download(
         console.log("download error source " + error.source);
         console.log("download error target " + error.target);
         console.log("upload error code" + error.code);
+        $("#upload_loader_wrapper").hide();
     },
     false,
     {
@@ -743,10 +746,11 @@ fileTransfer.download(
         }
 
         function fail(error) {
+        $("#upload_loader_wrapper").hide();
         window.localStorage.removeItem("user_img_local");
         console.log(error);
         show_loader(false);
-            ons.notification.alert("An error has occurred: Code = "+error.code);
+        ons.notification.alert("An error has occurred: Code = "+error.code);
         }
 
 

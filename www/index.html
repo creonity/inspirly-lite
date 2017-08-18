@@ -180,6 +180,13 @@ For production change content-security-policy and admob
 
 <template id="own_image.html">
   <ons-page id= "own_image">
+<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle'>
+<svg class="progress-circular progress-circular--indeterminate">
+  <circle class="progress-circular__background"/>
+  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
+  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
+</svg>
+</div></div></div>
 <div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
