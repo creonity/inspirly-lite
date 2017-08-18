@@ -327,7 +327,7 @@ $container.masonryImagesReveal( $items );
 function getItems(data) {
 var items = '';
 $.each(data, function(index, value) {
-var item = "<div onclick='saveLocal(\""+value.imageURL+"\",\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div onclick='saveFromUrl(\""+value.imageURL+"\",\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
 items += item;
 });
   return $( items );
