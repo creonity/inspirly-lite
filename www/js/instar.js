@@ -312,7 +312,6 @@ error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_con
 
 function load_image_from_pixabay(json)
 {
-console.log(json);
 var data = json.hits;
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $("#tabbar").append("<div class='pixabay'><img style='width:100px; display: block;' src='img/pixabay.png'></img></div>");
@@ -365,7 +364,6 @@ $.fn.masonryImagesReveal = function( $items ) {
   $items.imagesLoaded({ background: true }).progress( function( imgLoad, image ) {
     // get item
     // image is imagesLoaded class, not <img>, <img> is image.img
-    console.log(itemSelector);
     var $item = $( image.element );
     // un-hide item
     $item.show();
@@ -722,7 +720,7 @@ fileTransfer.download(
       //      params.value1 = "test";
       //      params.value2 = "param";
 
-            options.params = params;
+          //  options.params = params;
             options.chunkedMode = false;
             options.headers = {Connection: "close"};
 
