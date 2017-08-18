@@ -692,6 +692,7 @@ function onFail(message) {
 
             options.params = params;
             options.chunkedMode = false;
+            options.headers = {Connection: "close"};
 
             var ft = new FileTransfer();
             ft.upload(imageURI, "https://www.inspir.ly/user_img/user_img_upload.php", win, fail, options);
@@ -701,6 +702,7 @@ function onFail(message) {
             console.log("Code = " + r.responseCode);
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
+            console.log(r);
             window.localStorage.setItem("user_img", r.response.replace(/['"]+/g, ''));
       //      $("#user_img").html(r.response.replace(/['"]+/g, ''));
           //  refresh_preloaded(true);
