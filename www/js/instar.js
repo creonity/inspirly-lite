@@ -686,7 +686,7 @@ function movePic(file){
 $("#upload_loader_wrapper").show();
 window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);}
 function resolveOnSuccess(entry){
-    var newFileName = n + "own.jpg";
+    var newFileName = "own.jpg";
     var myFolderApp = "temp";
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
     fileSys.root.getDirectory( myFolderApp,{create:true, exclusive: false},
