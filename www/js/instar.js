@@ -698,36 +698,47 @@ uploadPhoto(entry.toURL());
 function resOnError(error) {ons.notification.alert(error.code);$("#upload_loader_wrapper").hide();}
 
 
-function saveLocal(file,fileSmall)
+function saveFromUrl(url,urlSmall)
 {
 $("#upload_loader_wrapper").show();
-var url = file;
-if(fileSmall){var url = fileSmall;}
+var datatosend = "url="+encodeURI(url);
+$.ajax({
+  url: "https://www.inspir.ly/user_img/download_pixabay.php",
+  type: "POST",
+  global: false,
+  data: datatosend,
+  success: function(msg, error) {
+window.localStorage.setItem("user_img",msg);
+
 var filePath = cordova.file.dataDirectory + '/own.jpg';
 var fileTransfer = new FileTransfer();
-var uri = encodeURI(url);
-
+var uri = encodeURI(urlSmall);
 fileTransfer.download(
     uri,
     filePath,
     function(entry) {
         window.localStorage.setItem("user_img_local", entry.toURL());
         console.log("download complete: " + entry.fullPath);
-        uploadPhoto(file);
+        show_crop();
     },
     function(error) {
         console.log("download error source " + error.source);
         console.log("download error target " + error.target);
         console.log("upload error code" + error.code);
         $("#upload_loader_wrapper").hide();
-    },
-    false,
-    {
-        headers: {
-        }
-    }
+    },false,{headers: {}}
 );
+},
+error: function (msg, textStatus, errorThrown) {console.log("error pixabayupload");$("#upload_loader_wrapper").hide();}
+});
 }
+
+
+
+
+
+
+
 
         function uploadPhoto(imageURI) {
 $("#upload_loader_wrapper").show();
