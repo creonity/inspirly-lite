@@ -327,7 +327,7 @@ $container.masonryImagesReveal( $items );
 function getItems(data) {
 var items = '';
 $.each(data, function(index, value) {
-var item = "<div onclick='uploadPhoto(\""+value.imageURL+"\",\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div onclick='saveLocal(\""+value.imageURL+"\",\""+value.webformatURL+"\")' class='img_preview' style='background-image: url("+value.previewURL+"); height:"+$(window).width()/3+"px;'></div>";
 items += item;
 });
   return $( items );
@@ -380,13 +380,14 @@ $.fn.masonryImagesReveal = function( $items ) {
 
 function show_crop()
 {
-console.log("showed");
+console.log("show crop");
+
+$(".pixabay").remove();
 $("#upload_loader_wrapper").fadeOut();
 $("#image_to_crop").attr("src",window.localStorage.getItem("user_img_local"));
+$("#crop_canvas_wrapper").css("height", $(window).width());
 $("#crop_wrapper").fadeIn();
 
-
-var zoom_to_old;
 
 $('#image_to_crop').cropper({
 viewMode: 3,
@@ -405,10 +406,11 @@ minCropBoxHeight: $(window).width(),
         cropBoxMovable: false,
         cropBoxResizable: false,
   dragMode: 'move',
-  crop: function(e) {
-var imageData = $('#image_to_crop').cropper('getImageData');
-  },
-  ready: function () {
+  ready: function() {
+//var imageData = $('#image_to_crop').cropper('getImageData');
+console.log("hui");
+//$('#image_to_crop').cropper('setCanvasData', 10, 10,200,200);
+//$('#image_to_crop').cropper('crop');
 
   },
 });
@@ -654,12 +656,12 @@ $('<img>').attr('src', image).on("load",function() {callback();});
 
 
 function takeImage() {
-navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 100,
+navigator.camera.getPicture(movePic, function(message) {console.log('take picture failed');}, { quality: 100,
     destinationType: Camera.DestinationType.FILE_URI });
 
 
 function onFail(message) {
-    alert('Failed because: ' + message);
+    alert('Taking Picture failed because: ' + message);
 }
 }
 
@@ -668,7 +670,7 @@ function onFail(message) {
             // Retrieve image file location from specified source
             console.log("upload_initiated");
             show_loader(true);
-            navigator.camera.getPicture(uploadPhoto, function(message) {console.log('get picture failed');},{
+            navigator.camera.getPicture(movePic, function(message) {console.log('get picture failed');},{
 			quality: 100,
 			destinationType: navigator.camera.DestinationType.FILE_URI,
 			sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
@@ -677,12 +679,30 @@ function onFail(message) {
 
         }
 
-        function uploadPhoto(imageURI,imageURIsmall) {
-$("#upload_loader_wrapper").show();
 
-//save image localy in temp folder
-var url = imageURI;
-if(imageURIsmall){var url = imageURIsmall;}
+
+
+function movePic(file){
+$("#upload_loader_wrapper").show();
+window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);}
+function resolveOnSuccess(entry){
+    var newFileName = n + "own.jpg";
+    var myFolderApp = "temp";
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
+    fileSys.root.getDirectory( myFolderApp,{create:true, exclusive: false},
+    function(directory) {entry.moveTo(directory, newFileName,  successMove, resOnError);},resOnError);},resOnError);}
+function successMove(entry) {
+window.localStorage.setItem("user_img_local", entry.toURL());
+uploadPhoto(entry.toURL());
+}
+function resOnError(error) {ons.notification.alert(error.code);$("#upload_loader_wrapper").hide();}
+
+
+function saveLocal(file,fileSmall)
+{
+$("#upload_loader_wrapper").show();
+var url = file;
+if(fileSmall){var url = fileSmall;}
 var filePath = cordova.file.dataDirectory + '/own.jpg';
 var fileTransfer = new FileTransfer();
 var uri = encodeURI(url);
@@ -693,6 +713,7 @@ fileTransfer.download(
     function(entry) {
         window.localStorage.setItem("user_img_local", entry.toURL());
         console.log("download complete: " + entry.fullPath);
+        uploadPhoto(file);
     },
     function(error) {
         console.log("download error source " + error.source);
@@ -706,12 +727,10 @@ fileTransfer.download(
         }
     }
 );
+}
 
-
-
-
-
-
+        function uploadPhoto(imageURI) {
+$("#upload_loader_wrapper").show();
 
             var options = new FileUploadOptions();
             options.fileKey="file";
@@ -722,13 +741,9 @@ fileTransfer.download(
       //      var params = new Object();
       //      params.value1 = "test";
       //      params.value2 = "param";
-
           //  options.params = params;
             options.chunkedMode = false;
             options.headers = {Connection: "close"};
-
-
-
 
             var ft = new FileTransfer();
             ft.upload(imageURI, "https://www.inspir.ly/user_img/user_img_upload.php", win, fail, options);

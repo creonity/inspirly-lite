@@ -180,7 +180,7 @@ For production change content-security-policy and admob
 
 <template id="own_image.html">
   <ons-page id= "own_image">
-<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle'>
+<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle;text-align:center'>
 <svg class="progress-circular progress-circular--indeterminate">
   <circle class="progress-circular__background"/>
   <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
@@ -191,7 +191,7 @@ For production change content-security-policy and admob
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
 </ons-list>
-<div><img id='image_to_crop'></div>
+<div id='crop_canvas_wrapper'><img id='image_to_crop'></div>
 <div style="float:right; padding:5px">
 <button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
 <button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
