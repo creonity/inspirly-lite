@@ -1,8 +1,5 @@
-//Fix file upload
-//slow rendering of images when camera file (probably image file to big)
 //show only new images
-//search pixabay from localstorage fails
-//use image from pixabay
+//search pixabayfrom localstorage fails
 
 
 //Set parameters
@@ -403,8 +400,12 @@ function show_crop()
 console.log("show crop");
 
 $(".pixabay").remove();
-$("#upload_loader_wrapper").fadeOut();
+
 $("#image_to_crop").attr("src",window.localStorage.getItem("user_img_local"));
+$('#image_to_crop').imagesLoaded( function() {
+console.log("loaded");
+$("#upload_loader_wrapper").fadeOut();
+})
 $("#crop_canvas_wrapper").css("height", $(window).width());
 $("#crop_wrapper").fadeIn();
 
@@ -530,7 +531,8 @@ else
 show_loader(true);
 $("#detect-area").off('swipeleft');
 await sleep(window.localStorage.getItem("sleeptime"));
-preloadImages(image_url, function() {
+
+$('<img>').attr('src', image_url).imagesLoaded( function() {
 $("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_url+"'>");
 show_loader(false);
 
@@ -648,7 +650,7 @@ else{
 //Performance
 duration_calculated[data.image_id] = Date.now() - performance[time_sent];
 window.localStorage.setItem("preloaded_time_calculated", duration_calculated[data.image_id]);
-preloadImages(data.image_url, function() {duration_loaded[data.image_id] = Date.now() - performance[time_sent];delete performance[time_sent];
+$('<img>').attr('src', data.image_url).imagesLoaded( function() {duration_loaded[data.image_id] = Date.now() - performance[time_sent];delete performance[time_sent];
 
 if(window.localStorage.getItem("current_image_id")==data.image_id){
 window.localStorage.setItem("current_time_loaded", duration_loaded[data.image_id]);
@@ -668,10 +670,6 @@ error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_con
 }
 
 
-
-function preloadImages(image, callback) {
-$('<img>').attr('src', image).on("load",function() {callback();});
-}
 
 
 //Image from camera
@@ -757,7 +755,7 @@ fileTransfer.download(
     },false,{headers: {}}
 );
 },
-error: function (msg, textStatus, errorThrown) {console.log("error pixabayupload");$("#upload_loader_wrapper").hide();}
+error: function (msg, textStatus, errorThrown) {ons.notification.alert("error pixabayupload");show_images_from_folder();$("#upload_loader_wrapper").hide();}
 });
 }
 
@@ -808,6 +806,7 @@ console.log("go_upload");
       //      $("#user_img").html(r.response.replace(/['"]+/g, ''));
           //  refresh_preloaded(true);
           show_crop();
+          
         }
 
         function fail(error) {
