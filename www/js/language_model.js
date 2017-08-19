@@ -68,6 +68,7 @@ Rate_btn : "Jetzt bewerten",
 Crop_image : "Bild zuschneiden",
 Crop : "Zuschneiden",
 Cancel : "Abbrechen",
+no_pics_pixabay: "Leider keine Bilder gefunden.",
     };
 
 $.each(german_lang, function(index, value) {
@@ -142,6 +143,7 @@ Rate_btn : "Rate It Now",
 Crop_image : "Crop image",
 Crop : "Crop",
 Cancel : "Cancel",
+no_pics_pixabay: "Oops, couldn't find any images.",
     };
 
 $.each(english_lang, function(index, value) {

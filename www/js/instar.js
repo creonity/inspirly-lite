@@ -186,9 +186,7 @@ if (page.matches("#own_image")) {
 $("#crop_image_area").css("height",$(".ons-tabbar__content").height());
 $("#upload_loader").css("height",$(".ons-tabbar__content").height());
 $container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
-$("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
-$("#search_pic").keyup(function(event){if(event.keyCode == 13){
-if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});show_images_from_folder();
+show_images_from_folder();
 }
 
 
@@ -220,7 +218,11 @@ if (page.matches("#usr_text_input")) {ko.applyBindings(languageModel,document.ge
 if (page.matches("#about")) {ko.applyBindings(languageModel,document.getElementById("about"));}
 if (page.matches("#settings")) {ko.applyBindings(languageModel,document.getElementById("settings"));}
 if (page.matches("#language")) {ko.applyBindings(languageModel,document.getElementById("language"));}
-if (page.matches("#own_image")) {ko.applyBindings(languageModel,document.getElementById("own_image"));}
+if (page.matches("#own_image")) {ko.applyBindings(languageModel,document.getElementById("own_image"));
+$("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
+$("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});
+
+}
 
 //Add text
 
@@ -289,6 +291,12 @@ else{$("#download_image_holder").fadeIn(500,function(){$(".loader").hide();})}
 
 function search_pic(key)
 {
+if(key == ""){
+console.log("nope");
+show_images_from_folder();}
+else
+{
+console.log("search_pic");
 //localStorage.removeItem(key);
 if(localStorage[key]){
 console.log(localStorage[key]);
@@ -299,9 +307,12 @@ if(pix_data.timestamp>hours24){load_image_from_pixabay(pix_data);}else{search_pi
 }
 else{search_pixabay(key)}
 }
+}
 
 function search_pixabay(key)
 {
+console.log("search_pixabay"+key+"no");
+
 //$("#image_area").html("");
 $.ajax({
   url: "https://pixabay.com/api/?key=6189766-fbdbc18f705acb44bca36ab6b&q="+encodeURI(key)+"&response_group=high_resolution&editors_choice=true&image_type=photo&per_page=100&lang="+locale,
@@ -320,13 +331,16 @@ error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_con
 function load_image_from_pixabay(json)
 {
 var data = json.hits;
+if(json.totalHits==0){showDialog('dialog-3');show_images_from_folder();}
+else
+{
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $("#tabbar").append("<div class='pixabay'><img style='width:100px; display: block;' src='img/pixabay.png'></img></div>");
 $( function() {
 var $items = getItems(data);
 $container.masonryImagesReveal( $items );
 });
-
+}
 
 
 
@@ -719,7 +733,10 @@ $.ajax({
   global: false,
   data: datatosend,
   success: function(msg, error) {
-window.localStorage.setItem("user_img",msg);
+
+ var data = JSON.parse(msg);
+window.localStorage.setItem("user_img","own/"+data.uploadName);
+console.log(data);
 
 var filePath = cordova.file.dataDirectory + '/own.jpg';
 var fileTransfer = new FileTransfer();
