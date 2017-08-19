@@ -1,3 +1,9 @@
+//Fix file upload
+//slow rendering of images when camera file (probably image file to big)
+//show only new images
+//search pixabay from localstorage fails
+//use image from pixabay
+
 
 //Set parameters
 var version = "1.0L";
@@ -654,9 +660,9 @@ $('<img>').attr('src', image).on("load",function() {callback();});
 }
 
 
-
+//Image from camera
 function takeImage() {
-navigator.camera.getPicture(movePic, function(message) {console.log('take picture failed');}, { quality: 100,
+navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 100,
     destinationType: Camera.DestinationType.FILE_URI });
 
 
@@ -666,11 +672,12 @@ function onFail(message) {
 }
 
 
+//Image from fotolibrary
      function getImage() {
             // Retrieve image file location from specified source
             console.log("upload_initiated");
             show_loader(true);
-            navigator.camera.getPicture(movePic, function(message) {console.log('get picture failed');},{
+            navigator.camera.getPicture(uploadPhoto, function(message) {console.log('get picture failed');},{
 			quality: 100,
 			destinationType: navigator.camera.DestinationType.FILE_URI,
 			sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
@@ -682,9 +689,11 @@ function onFail(message) {
 
 
 
+
+/*
 function movePic(file){
 $("#upload_loader_wrapper").show();
-window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);}
+window.resolveLocalFileSystemURL(file, resolveOnSuccess, resOnError);}
 function resolveOnSuccess(entry){
     var newFileName = "own.jpg";
     var myFolderApp = "temp";
@@ -695,7 +704,9 @@ function successMove(entry) {
 window.localStorage.setItem("user_img_local", entry.toURL());
 uploadPhoto(entry.toURL());
 }
-function resOnError(error) {ons.notification.alert(error.code);$("#upload_loader_wrapper").hide();}
+function resOnError(error) {ons.notification.alert("Error, couldn't move file "+error.code);$("#upload_loader_wrapper").hide();}
+*/
+
 
 
 function saveFromUrl(url,urlSmall)
@@ -740,9 +751,16 @@ error: function (msg, textStatus, errorThrown) {console.log("error pixabayupload
 
 
 
+
+
+
+
+
+
+
         function uploadPhoto(imageURI) {
 $("#upload_loader_wrapper").show();
-
+console.log("go_upload");
             var options = new FileUploadOptions();
             options.fileKey="file";
            // options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
@@ -765,7 +783,11 @@ $("#upload_loader_wrapper").show();
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             console.log(r);
-            window.localStorage.setItem("user_img", "own/"+r.response.replace(/['"]+/g, ''));
+            var data = JSON.parse(r.response);
+            console.log(data);
+          //  window.localStorage.setItem("user_img", "own/"+r.response.replace(/['"]+/g, ''));
+          window.localStorage.setItem("user_img", "own/"+data.uploadName);
+          window.localStorage.setItem("user_img_local", data.uploadSmall);
       //      $("#user_img").html(r.response.replace(/['"]+/g, ''));
           //  refresh_preloaded(true);
           show_crop();
