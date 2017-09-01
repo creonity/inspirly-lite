@@ -69,6 +69,8 @@ Crop_image : "Bild zuschneiden",
 Crop : "Zuschneiden",
 Cancel : "Abbrechen",
 no_pics_pixabay: "Leider keine Bilder gefunden.",
+Choose_template: "... oder W&auml;hle eine Vorlage",
+Favorite_has_beend_saved: "Das Bild wurde zu deinen Vorlagen hinzugef&uuml;gt",
     };
 
 $.each(german_lang, function(index, value) {
@@ -144,6 +146,8 @@ Crop_image : "Crop image",
 Crop : "Crop",
 Cancel : "Cancel",
 no_pics_pixabay: "Oops, couldn't find any images.",
+Choose_template: "... or choose a template",
+Favorite_has_beend_saved: "Image added to your templates",
     };
 
 $.each(english_lang, function(index, value) {

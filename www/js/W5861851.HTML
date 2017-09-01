@@ -1,3 +1,13 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>javascript preview: W5861851.HTML</title>
+</head>
+<body>
+<script type="text/javascript">
+<!-- begin script
+//show only new images
 //Positionierung von Camerabild ist falsch
 
 //Set parameters
@@ -25,7 +35,6 @@ var duration_calculated = {};
 var duration = 0;
 var duration_calculated_current_image = 0;
 var $container;
-var busy = false;
 
 //Clear local storage
 window.localStorage.removeItem("user_img");
@@ -78,7 +87,6 @@ if( /(android)/i.test(navigator.userAgent) ) {
 }
 
 function initApp() {
-busy = false;
 screen.orientation.lock('portrait');
 //Prepare adds
 if(typeof AdMob !== 'undefined') {create_bannerAd();create_interstitial();}
@@ -168,7 +176,6 @@ window.fn.load = function(page) {
 
 
 $(document).on("show", function( event ) {
-busy = false;
 var page = event.target;
 if (page.matches("#image")) {
 if(window.localStorage.getItem("trainer_mode")=="true"){$("#trainer_mode_ui").show();}else{$("#trainer_mode_ui").hide();}
@@ -278,10 +285,10 @@ $("#trainer_mode").on('change',function(){window.localStorage.setItem("trainer_m
 
 
 
-function show_loader(loader,block)
+function show_loader(loader)
 {
-if(loader){$(".loader").show();$("#download_image_holder").fadeOut(200);busy=block;}
-else{$("#download_image_holder").fadeIn(500,function(){$(".loader").hide();busy=false;})}
+if(loader){$(".loader").show();$("#download_image_holder").fadeOut(200);}
+else{$("#download_image_holder").fadeIn(500,function(){$(".loader").hide();})}
 }
 
 
@@ -464,8 +471,6 @@ document.getElementById("tabbar").setActiveTab("btn_image_menu", {});
 
 async function show_image(history,current,rating)
 {
-console.log(busy);
-if(busy){return;}
 if(show_counter>=20){if(typeof AdMob !== 'undefined'){AdMob.showInterstitial();}console.log("show add");create_interstitial();show_counter = 0;}
 if(history){
 //Show image from history_code, swap current code with history_code
@@ -524,7 +529,7 @@ show_loader(false);
 }
 else
 {
-show_loader(true,true);
+show_loader(true);
 $("#detect-area").off('swipeleft');
 await sleep(window.localStorage.getItem("sleeptime"));
 
@@ -549,7 +554,9 @@ $("#detect-area").on('swipeleft', swiepelefthandler);
 var swiepelefthandler = function(event) {show_image();$(".tutorial").fadeOut();}
 
 
-function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 function refresh_preloaded(all_new)
@@ -561,7 +568,7 @@ if(all_new){
 window.localStorage.removeItem("code");
 window.localStorage.removeItem("current_image");
 
-show_loader(true,false);
+show_loader(true);
 show_image();
 }
 else{create_random(true);}
@@ -654,6 +661,7 @@ window.localStorage.setItem("preloaded_code", data.code);
 window.localStorage.setItem("preloaded_image", data.image_url);
 window.localStorage.setItem("preloaded_guess", data.best_guess);
 window.localStorage.setItem("preloaded_image_id", data.image_id);
+console.log();
 if(!preload){console.log("zeig Bild");show_image();}
 }
 },
@@ -981,58 +989,6 @@ ons.notification.alert(error_connection_txt);}
     });
 }
 
-
-
-function addFavorite()
-{
-//send infromation to server
-
-//save to local library
-var URL = window.localStorage.getItem("current_image");
-var File_Name = URL.substring(URL.lastIndexOf('/')+1);
-window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
-//The folder is created if doesn't exist
-dirEntry.getDirectory( "templates",{create:true, exclusive: false},function(directory) {addTemplate(directory, File_Name, URL);},onErrorCreateDir);
-}, onErrorLoadFs);
-}
-
-function addTemplate(dirEntry, File_Name, URL) {
-// Creates a new file or returns the file if it already exists.
-dirEntry.getFile(File_Name, {create: true, exclusive: false}, function(fileEntry) {
-var uri = encodeURI(URL);
-favorite_transfer(fileEntry, uri);
-}, onErrorCreateFile);
-}
-
-
-
-function favorite_transfer(fileEntry, uri) {
-    var fileTransfer = new FileTransfer();
-    var fileURL = fileEntry.toURL();
-    console.log(fileURL);
-    fileTransfer.download(
-        uri,
-        fileURL,
-        function (entry) {
-        console.log("Favorite has been saved."+entry.toURL());
-        ons.notification.toast({message: $("#Favorite_has_beend_saved").html(), timeout: 2000});
-        },
-        function (error) {
-            ons.notification.alert("Error while downloading source.");
-        },null,{}
-    );
-}
-
-
-
-
-
-
-
-
-
-
-
 function create_banner()
 {
 console.log("create_banner");
@@ -1056,7 +1012,7 @@ $.ajax({
 $("#print_progress").fadeOut(1000,function(){
 $("#print_products").html("<img onclick='print_product()' style='width:100%' src='"+data.image_url+"'>");
 $("#print_products").fadeIn();});
-window.localStorage.setItem("current_banner_image", window.localStorage.getItem("current_image"));
+window.localStorage.setItem(current_banner_image, window.localStorage.getItem("current_image"));
 //$("#current_banner_image").html($("#current_image").html());
 },
 error: function (msg, textStatus, errorThrown) {console.log("error: "+errorThrown);}
@@ -1286,3 +1242,7 @@ function randomKey(obj) {
 
 var showDialog = function (id) {document.getElementById(id).show();};
 var hideDialog = function (id) {document.getElementById(id).hide();};
+// end script -->
+</script>
+</body>
+</html>

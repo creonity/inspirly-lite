@@ -126,6 +126,8 @@ For production change content-security-policy and admob
 <div class='hidden' id ='rate_later'><span data-bind="reshtml: 'Rate_later'"></span></div>
 <div class='hidden' id ='rate_cancel'><span data-bind="reshtml: 'Rate_cancel'"></span></div>
 <div class='hidden' id ='rate_btn'><span data-bind="reshtml: 'Rate_btn'"></span></div>
+<div class='hidden' id ='Favorite_has_beend_saved'><span data-bind="reshtml: 'Favorite_has_beend_saved'"></span></div>
+
 
 
 
@@ -246,6 +248,9 @@ For production change content-security-policy and admob
     <ons-list-item class="mood-item" value="6" tappable><span data-bind="reshtml: 'Sad'"></span></ons-list-item>
     <ons-list-item class="mood-item active" value="0" tappable><span data-bind="reshtml: 'Anything_goes'"></span></ons-list-item>
 </ons-list>
+  <ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
+</ons-list>
     </p>
   </ons-page>
 </template>
@@ -286,7 +291,7 @@ For production change content-security-policy and admob
 
 <div id='download_image_holder' style="display:none">
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
-    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-heart"></i></button>
+    <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="addFavorite();"><i class="fa fa-heart"></i></button>
     <button class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
 </div>
 </div>
