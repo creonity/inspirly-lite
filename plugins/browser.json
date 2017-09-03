@@ -1,0 +1,67 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-apprate": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-gallery-refresh": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-google-analytics": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-screen-orientation": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "ly.inspir.lite"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        }
+    }
+}
