@@ -13,7 +13,7 @@ if(!window.localStorage.getItem){window.localStorage.getItem("trainer_mode",fals
 //helpers
 show_counter=0;
 var device_id = false;
-var error_connection_txt = $("#error_connection_txt").html();
+var error_connection_txt = "";
 var admobid = {};
 var image_url;
 var locale = window.localStorage.getItem("locale");
@@ -22,23 +22,29 @@ var init_once = 0;
 var performance = {};
 var duration_loaded = {};
 var duration_calculated = {};
+var rating_array = {};
 var duration = 0;
 var duration_calculated_current_image = 0;
 var $container;
 var busy = false;
+var image_nr = -1;
+var image_chain = [];
+var ak_image_nr = 0;
+var ak_image_nr_show;
+var image_url_old;
 
 //Clear local storage
 window.localStorage.removeItem("user_img");
-window.localStorage.removeItem("preloaded_image");
-window.localStorage.removeItem("preloaded_guess");
-window.localStorage.removeItem("preloaded_image_id");
-window.localStorage.removeItem("preloaded_time_calculated");
-window.localStorage.removeItem("preloaded_time_loaded");
+//window.localStorage.removeItem("preloaded_image");
+//window.localStorage.removeItem("preloaded_guess");
+//window.localStorage.removeItem("preloaded_image_id");
+//window.localStorage.removeItem("preloaded_time_calculated");
+//window.localStorage.removeItem("preloaded_time_loaded");
 window.localStorage.removeItem("current_image");
 window.localStorage.removeItem("current_image_id");
-window.localStorage.removeItem("current_guess");
-window.localStorage.removeItem("current_time_calculated");
-window.localStorage.removeItem("current_time_loaded");
+//window.localStorage.removeItem("current_guess");
+//window.localStorage.removeItem("current_time_calculated");
+//window.localStorage.removeItem("current_time_loaded");
 window.localStorage.removeItem("current_banner_image");
 window.localStorage.removeItem("history_image");
 window.localStorage.removeItem("preloaded_code");
@@ -176,14 +182,11 @@ var page = event.target;
 if (page.matches("#image")) {
 if(window.localStorage.getItem("trainer_mode")=="true"){$("#trainer_mode_ui").show();}else{$("#trainer_mode_ui").hide();}
 if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
+show_image(0);
 }
 if (page.matches("#usr_text_input")) {
 if(window.localStorage.getItem("autolinebreak")=="true"){$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' checked disable-auto-styling style='margin-left:0px'></ons-switch>");}
 else{$("#autolinebreak_switch").html("<ons-switch id='autolinebreak' disable-auto-styling style='margin-left:0px'></ons-switch>");}
-
-
-//if(window.localStorage.getItem("autolinebreak")==false){$("#autolinebreak").removeAttr("checked");}
-//else{$("#autolinebreak").attr("checked");}
 
 
 $("#user_txt").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
@@ -230,6 +233,7 @@ if (page.matches("#language")) {if(window.localStorage.getItem("locale")){locale
 
 if (page.matches("#mySplitter") && init_once == 0) {ko.applyBindings(languageModel,document.getElementById("mySplitter"));init_once=1;}
 if (page.matches("#create")) {ko.applyBindings(languageModel,document.getElementById("create"));
+error_connection_txt = $("#error_connection_txt").html();
 $("#create").on("prehide", function(){$("#btn_options").removeClass("create_btn_active");});
 }
 if (page.matches("#image")) {ko.applyBindings(languageModel,document.getElementById("image"));}
@@ -252,19 +256,20 @@ $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova
 
 
 if (page.matches("#mood")) {
-$("#select_mood").on("change", function(){window.localStorage.setItem("mood",$(this).val());refresh_preloaded(true);document.getElementById("tabbar").setActiveTab("btn_image_menu", {});});
+$("#select_mood").on("change", function(){window.localStorage.setItem("mood",$(this).val());uncheck_options();refresh_preloaded(true);document.getElementById("tabbar").setActiveTab("btn_image_menu", {});});
 }
 
 if (page.matches("#image")) {
-if(!window.localStorage.getItem("current_text")){getQuote();show_image(false,false);}else{show_image(false,true)}
+//if(!window.localStorage.getItem("current_text")){
+getQuote();show_image(0);
+//}
 $("#detect-area").css("height", $(window).width());
 //$("#btn_create_random").on("click", function(){show_image();});
 //$("#btn_create_random_history").on("click", function(){show_image(true);});
 //$("#btn_image_menu").on("click", function(){create_random($("#user_txt").val());});
 $("#detect-area").on('swipeleft', swiepelefthandler);
-$("#detect-area").on('swiperight', function(event) {if(window.localStorage.getItem("history_code")!=""){show_image(true);}});
+$("#detect-area").on('swiperight', function(event) {show_image(-1);});
 $(".tutorial").on('click', function(){$(".tutorial").fadeOut();})
-//show_image();
 }
 
 if (page.matches("#usr_text_input")) {
@@ -602,20 +607,60 @@ window.localStorage.setItem('texture', 0);$("#texture").prop( "checked", false )
 
 
 
-
-
-
-
-
-
-
-
-async function show_image(history,current,rating)
+async function show_image(image_change)
 {
-console.log(busy);
+if(busy && image_change==1){return;}
+ak_image_nr = ak_image_nr + image_change;
+if(ak_image_nr<0){ak_image_nr=0}
+if(ak_image_nr_show != ak_image_nr){
+show_loader(true,true);
+await sleep(window.localStorage.getItem("sleeptime"));
+}
+if(!image_chain[ak_image_nr]){create_image(ak_image_nr);return;}    
+if(!image_chain[ak_image_nr]["src"]){return;}
+
+$('<img>').attr('src', image_chain[ak_image_nr]["src"]).imagesLoaded( {"image_nr":ak_image_nr}, function() {
+ image_chain[this.options.image_nr]["loaded"]=true;
+ if(this.options.image_nr == ak_image_nr){$("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_chain[ak_image_nr]["src"]+"'>");}
+show_loader(false);
+$("#best_guess").html("("+image_chain[ak_image_nr]["best_guess"]+"%)");
+$("#time_calculated").html("("+Math.round(image_chain[ak_image_nr]["performance_calculation"]/100)/10+"s)");
+$("#time_loaded").html("("+Math.round(image_chain[ak_image_nr]["performance_loaded"]/100)/10+"s)");
+ak_image_nr_show = ak_image_nr;
+window.localStorage.setItem("current_image",image_chain[ak_image_nr]["src"]);
+window.localStorage.setItem("current_image_id",image_chain[ak_image_nr]["image_id"]);
+
+});
+
+//render preview
+if(!image_chain[ak_image_nr+1]){create_image(ak_image_nr+1);}
+}
+
+
+
+function rate_image(image_nr, rating)
+{
+image_chain[image_nr]["rating"]=rating;    
+rating_array[image_chain[image_nr]["image_id"]] = rating; 
+}
+
+
+
+/*
+async function show_image_old(history,current,rating)
+{
+    
+    
+show_it(ak_image_nr);
+create_random(false,false);
+
+//console.log("history "+window.localStorage.getItem("history_image"));
+//console.log(busy);
 if(busy){return;}
 if(show_counter>=20){if(typeof AdMob !== 'undefined'){AdMob.showInterstitial();}console.log("show add");create_interstitial();show_counter = 0;}
 if(history){
+    //ak_image_nr = ak_image_nr-1;
+   // if(ak_image_nr < 0){ak_image_nr = 0;}
 //Show image from history_code, swap current code with history_code
 console.log("Load from history");
 $("#btn_create_random_history").prop("disabled", true);
@@ -633,6 +678,7 @@ else if(current){
 }
 else if(window.localStorage.getItem("preloaded_code")){
 //Show preloaded image
+//ak_image_nr = ak_image_nr+1;
 $("#btn_create_random_history").prop("disabled", false);
 window.localStorage.setItem("history_code", window.localStorage.getItem("code"));
 window.localStorage.setItem("history_image", window.localStorage.getItem("current_image"));
@@ -649,22 +695,33 @@ window.localStorage.removeItem("preloaded_image_id");
 window.localStorage.removeItem("preloaded_guess");
 window.localStorage.removeItem("preloaded_time_calculated");
 window.localStorage.removeItem("preloaded_time_loaded");
-console.log("create preoloaded image");
+//console.log("create preoloaded image");
 create_random(true,rating);
 }
 else
 {
+//ak_image_nr = ak_image_nr+1;  
+    console.log("not yet loaded"+ak_image_nr);
 //generate new image and show
 create_random(false,rating);
+  //show_loader(true,true); 
+return;
 }
 
 
+//Show image
 
+
+
+
+/*
 if(window.localStorage.getItem("current_image"))
 {
+console.log(image_chain);
+console.log(ak_image_nr);
+        image_url = image_chain[ak_image_nr]["src"];
 //console.log("ak_image="+window.localStorage.getItem("current_image"));
 image_url = window.localStorage.getItem("current_image");
-
 if($('<img>').attr('src', image_url).complete){
 console.log("current_image");
 $("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_url+"'>");
@@ -675,7 +732,6 @@ else
 show_loader(true,true);
 $("#detect-area").off('swipeleft');
 await sleep(window.localStorage.getItem("sleeptime"));
-
 $('<img>').attr('src', image_url).imagesLoaded( function() {
 console.log("new_image "+image_url);
 $("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_url+"'>");
@@ -689,10 +745,17 @@ $("#detect-area").on('swipeleft', swiepelefthandler);
 }
 
 }
+else
+{
+  show_loader(true,true);  
 }
+}
+*/
 
 
-var swiepelefthandler = function(event) {show_image();$(".tutorial").fadeOut();}
+
+
+var swiepelefthandler = function(event) {show_image(1);$(".tutorial").fadeOut();}
 
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
@@ -700,17 +763,18 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
 
 function refresh_preloaded(all_new)
 {
-window.localStorage.removeItem("preloaded_code");
-window.localStorage.removeItem("preloaded_image");
+//window.localStorage.removeItem("preloaded_code");
+//window.localStorage.removeItem("preloaded_image");
 //Preload next image with new settings
 if(all_new){
-window.localStorage.removeItem("code");
-window.localStorage.removeItem("current_image");
-
-show_loader(true,false);
-show_image();
+//window.localStorage.removeItem("code");
+//window.localStorage.removeItem("current_image");
+delete image_chain[ak_image_nr_show+1];
+show_image(1);
 }
-else{create_random(true);}
+else{
+    delete image_chain[ak_image_nr_show+1];
+     create_image(ak_image_nr_show+1);}
 }
 
 
@@ -727,19 +791,113 @@ window.localStorage.removeItem("current_image");
 
 
 
-
-
-
-
-
-
-
-function create_random(preload,rating)
+//function create_random(preload,rating)
+function create_image(image_nr)
 {
-if(typeof ga !== 'undefined'){window.ga.trackEvent('Image', 'Create random');}
-show_counter = show_counter +1;
-user_txt = window.localStorage.getItem("current_text");
+    console.log("create_image "+image_nr);
+//analytics
+if(typeof ga !== 'undefined'){window.ga.trackEvent('Image', 'Create Image');}
+//Textinput
+user_txt = get_text();    
+//Performance data
+var duration_calculated_str = JSON.stringify(duration_calculated);
+$.each(duration_calculated, function(index, value) {if(value){delete duration_calculated[index];}});
+var duration_loaded_str = JSON.stringify(duration_loaded);
+$.each(duration_loaded, function(index, value) {if(value){delete duration_loaded[index];}});
+var rating_str = JSON.stringify(rating_array);
+$.each(rating_array, function(index, value) {if(value){delete rating_array[index];}});
 
+
+        
+//add to chain
+image_chain[image_nr] = []; 
+image_chain[image_nr]["time_sent"] = Date.now();
+
+if(image_chain[ak_image_nr_show]){
+    console.log(ak_image_nr_show+" "+image_nr);
+    var code = image_chain[ak_image_nr_show]["code"];}else{var code = "{}";}
+
+
+//Render new image
+var datatosend = "template_id="+window.localStorage.getItem("template_id")+"&code="+code+"&crop_image="+window.localStorage.getItem("crop_image")+"&performance_calculated="+duration_calculated_str+"&performance_loaded="+duration_loaded_str+"&rating="+rating_str+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
+window.localStorage.setItem("template_id","");
+
+$.ajax({
+  url: "https://www.inspir.ly/user_img/create_random.php",
+  type: "POST",
+  global: false,
+  data: datatosend,
+  success: function(msg, error) {
+//    console.log(msg.replace(/\\/g, ''));
+var data = JSON.parse(msg);
+
+try {
+        var code = JSON.parse(data.code);
+    } catch(e) {
+        data.error = "Error. Please try again.";
+        data.image_id = "error";
+        data.best_guess = 0;
+        if(image_chain[image_nr-1]){data.code = image_chain[image_nr-1]["code"];}else{data.code = "{}";}
+        var code = [];code["layers"] = [];code["layers"][1]=window.localStorage.getItem('current_text');
+    }
+
+
+window.localStorage.setItem('current_text', code.layers[1].text_content);
+
+window.localStorage.setItem("sleeptime",data.sleeptime);
+ //add information to chain
+if(data.error){busy=false;
+    //ons.notification.alert(data.error);
+    image_chain[image_nr]["src"]= "http://placehold.it/476x288/eb356c/ffffff?text="+encodeURI(data.error);}
+else{image_chain[image_nr]["src"]=data.image_url;}    
+    image_chain[image_nr]["image_id"]=data.image_id;
+    image_chain[image_nr]["loaded"]=false;
+    image_chain[image_nr]["code"]=data.code;
+    image_chain[image_nr]["best_guess"]=data.best_guess;
+//Performance
+image_chain[image_nr]["performance_calculation"] = Date.now() - image_chain[image_nr]["time_sent"];
+duration_calculated[data.image_id]=image_chain[image_nr]["performance_calculation"];
+max_history();
+show_image(0);
+$('<img>').attr('src', image_chain[image_nr]["src"]).imagesLoaded( {"image_nr":image_nr}, function() {
+   image_chain[this.options.image_nr]["loaded"]=true;
+   image_chain[this.options.image_nr]["performance_loaded"] = Date.now() - image_chain[this.options.image_nr]["time_sent"];
+duration_loaded[data.image_id]=image_chain[image_nr]["performance_loaded"];
+});
+/*
+$('<img>').attr('src', data.image_url).imagesLoaded( {"image_nr":image_nr}, function() {
+    image_chain[this.options.image_nr]["loaded"]=true;
+    console.log("loaded "+this.options.image_nr+" "+ak_image_nr);
+    if(this.options.image_nr == ak_image_nr){
+        console.log("show it");
+        show_it(ak_image_nr);}
+    
+    duration_loaded[data.image_id] = Date.now() - performance[time_sent];delete performance[time_sent];
+if(window.localStorage.getItem("current_image_id")==data.image_id){
+window.localStorage.setItem("current_time_loaded", duration_loaded[data.image_id]);
+$("#time_loaded").html("("+Math.round(duration_loaded[data.image_id]/100)/10+"s)");}else{window.localStorage.setItem("preloaded_time_loaded", duration_loaded[data.image_id]);}
+});
+*/
+//Set results
+//window.localStorage.setItem("preloaded_code", data.code);
+//window.localStorage.setItem("preloaded_image", data.image_url);
+//window.localStorage.setItem("preloaded_guess", data.best_guess);
+//window.localStorage.setItem("preloaded_image_id", data.image_id);
+//if(!preload){show_it(ak_image_nr);}
+},
+error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
+    });
+}
+
+function max_history()
+{
+    
+}
+
+
+function get_text()
+{
+user_txt = window.localStorage.getItem("current_text");
 if(user_txt.length==0 && !window.localStorage.getItem("template_id")){getQuote();user_txt = window.localStorage.getItem("current_text");}
 str_length = user_txt.length;
 if(window.localStorage.getItem("autolinebreak")=="true")
@@ -759,61 +917,15 @@ if(counter>avg_line_length){user_txt_structured = user_txt_structured+"\n";count
 if(text_items.length==2){user_txt_structured=text_items[0]+"\n"+text_items[1];}
 user_txt = user_txt_structured;
 }
-
-
-var duration_calculated_str = JSON.stringify(duration_calculated);
-$.each(duration_calculated, function(index, value) {
-if(value){delete duration_calculated[index];}
-});
-var duration_loaded_str = JSON.stringify(duration_loaded);
-$.each(duration_loaded, function(index, value) {
-if(value){delete duration_loaded[index];}
-});
-
-
-//var datatosend = "user_txt="+encodeURI(user_txt);
-var datatosend = "template_id="+window.localStorage.getItem("template_id")+"&code="+window.localStorage.getItem("code")+"&crop_image="+window.localStorage.getItem("crop_image")+"&performance_calculated="+duration_calculated_str+"&performance_loaded="+duration_loaded_str+"&rating="+rating+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
-window.localStorage.setItem("template_id","");
-var time_sent= Date.now();
-performance[time_sent]= time_sent;
-$.ajax({
-  url: "https://www.inspir.ly/user_img/create_random.php",
-  type: "POST",
-  global: false,
-  data: datatosend,
-  success: function(msg, error) {
-//    console.log(msg.replace(/\\/g, ''));
-
-    var data = JSON.parse(msg);
-console.log(data.debug);
-
-var code = JSON.parse(data.code);
-window.localStorage.setItem('current_text', code.layers[1].text_content);
-
-
-
-window.localStorage.setItem("sleeptime",data.sleeptime);
-if(data.error){ons.notification.alert(data.error);}
-else{
-//Performance
-duration_calculated[data.image_id] = Date.now() - performance[time_sent];
-window.localStorage.setItem("preloaded_time_calculated", duration_calculated[data.image_id]);
-$('<img>').attr('src', data.image_url).imagesLoaded( function() {duration_loaded[data.image_id] = Date.now() - performance[time_sent];delete performance[time_sent];
-if(window.localStorage.getItem("current_image_id")==data.image_id){
-window.localStorage.setItem("current_time_loaded", duration_loaded[data.image_id]);
-$("#time_loaded").html("("+Math.round(duration_loaded[data.image_id]/100)/10+"s)");}else{window.localStorage.setItem("preloaded_time_loaded", duration_loaded[data.image_id]);}
-});
-//Set results
-window.localStorage.setItem("preloaded_code", data.code);
-window.localStorage.setItem("preloaded_image", data.image_url);
-window.localStorage.setItem("preloaded_guess", data.best_guess);
-window.localStorage.setItem("preloaded_image_id", data.image_id);
-if(!preload){console.log("zeig Bild");show_image();}
+return user_txt;  
 }
-},
-error: function (msg, textStatus, errorThrown) {ons.notification.alert(error_connection_txt);}
-    });
-}
+
+
+
+
+
+
+
 
 
 
@@ -1316,7 +1428,7 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 
 function getQuote(user) {
-console.log("getquote");
+//console.log("getquote");
 var author = randomKey(quote_array[locale]);
 var quote = quote_array[locale][author];
 if(user){$("#user_txt").val(quote);}
@@ -1480,6 +1592,12 @@ function randomKey(obj) {
         if (Math.random() < 1/++c)
            ret = key;
     return ret;
+}
+
+function is_empty(check_var)
+{
+if(check_var == "null" || check_var == null || check_var == "" || check_var == false || check_var == "false"){return true;}
+else{return false;}
 }
 
 

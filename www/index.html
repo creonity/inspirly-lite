@@ -92,7 +92,6 @@ For production change content-security-policy and admob
     <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
     <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
 </ons-list>
-
   </ons-page>
 </ons-template>
 
@@ -113,6 +112,7 @@ For production change content-security-policy and admob
       <div class="center">
         <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
       </div>
+    
     </ons-toolbar>
 
 
@@ -291,13 +291,12 @@ For production change content-security-policy and admob
 
  <ons-list-item tappable>
 <select id='select_mood' class="select-input">
-  <option value='1' data-bind="reshtml: 'Lovely'"></option>
-  <option value='2' data-bind="reshtml: 'Young'"></option>
-  <option value='3' data-bind="reshtml: 'Sparkling'"></option>
-  <option value='4' data-bind="reshtml: 'Serious'"></option>
-  <option value='5' data-bind="reshtml: 'Cheerful'"></option>
-  <option value='6' data-bind="reshtml: 'Sad'"></option>
-  <option value='0' data-bind="reshtml: 'Anything_goes'" selected></option>
+  <option value='1' data-bind="reshtml: 'Simple'"></option>
+  <option value='2' data-bind="reshtml: 'Artsy'"></option>
+  <option value='3' data-bind="reshtml: 'Favorites'"></option>
+  <option value='4' data-bind="reshtml: 'Effects'"></option>
+  <option value='5' data-bind="reshtml: 'Newest'"></option>
+  <option value='0' data-bind="reshtml: 'Experimental'" selected></option>
 </select>
 </ons-list-item>
 
@@ -365,9 +364,9 @@ For production change content-security-policy and admob
 <div style='padding:10px; padding-bottom:0px'>
 <div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
 <div style='float:left; width:50%; text-align:center'>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half-o"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
+<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,1);show_image(1);"><i class="fa fa-star-o"></i></button>
+<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,3);show_image(1);"><i class="fa fa-star-half-o"></i></button>
+<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,5);show_image(1);"><i class="fa fa-star"></i></button>
 </div>
 <div style='width:25%; float:left; text-align:right; font-size:14px; line-height:14px'> <div id='best_guess' style='color:rgba(0,0,0,0.2)'></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div></div>
 <div style='clear:both'></div>
