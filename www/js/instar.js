@@ -23,6 +23,7 @@ var performance = {};
 var duration_loaded = {};
 var duration_calculated = {};
 var rating_array = {};
+var focus_array = {};
 var duration = 0;
 var duration_calculated_current_image = 0;
 var $container;
@@ -30,6 +31,7 @@ var busy = false;
 var image_nr = -1;
 var image_chain = [];
 var ak_image_nr = 0;
+var last_image_nr = -1;
 var ak_image_nr_show;
 var image_url_old;
 
@@ -613,15 +615,21 @@ if(busy && image_change==1){return;}
 ak_image_nr = ak_image_nr + image_change;
 if(ak_image_nr<0){ak_image_nr=0}
 if(ak_image_nr_show != ak_image_nr){
+if(last_image_nr>=0){image_chain[last_image_nr]["time_hidden"] = Date.now();
+focus_array[image_chain[last_image_nr]["image_id"]] = image_chain[last_image_nr]["time_hidden"]-image_chain[last_image_nr]["time_shown"]; }
 show_loader(true,true);
 await sleep(window.localStorage.getItem("sleeptime"));
 }
 if(!image_chain[ak_image_nr]){create_image(ak_image_nr);return;}    
 if(!image_chain[ak_image_nr]["src"]){return;}
+if(ak_image_nr==last_image_nr){return;}
 
 $('<img>').attr('src', image_chain[ak_image_nr]["src"]).imagesLoaded( {"image_nr":ak_image_nr}, function() {
  image_chain[this.options.image_nr]["loaded"]=true;
- if(this.options.image_nr == ak_image_nr){$("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_chain[ak_image_nr]["src"]+"'>");}
+ if(this.options.image_nr == ak_image_nr){$("#download_image").html("<img style='width: 100%; height:"+$(window).width()+"px;' src='"+image_chain[ak_image_nr]["src"]+"'>");
+ image_chain[ak_image_nr]["time_shown"] = Date.now();
+ last_image_nr= ak_image_nr;
+ }
 show_loader(false);
 $("#best_guess").html("("+image_chain[ak_image_nr]["best_guess"]+"%)");
 $("#time_calculated").html("("+Math.round(image_chain[ak_image_nr]["performance_calculation"]/100)/10+"s)");
@@ -645,7 +653,7 @@ rating_array[image_chain[image_nr]["image_id"]] = rating;
 }
 
 
-
+          
 /*
 async function show_image_old(history,current,rating)
 {
@@ -806,6 +814,8 @@ var duration_loaded_str = JSON.stringify(duration_loaded);
 $.each(duration_loaded, function(index, value) {if(value){delete duration_loaded[index];}});
 var rating_str = JSON.stringify(rating_array);
 $.each(rating_array, function(index, value) {if(value){delete rating_array[index];}});
+var focus_str = JSON.stringify(focus_array);
+$.each(focus_array, function(index, value) {if(value){delete focus_array[index];}});
 
 
         
@@ -819,7 +829,7 @@ if(image_chain[ak_image_nr_show]){
 
 
 //Render new image
-var datatosend = "template_id="+window.localStorage.getItem("template_id")+"&code="+code+"&crop_image="+window.localStorage.getItem("crop_image")+"&performance_calculated="+duration_calculated_str+"&performance_loaded="+duration_loaded_str+"&rating="+rating_str+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
+var datatosend = "template_id="+window.localStorage.getItem("template_id")+"&code="+code+"&crop_image="+window.localStorage.getItem("crop_image")+"&performance_calculated="+duration_calculated_str+"&performance_loaded="+duration_loaded_str+"&focus="+focus_str+"&rating="+rating_str+"&version="+version+"&language="+language+"&device_id="+device_id+"&template="+history+"&mood="+window.localStorage.getItem("mood")+"&preview_quality="+window.localStorage.getItem("preview_quality")+"&user_txt="+user_txt+"&user_img="+window.localStorage.getItem("user_img")+"&fontfilling="+window.localStorage.getItem("fontfilling")+"&frame="+window.localStorage.getItem("frame")+"&font="+window.localStorage.getItem("font")+"&background="+window.localStorage.getItem("background")+"&texture="+window.localStorage.getItem("texture")+"&fontsize="+window.localStorage.getItem("fontsize");
 window.localStorage.setItem("template_id","");
 
 $.ajax({
@@ -838,7 +848,7 @@ try {
         data.image_id = "error";
         data.best_guess = 0;
         if(image_chain[image_nr-1]){data.code = image_chain[image_nr-1]["code"];}else{data.code = "{}";}
-        var code = [];code["layers"] = [];code["layers"][1]=window.localStorage.getItem('current_text');
+        var code = [];code["layers"] = [];code["layers"][1]=[];code.layers[1].text_content =window.localStorage.getItem('current_text');
     }
 
 
@@ -854,6 +864,7 @@ else{image_chain[image_nr]["src"]=data.image_url;}
     image_chain[image_nr]["loaded"]=false;
     image_chain[image_nr]["code"]=data.code;
     image_chain[image_nr]["best_guess"]=data.best_guess;
+    
 //Performance
 image_chain[image_nr]["performance_calculation"] = Date.now() - image_chain[image_nr]["time_sent"];
 duration_calculated[data.image_id]=image_chain[image_nr]["performance_calculation"];
