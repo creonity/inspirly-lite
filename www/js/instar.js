@@ -852,14 +852,15 @@ try {
     }
 
 
-window.localStorage.setItem('current_text', code.layers[1].text_content);
 
-window.localStorage.setItem("sleeptime",data.sleeptime);
  //add information to chain
 if(data.error){busy=false;
     //ons.notification.alert(data.error);
     image_chain[image_nr]["src"]= "http://placehold.it/476x288/eb356c/ffffff?text="+encodeURI(data.error);}
-else{image_chain[image_nr]["src"]=data.image_url;}    
+else{image_chain[image_nr]["src"]=data.image_url;
+window.localStorage.setItem('current_text', code.layers[1].text_content);
+window.localStorage.setItem("sleeptime",data.sleeptime);
+}    
     image_chain[image_nr]["image_id"]=data.image_id;
     image_chain[image_nr]["loaded"]=false;
     image_chain[image_nr]["code"]=data.code;
