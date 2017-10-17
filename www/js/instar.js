@@ -1101,7 +1101,7 @@ $(".download_btn").prop("disabled", true);
 
 //var datatosend = "user_txt="+encodeURI(user_txt);
 var template_id = getTemplateId(window.localStorage.getItem("current_image"));
-var datatosend = "code="+window.localStorage.getItem("code")+"&size="+size+"&template_id="+template_id+"&device_id="+device_id;
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size="+size+"&template_id="+template_id+"&device_id="+device_id;
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/download.php",
@@ -1119,6 +1119,7 @@ $.ajax({
 
 //var fileTransfer = new FileTransfer();
 //download(data.image_url, "inspirly", data.image_name);
+console.log(data.image_url+" "+data.image_name);
 download(data.image_url,data.image_name);
 
 },
@@ -1170,6 +1171,7 @@ function file_transfer(fileEntry, uri) {
     var fileTransfer = new FileTransfer();
     var fileURL = fileEntry.toURL();
     console.log(fileURL);
+     console.log(uri);
     fileTransfer.download(
         uri,
         fileURL,
@@ -1209,7 +1211,7 @@ $("#share_progress").fadeIn();
 $(".share_btn").prop("disabled", true);
 
 var template_id = getTemplateId(window.localStorage.getItem("current_image"));
-var datatosend = "code="+window.localStorage.getItem("code")+"&size=1080&template_id="+template_id+"&device_id="+device_id+"&share="+platform;
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=1080&template_id="+template_id+"&device_id="+device_id+"&share="+platform;
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/download.php",
@@ -1396,7 +1398,7 @@ for (var i=0; i < eles.length; i++)
 
 
 var template_id = getTemplateId(window.localStorage.getItem("current_image"));
-var datatosend = "code="+window.localStorage.getItem("code")+"&size=2000&template_id="+template_id+"&device_id="+device_id+"&print=1";
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=2000&template_id="+template_id+"&device_id="+device_id+"&print=1";
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/download.php",
