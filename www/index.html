@@ -30,7 +30,7 @@ For production change content-security-policy and admob
     <link rel="stylesheet" type="text/css" href="css/cropper.min.css" />
 
 
-
+    <script src="js/fabric.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/onsenui.min.js"></script>
     <script src="js/knockout-3.4.2.js"></script>
@@ -344,7 +344,10 @@ For production change content-security-policy and admob
 
 
   <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
-<div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
+<div id="fabric_area" style='position:absolute; top:0px; left:0px; width:100%; height:100%; overflow:hidden'>
+<canvas id='c' width="100" height="100"></canvas>
+</div>
+<div class="tutorial hidden" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
 <span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
 </div>
 
@@ -353,6 +356,8 @@ For production change content-security-policy and admob
 
 <div id='download_image_holder' style="display:none">
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
+    <button id="btn_apply" class="button button--light create_btn hidden" style="position:absolute; bottom:5px; left:5px; z-index:3; width:150px; background:rgba(255,0,0,0.5); color:white" onclick="applyChanges();"><span data-bind="reshtml: 'Apply'"></span></button>
+
     <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="addFavorite();"><i class="fa fa-heart"></i></button>
     <button id="btn_options" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
 </div>

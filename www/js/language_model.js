@@ -75,6 +75,7 @@ Confirm : "Best&auml;tige",
 Optimize_to_share : "Bitte warte kurz. Das Bild wird f&uuml;rs teilen optimiert.",
 Optimize_to_download : "Bitte warte kurz. Das Bild wird f&uuml;rs den Download optimiert.",
 Optimize_to_print : "Bitte warte kurz. Das Bild wird f&uuml;rs den Druck optimiert.",
+Apply: "Anwenden",
     };
 
 $.each(german_lang, function(index, value) {
@@ -156,6 +157,7 @@ Confirm : "Confirm",
 Optimize_to_share : "Please wait. We optimize your image for sharing.",
 Optimize_to_download : "Please wait. We optimize your image downloading.",
 Optimize_to_print : "Please wait. We optimize your image for printing.",
+Apply: "Apply",
     };
 
 $.each(english_lang, function(index, value) {
