@@ -39,7 +39,7 @@
     <plugin name="cordova-plugin-admobpro" spec="^2.29.21" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-file-transfer" />
     <plugin name="cordova-plugin-gallery-refresh" spec="^1.0.56" />
     <plugin name="cordova-plugin-screen-orientation" spec="^2.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
