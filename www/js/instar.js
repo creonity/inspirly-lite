@@ -100,7 +100,7 @@ device_id = device.uuid;
 
 
 //In your 'deviceready' handler, set up your Analytics tracker:
-window.ga.startTrackerWithId('UA-104693442-1', 30)
+//window.ga.startTrackerWithId('UA-104693442-1', 30)
 
 
 AppRate.preferences = {
