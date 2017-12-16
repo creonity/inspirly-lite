@@ -280,7 +280,7 @@ $("#detect-area").css("height", $(window).width());
 $("#detect-area").on('swipeleft', swiepelefthandler);
 $("#detect-area").on('swiperight', swieperighthandler);
 $("#download_image").on('tap', change_textimage_handler);
-$(".page__content").on('tap', change_textimage_handler_off);
+$(".page__background").on('tap', change_textimage_handler_off);
 
 
 
@@ -1462,7 +1462,7 @@ console.log("show_text");
 $("#fabric_area").css({"height":$(window).width(),"width":$(window).width()});
 $("#btn_favorite, #btn_options").hide();
 $("#btn_apply").show();
-$("#btn_apply").on("click",function(event){event.stopPropagation();applyChanges();});
+$("#btn_apply").on("click",function(event){console.log("clicked");event.stopPropagation();applyChanges();});
 $("#detect-area").off('swipeleft');
 $("#detect-area").off('swiperight');
 }
