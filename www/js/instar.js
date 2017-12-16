@@ -1493,6 +1493,31 @@ var quote_array = [];
 quote_array["en"] = [];
 quote_array["de"] = [];
 //quote_array[""] = [""];
+
+quote_array["en"] = ["LOVE LIFE"];
+quote_array["en"] = ["Life is good"];
+quote_array["en"] = ["Welcome to happiness"];
+quote_array["en"] = ["Thank you!"];
+quote_array["en"] = ["be happy."];
+quote_array["en"] = ["choose happy"];
+quote_array["en"] = ["feeling happy"];
+quote_array["en"] = ["Smile, happiness looks gorgeous on you."];
+quote_array["en"] = ["Happiness depends on ourselves."];
+quote_array["en"] = ["I choose to be happy."];
+quote_array["en"] = ["hello HAPPINESS"];
+quote_array["en"] = ["Peace Love Happiness"];
+quote_array["en"] = ["Do more of what makes you happy"];
+quote_array["en"] = ["Happiness is a decision."];
+quote_array["en"] = ["You make me Happy"];
+
+quote_array["de"] = ["Ich bin dann mal glücklich."];
+quote_array["de"] = ["glücklich"];
+quote_array["de"] = ["Du bist am schönsten, wenn du glücklich bist."];
+quote_array["de"] = ["Glückfinder"];
+quote_array["de"] = ["Du machst mich glücklich!"];
+quote_array["de"] = ["Hauptsache glücklich!"];
+
+/*
 quote_array["en"]["Vivian Greene"] = ["Life isn't about waiting for the storm to pass... It's about learning to dance in the rain."];
 quote_array["en"]["Proverbs"] = ["Live today for tomorrow it will all be history."];
 quote_array["en"]["Proverbs"] = ["Before you embark on a journey of revenge, dig two graves."];
@@ -1636,7 +1661,7 @@ quote_array["de"][""] = ["Du willst wissen, in wen ich mich verliebt habe? Dann 
 quote_array["de"][""] = ["Deine Ecken passen gut zu meinen Kanten."];
 quote_array["de"][""] = ["GlÃ¼ck findest du nicht, wenn du es suchst, sondern wenn du zulÃ¤sst dass es DICH findet..."];
 quote_array["de"][""] = ["Du bist nicht alles, aber ohne dich ist alles nichts."];
-
+*/
 
 function randomKey(obj) {
     var ret;
