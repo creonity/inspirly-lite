@@ -1419,6 +1419,7 @@ hide_text_img();
 
 function applyChanges()
 {
+console.log("apply");
 var code_array = JSON.parse(image_chain[ak_image_nr_show]["code"]);
 
 
@@ -1456,6 +1457,7 @@ refresh_preloaded(true);
 
 function show_text_img()
 {
+console.log("show_text");
 $("#fabric_area").css({"height":$(window).width(),"width":$(window).width()});
 $("#btn_favorite, #btn_options").hide();
 $("#btn_apply").show();
@@ -1465,6 +1467,7 @@ $("#detect-area").off('swiperight');
 
 function hide_text_img()
 {
+console.log("hide_text");
 canvas.clear();
 $("#fabric_area").css({"height":0,"width":0});
 $("#btn_favorite, #btn_options").show();
