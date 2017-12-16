@@ -155,7 +155,7 @@ Favorite_has_beend_saved: "Added to your templates",
 Confirm_Delete_Favorite: "Do you want to delete this template?",
 Confirm : "Confirm",
 Optimize_to_share : "Please wait. We optimize your image for sharing.",
-Optimize_to_download : "Please wait. We optimize your image downloading.",
+Optimize_to_download : "Please wait. We optimize your image for downloading.",
 Optimize_to_print : "Please wait. We optimize your image for printing.",
 Apply: "Apply",
     };
