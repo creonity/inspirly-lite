@@ -1354,7 +1354,7 @@ for (var i=0; i < eles.length; i++)
 
 window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(data.image_url));
 
-  $("#download_prev").html("<img src='"+data.image_url+"'>");
+  //$("#download_prev").html("<img src='"+data.image_url+"'>");
 });
 
 },
