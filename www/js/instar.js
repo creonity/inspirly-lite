@@ -691,8 +691,8 @@ rating_array[image_chain[image_nr]["image_id"]] = rating;
 
 var swiepelefthandler = function(event) {show_image(1);$(".tutorial").fadeOut();}
 var swieperighthandler = function(event) {show_image(-1);$(".tutorial").fadeOut();}
-var change_textimage_handler = function(event) {event.stopPropagation();add_text_image(image_chain[ak_image_nr]["text_image"]);}
-var change_textimage_handler_off = function(event) {remove_text_image();}
+var change_textimage_handler = function(event) {console.log("on");event.stopPropagation();add_text_image(image_chain[ak_image_nr]["text_image"]);}
+var change_textimage_handler_off = function(event) {console.log("off");event.stopPropagation();remove_text_image();}
 
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
@@ -1380,6 +1380,7 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 function add_text_image(text_image)
 {
+console.log("add_text");
 fabric.Image.fromURL(text_image["src"], function(img) {
     //img.left = 50;
     //img.top = 50;
