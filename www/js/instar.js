@@ -692,7 +692,7 @@ rating_array[image_chain[image_nr]["image_id"]] = rating;
 var swiepelefthandler = function(event) {show_image(1);$(".tutorial").fadeOut();}
 var swieperighthandler = function(event) {show_image(-1);$(".tutorial").fadeOut();}
 var change_textimage_handler = function(event) {console.log("on");event.stopPropagation();add_text_image(image_chain[ak_image_nr]["text_image"]);}
-var change_textimage_handler_off = function(event) {console.log("off");event.stopPropagation();remove_text_image();}
+var change_textimage_handler_off = function(event) {console.log("off");remove_text_image();}
 
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
@@ -1462,6 +1462,7 @@ console.log("show_text");
 $("#fabric_area").css({"height":$(window).width(),"width":$(window).width()});
 $("#btn_favorite, #btn_options").hide();
 $("#btn_apply").show();
+$("#btn_apply").on("click",function(event){event.stopPropagation();applyChanges();});
 $("#detect-area").off('swipeleft');
 $("#detect-area").off('swiperight');
 }
@@ -1473,6 +1474,7 @@ canvas.clear();
 $("#fabric_area").css({"height":0,"width":0});
 $("#btn_favorite, #btn_options").show();
 $("#btn_apply").hide();
+$("#btn_apply").off("click");
 $("#detect-area").on('swipeleft', swiepelefthandler);
 $("#detect-area").on('swiperight', swieperighthandler);
 }
