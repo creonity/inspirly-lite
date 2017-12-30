@@ -42,7 +42,7 @@ Error : "Fehler!",
 You_can_only_share_if_you_have_the_according_app_installed : "Daf&uuml;r musst du erst die dazugeh&ouml;rige App installieren.",
 Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed : "Welcher Aspekt des Designs gef&auml;llt dir? Markiere was sich nicht mehr &auml;ndern soll.",
 Fontstyle : "Schriftart",
-Fontsize_and_position : "Schriftgr&ouml;sse",
+Fontsize_and_position : "Schriftgr&ouml;sse und Pos.",
 Fontfilling : "Schriftf&uuml;llung",
 Frame : "Rahmen",
 Background : "Hintergrund",
@@ -78,7 +78,10 @@ Optimize_to_print : "Bitte warte kurz. Das Bild wird f&uuml;rs den Druck optimie
 Apply: "Anwenden",
     };
 
-
+$.each(german_lang, function(index, value) {
+if(!resources[index]){resources[index] = [];}
+resources[index]["de"] = value;
+});
 
 
 var english_lang =
@@ -163,16 +166,11 @@ resources[index]["en"] = value;
 });
 
 
-/*
+
 $.each(german_lang, function(index, value) {
 languageModel[index] = ko.observable();
 });
-*/
 
-$.each(german_lang, function(index, value) {
-if(!resources[index]){resources[index] = [];}
-resources[index]["de"] = value;
-});
 
 
 

@@ -111,9 +111,6 @@ width:200px;
 
 .pixabay {background:rgba(255,255,255,0.8);padding:5px; position:absolute;bottom:55px;right:0px; z-index:4; border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
 
-.option_btn {color:grey}
-.option_btn.active {color:black}
-.option_btn.activeMenu {color:black; border-bottom:1px solid black}
 
 #crop_image_area {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
 #upload_loader {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}

@@ -57,6 +57,30 @@ For production change content-security-policy and admob
 
 
 
+<ons-template id="mySplitter.html">
+<ons-page id="mySplitter">
+<ons-splitter>
+  <ons-splitter-side id="menu" side="left" width="220px" collapse>
+    <ons-page>
+      <ons-list>
+        <ons-list-item onclick="fn.load('create.html')" tappable>
+          <span data-bind="reshtml: 'Designer'"></span>
+        </ons-list-item>
+           <ons-list-item onclick="fn.load('settings.html')" tappable>
+          <span data-bind="reshtml: 'Settings'"></span>
+        </ons-list-item>
+        <ons-list-item onclick="fn.load('about.html')" tappable>
+          <span data-bind="reshtml: 'About'"></span>
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-splitter-side>
+  <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
+</ons-splitter>
+  </ons-page>
+</ons-template>
+
+
 
 
 
@@ -65,11 +89,240 @@ For production change content-security-policy and admob
 <ons-page id="language">
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">English</ons-list-item>
-    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">Deutsch</ons-list-item>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
 </ons-list>
   </ons-page>
 </ons-template>
+
+
+
+
+
+
+
+<ons-template id="create.html">
+<ons-page id="create">
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
+    
+    </ons-toolbar>
+
+
+
+<ons-popover direction="up" cancelable id="options">
+  <div style="padding: 10px; text-align: right;">
+<ons-list style="margin-bottom:10px; background-color:rgba(0,0,0,0)">
+<ons-list-item>
+<span data-bind="reshtml: 'Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed'"></span>
+</ons-list-item>
+</ons-list>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontstyle'"></span>
+  <input id="font" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('font', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontsize_and_position'"></span>
+  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontsize', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Fontfilling'"></span>
+  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontfilling', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br>
+<label class="checkbox">
+<span data-bind="reshtml: 'Frame'"></span>
+  <input id="frame" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('frame', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Background'"></span>
+  <input id="background" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('background', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br><label class="checkbox">
+<span data-bind="reshtml: 'Texture'"></span>
+  <input id="texture" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('texture', $(this).is(':checked'));refresh_preloaded()">
+ <div class="checkbox__checkmark"></div>
+</label>
+<br></div>
+</ons-popover>
+
+
+<div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
+<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
+<div class='hidden' id ='Created_with_inspirly'><span data-bind="reshtml: 'Created_with_inspirly'"></span></div>
+<div class='hidden' id ='Get_inspired'><span data-bind="reshtml: 'Get_inspired'"></span></div>
+<div class='hidden'><span id ='Pick_an_app' data-bind="reshtml: 'Pick_an_app'"></span></div>
+<div class='hidden' id ='rate_title'><span data-bind="reshtml: 'Rate_app'"></span></div>
+<div class='hidden' id ='rate_message'><span data-bind="reshtml: 'Rate_msg'"></span></div>
+<div class='hidden' id ='rate_later'><span data-bind="reshtml: 'Rate_later'"></span></div>
+<div class='hidden' id ='rate_cancel'><span data-bind="reshtml: 'Rate_cancel'"></span></div>
+<div class='hidden' id ='rate_btn'><span data-bind="reshtml: 'Rate_btn'"></span></div>
+<div class='hidden' id ='Favorite_has_beend_saved'><span data-bind="reshtml: 'Favorite_has_beend_saved'"></span></div>
+<div class='hidden' id ='Confirm_Delete_Favorite'><span data-bind="reshtml: 'Confirm_Delete_Favorite'"></span></div>
+<div class='hidden' id ='Confirm'><span data-bind="reshtml: 'Confirm'"></span></div>
+<div class='hidden' id ='OK_lbl'><span data-bind="reshtml: 'OK'"></span></div>
+<div class='hidden' id ='Cancel_lbl'><span data-bind="reshtml: 'Cancel'"></span></div>
+
+
+
+<ons-tabbar id="tabbar" disable-auto-styling>
+  <ons-tab data-bind="resattr: { label: 'Text' }" icon="fa-quote-left" page="text.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling ></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Template' }" icon="fa-heart" page="mood.html" disable-auto-styling></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling active></ons-tab>
+  <ons-tab data-bind="resattr: { label: 'Share' }" icon="fa-share-square" id='share' page="share.html" disable-auto-styling></ons-tab>
+</ons-tabbar>
+  </ons-page>
+</ons-template>
+
+
+
+
+<template id="text.html">
+  <ons-page id= "usr_text_input">
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
+
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
+</ons-list-item>
+
+
+
+
+<ons-list-item>
+
+      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
+      <div class="right" id="autolinebreak_switch"></div>
+</ons-list-item>
+
+</ons-list>
+
+<p style="text-align: center;">
+
+<button class="button button--outline download_btn" onclick="getQuote(true)"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+
+
+
+  </ons-page>
+</template>
+
+
+
+
+
+
+<template id="own_image.html">
+  <ons-page id= "own_image">
+<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle;text-align:center'>
+<svg class="progress-circular progress-circular--indeterminate">
+  <circle class="progress-circular__background"/>
+  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
+  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
+</svg>
+</div></div></div>
+<div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
+</ons-list>
+<div id='crop_canvas_wrapper'><img id='image_to_crop'></div>
+<div style="float:right; padding:5px">
+<button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
+<button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
+</div>
+</div></div></div>
+<div id='toparea' style='padding:5px'>
+<input type="search" id="search_pic" value="" placeholder="Search image on Pixabay" class="search-input" style="width: 60%; margin-top:7px">
+<div style='float:right'>
+    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
+    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
+</div>
+<div style='clear:both'></div>
+</div>
+<div id='image_area' style='width:100%; overflow:scroll'>
+
+
+
+</div>
+<div style='clear:both'></div>
+
+<ons-alert-dialog id="dialog-3">
+  <div class="alert-dialog-title"><span data-bind="reshtml: 'Error'"></span></div>
+  <div class="alert-dialog-content">
+  <span data-bind="reshtml: 'no_pics_pixabay'"></span>
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="alert-dialog-button" onclick="hideDialog('dialog-3')"><span data-bind="reshtml: 'OK'"></span></button>
+  </div>
+</ons-alert-dialog>
+
+  </ons-page>
+
+
+</template>
+
+
+
+
+
+
+
+<template id="mood.html">
+  <ons-page id="mood">
+    <p style="text-align: center;">
+  <ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
+
+ <ons-list-item tappable>
+<select id='select_mood' class="select-input">
+  <option value='1' data-bind="reshtml: 'Simple'"></option>
+  <option value='2' data-bind="reshtml: 'Artsy'"></option>
+  <option value='3' data-bind="reshtml: 'Favorites'"></option>
+  <option value='4' data-bind="reshtml: 'Effects'"></option>
+  <option value='5' data-bind="reshtml: 'Newest'"></option>
+  <option value='0' data-bind="reshtml: 'Experimental'" selected></option>
+</select>
+</ons-list-item>
+
+
+</ons-list>
+
+
+
+  <ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
+</ons-list>
+    </p>
+
+<div id='templates_area' style='width:100%; overflow:scroll'>
+
+  </ons-page>
+</template>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,10 +337,8 @@ For production change content-security-policy and admob
 
 <ons-template id="rand_img.html">
   <ons-page  id = "image">
- <ons-toolbar>
-      <div class="center"><img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'></div>
-    <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
-    </ons-toolbar>
+
+
 
 <ons-gesture-detector>
 
@@ -107,102 +358,13 @@ For production change content-security-policy and admob
 <div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
     <button id="btn_apply" class="button button--light create_btn hidden" style="position:absolute; bottom:5px; left:5px; z-index:3; width:150px; background:rgba(255,0,0,0.5); color:white"><span data-bind="reshtml: 'Apply'"></span></button>
 
-    <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="shareImg()"><i class="fa fa-heart"></i></button>
+    <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="addFavorite();"><i class="fa fa-heart"></i></button>
+    <button id="btn_options" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
 </div>
 </div>
 </ons-gesture-detector>
 
-
-
-
-
-
-
-<div id='font_options' class='hidden'>
-<button id='font_fixed' class="button button--material--flat option_btn">FIXED</button>
-<button id='font_text' class="button button--material--flat option_btn">TEXT</button>
-<button id='font_filling' class="button button--material--flat option_btn">FILLING</button>
-<button id='font_delete' class="button button--material--flat option_btn">DELETE</button>
-</div>
-
-<div id='image_options' class='hidden'>
-<button id='image_fixed' class="button button--material--flat option_btn">FIXED</button>
-<button id='image_filling' class="button button--material--flat option_btn">BACKGROUND</button>
-<button id='add_font' class="button button--material--flat option_btn">ADD TEXT</button>
-</div>
-
-
-
-
-
-
-<div id='text_input' class='hidden'>
-<ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
-<ons-list-item>
-<textarea maxlength="800" style="width:100%;height:40px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
-</ons-list-item>
-<ons-list-item>
-      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
-      <div class="right" id="autolinebreak_switch"></div>
-</ons-list-item>
-</ons-list>
-<p style="text-align: center;">
-<button class="button button--outline download_btn" onclick="getQuote(true)"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
-</p>
-</div>
-
-
-
-<div id='filling_input' class='hidden'>
-<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle;text-align:center'>
-<svg class="progress-circular progress-circular--indeterminate">
-  <circle class="progress-circular__background"/>
-  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
-  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
-</svg>
-</div></div></div>
-<div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
-</ons-list>
-<div id='crop_canvas_wrapper'><img id='image_to_crop'></div>
-<div style="float:right; padding:5px">
-<button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
-<button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
-</div>
-</div></div></div>
-<div id='toparea' style='padding:5px'>
-<input type="search" id="search_pic" value="" placeholder="Search image on Pixabay" class="search-input" style="width: 50%; margin-top:7px">
-<div style='float:right'>
-    <button class="button button--outline create_btn" class='hidden' id='resetImage_btn' onclick="resetImage();"><i class="fa fa-close"></i></button>
-    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
-    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
-</div>
-<div style='clear:both'></div>
-</div>
-<div id='image_area' style='width:100%; overflow:scroll'>
-
-
-
-</div>
-<div style='clear:both'></div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="trainer_mode_ui" class='hidden'>
+<div id="trainer_mode_ui">
 
 <div style='padding:10px; padding-bottom:0px'>
 <div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
@@ -216,34 +378,6 @@ For production change content-security-policy and admob
 </div>
 </div>
 
-<button class="fab fab--mini" style='position:fixed; right:5px; bottom:5px; background-color:#e0e0e0'><i class="zmdi zmdi-plus"></i></button>
-
-<div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
-<div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
-<div class='hidden' id ='Created_with_inspirly'><span data-bind="reshtml: 'Created_with_inspirly'"></span></div>
-<div class='hidden' id ='Get_inspired'><span data-bind="reshtml: 'Get_inspired'"></span></div>
-<div class='hidden'><span id ='Pick_an_app' data-bind="reshtml: 'Pick_an_app'"></span></div>
-<div class='hidden' id ='rate_title'><span data-bind="reshtml: 'Rate_app'"></span></div>
-<div class='hidden' id ='rate_message'><span data-bind="reshtml: 'Rate_msg'"></span></div>
-<div class='hidden' id ='rate_later'><span data-bind="reshtml: 'Rate_later'"></span></div>
-<div class='hidden' id ='rate_cancel'><span data-bind="reshtml: 'Rate_cancel'"></span></div>
-<div class='hidden' id ='rate_btn'><span data-bind="reshtml: 'Rate_btn'"></span></div>
-<div class='hidden' id ='Favorite_has_beend_saved'><span data-bind="reshtml: 'Favorite_has_beend_saved'"></span></div>
-<div class='hidden' id ='Confirm_Delete_Favorite'><span data-bind="reshtml: 'Confirm_Delete_Favorite'"></span></div>
-<div class='hidden' id ='Confirm'><span data-bind="reshtml: 'Confirm'"></span></div>
-<div class='hidden' id ='OK_lbl'><span data-bind="reshtml: 'OK'"></span></div>
-<div class='hidden' id ='Cancel_lbl'><span data-bind="reshtml: 'Cancel'"></span></div>
-
-
-<ons-alert-dialog id="dialog-3">
-  <div class="alert-dialog-title"><span data-bind="reshtml: 'Error'"></span></div>
-  <div class="alert-dialog-content">
-  <span data-bind="reshtml: 'no_pics_pixabay'"></span>
-  </div>
-  <div class="alert-dialog-footer">
-    <button class="alert-dialog-button" onclick="hideDialog('dialog-3')"><span data-bind="reshtml: 'OK'"></span></button>
-  </div>
-</ons-alert-dialog>
 
   </ons-page>
 </ons-template>
@@ -265,12 +399,6 @@ For production change content-security-policy and admob
 
 <template id="share.html">
   <ons-page id="share">
- <ons-toolbar>
-  <div class="left">
-<div class="left"><ons-back-button></ons-back-button></div>
-</div>
-      <div class="center">Save Image</div>
-    </ons-toolbar>
 
     <p style="text-align: center;">
 
@@ -296,7 +424,7 @@ For production change content-security-policy and admob
 <button class="button button--outline download_btn" onclick="download_image(1600)"><span data-bind="reshtml: 'Large'"></span></button>
 <button class="button button--outline download_btn" onclick="download_image(3200)"><span data-bind="reshtml: 'X_Large'"></span></button>
 </p>
-
+<img id='imageElement' src=''>
 <div id="download_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_download'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
 
 <p>
@@ -332,10 +460,6 @@ For production change content-security-policy and admob
   </div>
 </ons-alert-dialog>
 
-<p style="text-align: center;margin-top:10px">
-<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
-</p>
-
   </ons-page>
 </template>
 
@@ -350,30 +474,25 @@ For production change content-security-policy and admob
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <template id="settings.html">
   <ons-page id="settings">
- <ons-toolbar>
-  <div class="left">
-<div class="left"><ons-back-button></ons-back-button></div>
-</div>
-      <div class="center">Settings</div>
+<ons-toolbar disable-auto-styling>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">
+        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
+      </div>
     </ons-toolbar>
+
+
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="change_lang('en');">English</ons-list-item>
-    <ons-list-item onclick="change_lang('de');">Deutsch</ons-list-item>
+    <ons-list-item onclick="locale='en';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
 </ons-list>
 
 <ons-list>
@@ -391,7 +510,7 @@ For production change content-security-policy and admob
 
 
 <p style="text-align: center;margin-top:10px">
-<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
+<button class="button button--outline" onclick="fn.load('create.html')"><span data-bind="reshtml: 'Go_back'"></span></button>
 </p>
 
   </ons-page>

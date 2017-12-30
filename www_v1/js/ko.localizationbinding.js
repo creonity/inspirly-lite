@@ -1,4 +1,4 @@
-// See https://github.com/tfsjohan/Knockout-Localization-Binding for more details.
+﻿// See https://github.com/tfsjohan/Knockout-Localization-Binding for more details.
 
 (function () {
 	ko.bindingHandlers.restext = {
