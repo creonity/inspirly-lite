@@ -115,9 +115,19 @@ width:200px;
 .option_btn.active {color:black}
 .option_btn.activeMenu {color:black; border-bottom:1px solid black}
 
-#crop_image_area {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
+#crop_image_area {position:fixed; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
 #upload_loader {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
 img {max-width: 100%;}
 
 #image_to_crop {}
 #crop_canvas_wrapper {width:100%px; overflow:hidden}
+
+.collection_img {background:url("../img/logo_sq.png"); width:30%; margin:1%; float:left;border-radius: 5px;background-size: cover}
+.flickr_img {
+-webkit-animation: flickerAnimation 4s infinite;
+   -moz-animation: flickerAnimation 4s infinite;
+   -o-animation: flickerAnimation 4s infinite;
+    animation: flickerAnimation 4s infinite;
+}
+#collection_wrapper{position:absolute;left:0px;top:0px; z-index:10;height:100%; width:100%;background:rgba(255,255,255,0.95);}
+#crop_image_area{position:fixed; left:0px; z-index:10; top:0px; height:100%; width:100%; display: table; background:rgba(255,255,255,0.95);}
