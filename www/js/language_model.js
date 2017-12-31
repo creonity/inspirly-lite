@@ -53,8 +53,8 @@ Picture_has_beend_saved : "Bild in deiner Gallerie gespeichert.",
 Created_with_inspirly : "Erstellt mit inspir.ly",
 Get_inspired : "Inspiration f&uuml;r dich",
 Pick_an_app : "W&auml;hle eine App aus",
-terms_en : ko.observable(false),
-terms_de : ko.observable(true),
+terms_en : false,
+terms_de : true,
 High_preview_quality_switch_off_if_images_load_slowly : "Hohe Qualit&auml;t der Vorschaubilder - Ausschalten falls Bilder nur langsam geladen werden",
 Go_back : "Zur&uuml;ck",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainingsmodus - Hilf unserer inspirly Designer KI besser zu werden",
@@ -76,6 +76,11 @@ Optimize_to_share : "Bitte warte kurz. Das Bild wird f&uuml;rs teilen optimiert.
 Optimize_to_download : "Bitte warte kurz. Das Bild wird f&uuml;rs den Download optimiert.",
 Optimize_to_print : "Bitte warte kurz. Das Bild wird f&uuml;rs den Druck optimiert.",
 Apply: "Anwenden",
+Help: "Hilfe",
+Basic_terms: "Nutzungsbedingungen",
+About_us: "&Uuml;ber uns",
+Privacy_policy: "Datenschutzerkl&auml;rung",
+Infos: "Infos",
     };
 
 
@@ -132,8 +137,8 @@ Picture_has_beend_saved : "Picture has beend saved",
 Created_with_inspirly : "Created with inspirly",
 Get_inspired : "Get inspired",
 Pick_an_app : "Pick an app",
-terms_en : ko.observable(true),
-terms_de : ko.observable(false),
+terms_en : true,
+terms_de : false,
 High_preview_quality_switch_off_if_images_load_slowly : "High preview quality - switch off if images load slowly",
 Go_back : "Go back",
 Trainer_mode_help_our_inspirly_Designer_AI_to_become_better : "Trainer mode - help our inspirly Designer AI to become better",
@@ -155,7 +160,16 @@ Optimize_to_share : "Please wait. We optimize your image for sharing.",
 Optimize_to_download : "Please wait. We optimize your image for downloading.",
 Optimize_to_print : "Please wait. We optimize your image for printing.",
 Apply: "Apply",
+Help: "Help",
+Basic_terms: "Basic terms",
+About_us: "About us",
+Privacy_policy: "Privacy policy",
+Infos: "Infos",
     };
+
+
+
+
 
 $.each(english_lang, function(index, value) {
 if(!resources[index]){resources[index] = [];}
@@ -163,19 +177,23 @@ resources[index]["en"] = value;
 });
 
 
-/*
-$.each(german_lang, function(index, value) {
-languageModel[index] = ko.observable();
-});
-*/
+
+
+
+
+
+
 
 $.each(german_lang, function(index, value) {
 if(!resources[index]){resources[index] = [];}
 resources[index]["de"] = value;
 });
 
-
-
+/*
+$.each(english_lang, function(index, value) {
+languageModel[index] = value;
+});
+*/
 
 
 

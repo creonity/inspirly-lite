@@ -163,7 +163,7 @@ For production change content-security-policy and admob
   <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
 </svg>
 </div></div></div>
-<div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
+<div id='crop_wrapper' class='hidden' ><div id='crop_image_area' style='position:fixed'><div style='display: table-cell; vertical-align: middle'>
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
 </ons-list>
@@ -216,7 +216,7 @@ For production change content-security-policy and admob
 </div>
 </div>
 
-<button class="fab fab--mini" style='position:fixed; right:5px; bottom:5px; background-color:#e0e0e0'><i class="zmdi zmdi-plus"></i></button>
+<button class="fab fab--mini" id="new_image" style='position:fixed; right:5px; bottom:5px; background-color:rgba(0,128,255,0.7)'><i class="zmdi zmdi-plus"></i></button>
 
 <div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
 <div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
@@ -353,6 +353,33 @@ For production change content-security-policy and admob
 
 
 
+<template id="mood.html">
+  <ons-page id="mood">
+
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center">New Image</div>
+    </ons-toolbar>
+
+  <ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
+</ons-list>
+<div id='moddsets_area' style='width:100%; overflow:scroll'></div>
+
+
+  <ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
+</ons-list>
+  
+
+<div id='templates_area' style='width:100%; overflow:scroll'></div>
+
+  </ons-page>
+</template>
+
+
 
 
 
@@ -379,7 +406,7 @@ For production change content-security-policy and admob
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
     <ons-list-item>
-  <div class="center" style="margin-top:0px" id="preview_quality_switch"></div>
+  <div class="center" style="margin-top:0px" id="preview_quality_switch"><ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
     </ons-list-item>
 </ons-list>
 <ons-list>
@@ -387,6 +414,14 @@ For production change content-security-policy and admob
     <ons-list-item>
   <div class="center" style="margin-top:0px" id="trainer_switch"></div>
     </ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
 </ons-list>
 
 
@@ -402,21 +437,17 @@ For production change content-security-policy and admob
 
 <template id="about.html">
   <ons-page id="about">
-<ons-toolbar disable-auto-styling>
-      <div class="left">
-        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
-      </div>
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center"><span data-bind="reshtml: 'About_us'"></span></div>
     </ons-toolbar>
 
 
 
 
-<div style='padding:20px' data-bind="visible: 'terms_de'">
+<div style='padding:20px' id='terms_de' data-bind="resvisible: 'terms_de'">
     <p style="text-align: center;">
     Wir von inspir.ly lieben sch&ouml;ne Bilder genauso wie du. Benutze inspir.ly und werde inspiriert. Alle Bilder werden von unseren einzigartigen <i>inspir.ly Desiger KI</i> erstellt,
      welche mit Hilfe von k&uuml;nstlicher Intelligenz bei jedem Desing dazulernt. Manchmal braucht es noch etwas Geduld, daf&uuml;r sind die Designs umso grossartiger. Sobald dir ein Design ge&auml;llt,
@@ -514,7 +545,7 @@ Wir behalten uns das Recht vor, jederzeit &Auml;nderungen an dieser Datenschutze
 
 
 
-<div style='padding:20px' data-bind="visible: 'terms_en'">
+<div style='padding:20px' data-bind="resvisible: 'terms_en'">
     <p style="text-align: center;">
 We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique <i>inspirly design engine AI</i>. The engine learns each time it creates an image to get better and better. When you like what
 you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.
