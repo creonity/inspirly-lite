@@ -41,7 +41,7 @@ var from_setting;
 var tutorial_shown;
 var fabric_last_obj;
 var ak_layer_id;
-
+ons.disableAutoStyling();
 //Clear local storage
 window.localStorage.removeItem("user_img");
 //window.localStorage.removeItem("preloaded_image");
