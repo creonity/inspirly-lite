@@ -122,12 +122,36 @@ img {max-width: 100%;}
 #image_to_crop {}
 #crop_canvas_wrapper {width:100%px; overflow:hidden}
 
-.collection_img {background:url("../img/logo_sq.png"); width:30%; margin:1%; float:left;border-radius: 5px;background-size: cover}
+
+
+
+
+
+
+
+
+@-webkit-keyframes pop-in {
+0% { opacity: 0; -webkit-transform: scale(0.1); }
+100% { opacity: 1; -webkit-transform: scale(1); }
+}
+@-moz-keyframes pop-in {
+0% { opacity: 0; -moz-transform: scale(0.1); }
+100% { opacity: 1; -moz-transform: scale(1); }
+}
+@keyframes pop-in {
+0% { opacity: 0; transform: scale(0.1); }
+100% { opacity: 1; transform: scale(1); }
+}
+
+
+.collection_img {background-color:white; background-image:url("../img/logo_sq.png"); margin:0.5%;border-radius: 5px;background-size: cover}
 .flickr_img {
--webkit-animation: flickerAnimation 4s infinite;
-   -moz-animation: flickerAnimation 4s infinite;
-   -o-animation: flickerAnimation 4s infinite;
-    animation: flickerAnimation 4s infinite;
+-webkit-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+-moz-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+-ms-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+animation:pop-in 0.5s,flickerAnimation 4s infinite;
+
 }
 #collection_wrapper{position:absolute;left:0px;top:0px; z-index:10;height:100%; width:100%;background:rgba(255,255,255,0.95);}
+#collection_area{height:100%; width:100%;}
 #crop_image_area{position:fixed; left:0px; z-index:10; top:0px; height:100%; width:100%; display: table; background:rgba(255,255,255,0.95);}
