@@ -148,6 +148,7 @@ For production change content-security-policy and admob
 </ons-list-item>
 </ons-list>
 <p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
 <button class="button button--outline download_btn" onclick="getQuote(true)"><span data-bind="reshtml: 'Random'"></span></button>
 <button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
 </p>
