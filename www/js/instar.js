@@ -323,6 +323,15 @@ $("#detect-area").off('swiperight');
 $("#detect-area").on('swiperight', swieperighthandler);
 $("#btn_favorite").on('click',function(e){e.stopPropagation();shareImg();});
 
+if($("#collection_wrapper").is(":visible"))
+{
+$("#collection_wrapper").off('pinchin');
+$("#collection_wrapper").off('swipeleft');
+$("#collection_wrapper").off('swiperight');
+$("#collection_wrapper").on('pinchin', pinchinhandler);
+$("#collection_wrapper").on('swipeleft', swipeleftcollectionhandler);
+$("#collection_wrapper").on('swiperight', swiperightcollectionhandler);
+}
 
 //if(from_setting==1){show_image(1);from_setting=0;}
 
@@ -573,10 +582,10 @@ async function createCollection(size)
 canvas.clear();
 collectionItemsShown=0;
 
-
+//if(!$collectionGrid)
+//{
 $collectionGrid = $('#collection_area').masonry({
   itemSelector: '.collection_img',
-  columnWidth: 1
 });
 
 $collectionGrid.on( 'removeComplete',
@@ -584,23 +593,25 @@ $collectionGrid.on( 'removeComplete',
     console.log( 'Removed ' + removedItems.length + ' items' );
   }
 );
-
+//}
 $("#collection_wrapper").show();
 $("#collection_wrapper").off('swipeleft');
 $("#collection_wrapper").off('swiperight');
 var counter=0;
 var total_elements = size*size;
-var item_width = $(window).width()/size-($(window).width()*0.02);
+var item_width = $(window).width()/size-($(window).width()*0.01);
 
 
 $('.collection_img').animate({height:item_width+"px",width:item_width+"px"},50,function(){$collectionGrid.masonry('layout')})
 
 
-
 while(counter <total_elements)
 {
-create_collection_item(ak_image_nr_collection+counter,item_width);
+if(!image_chain[ak_image_nr_collection+counter])
+{
 await sleep(50);
+}
+create_collection_item(ak_image_nr_collection+counter,item_width);
 counter=counter+1;
 }
 }
@@ -609,13 +620,17 @@ function create_collection_item(image_nr,item_width)
 {
 if($("#collection_img_"+image_nr).length == 0)
 {
-var $content = $("<div class='collection_img' style='height:"+item_width+"px; width:"+item_width+"px' id='collection_img_"+image_nr+"'>");
+var $content = $("<div onclick='clickCollectionItem("+image_nr+")' class='collection_img' style='height:"+item_width+"px; width:"+item_width+"px' id='collection_img_"+image_nr+"'>");
 $collectionGrid.append( $content ).masonry( 'appended', $content);
 $collectionGrid.masonry();
+//$collectionGrid.append( $content ).masonry( 'addItems', $content);
+//$collectionGrid.masonry();
+//$("collection_img_"+image_nr).addClass("flickr_img");
 }
 if(!image_chain[image_nr]){create_image(image_nr,image_chain[ak_image_nr]["code"],showCollectionItem,image_nr);}
-else if(!image_chain[image_nr]["src"]){create_image(image_nr,image_chain[ak_image_nr]["code"],showCollectionItem,image_nr);}
-else{showCollectionItem(image_nr);}
+else if(!image_chain[image_nr]["src"]){$("collection_img_"+image_nr).addClass("flickr_img");create_image(image_nr,image_chain[ak_image_nr]["code"],showCollectionItem,image_nr);}
+else{
+showCollectionItem(image_nr);}
 
 }
 
@@ -623,16 +638,13 @@ else{showCollectionItem(image_nr);}
 
 function showCollectionItem(image_nr)
 {
-$("#collection_img_"+image_nr).css("background-image", "url("+image_chain[image_nr]["src"]+")").removeClass("flickr_img");  
-$("#collection_img_"+image_nr).on("click",function(){
-fullsize_image(image_nr);
-$("#collection_wrapper").off('pinchin');
-$("#collection_wrapper").off('swipeleft');
-$("#collection_wrapper").off('swiperight');
-//$collectionGrid.masonry( 'remove', $(".collection_img") );
-$collectionGrid.masonry('destroy');
-$("#collection_area").html("");
-$("#collection_wrapper").hide();collection_size=collection_size-1;})
+//var item_width = $("#collection_img_"+image_nr).width();
+//var item_top = $("#collection_img_"+image_nr).position().top;
+//var item_left= $("#collection_img_"+image_nr).position().left;
+//$("#collection_img_"+image_nr).removeClass("flickr_img");
+//$("#collection_img_"+image_nr).removeAttr("style").width(item_width).height(item_width).css({ top: item_top+'px', left: item_left+'px' });
+$("#collection_img_"+image_nr).css("background-image", "url("+image_chain[image_nr]["src"]+")");
+
 collectionItemsShown = collectionItemsShown+1;
 
 //attach pinch handler, when all items shown
@@ -641,10 +653,24 @@ if(collectionItemsShown == collection_size*collection_size)
 next_image_nr=ak_image_nr_collection+collectionItemsShown;
 $("#collection_wrapper").off('pinchin');
 $("#collection_wrapper").off('swipeleft');
+$("#collection_wrapper").off('swiperight');
 $("#collection_wrapper").on('pinchin', pinchinhandler);
 $("#collection_wrapper").on('swipeleft', swipeleftcollectionhandler);
 $("#collection_wrapper").on('swiperight', swiperightcollectionhandler);
 }
+}
+
+function clickCollectionItem(image_nr)
+{
+fullsize_image(image_nr);
+$("#collection_wrapper").off('pinchin');
+$("#collection_wrapper").off('swipeleft');
+$("#collection_wrapper").off('swiperight');
+//$collectionGrid.masonry( 'remove', $(".collection_img") );
+$collectionGrid.masonry('destroy');
+$("#collection_area").html("");
+$("#collection_wrapper").hide();
+collection_size=collection_size-1;
 }
 
 var swipeleftcollectionhandler = function(event) {
@@ -1198,7 +1224,7 @@ if(data.error){busy=false;
 else{
 image_chain[image_nr]["src"]=data.image_url;
 
-//console.log(data.debug);
+console.log(data.debug_script);
 image_chain[image_nr]["text_image"]=[];
 
 data.text_img = JSON.parse(data.text_img);
@@ -1455,11 +1481,11 @@ $.ajax({
   data: datatosend,
   success: function(msg, error) {
   var data = JSON.parse(msg);
-
+console.log(data.debug_script);
   $("#download_progress").fadeOut(1000, function(){
 
 
-  //$("#download_prev").html("<img src='"+data.image_url+"'>");
+  $("#download_prev").html("<img src='"+data.image_url+"'>");
   $(".download_btn").prop("disabled", false);});
 
 //var fileTransfer = new FileTransfer();
@@ -1488,6 +1514,7 @@ ons.notification.alert(error_connection_txt);}
 
 
 function download(URL, File_Name) {
+if(typeof cordova !== 'undefined'){
 //window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function (dirEntry) {
 window.resolveLocalFileSystemURL('cdvfile://localhost/sdcard/Pictures/', function (dirEntry) {
 //alert('cdvfile URI: ' + dirEntry.toInternalURL());
@@ -1495,6 +1522,10 @@ window.resolveLocalFileSystemURL('cdvfile://localhost/sdcard/Pictures/', functio
 dirEntry.getDirectory( "inspirly",{create:true, exclusive: false},function(directory) {createFile(directory, File_Name, URL);},onErrorCreateDir);
 //createFile(dirEntry, File_Name, URL);
 }, onErrorLoadFs);
+}else
+{
+$("#download_prev").show();
+}
 }
 
 function onErrorCreateDir(msg){alert("Error while creating directory.");}
