@@ -245,10 +245,6 @@ $("#detect-area").css("height", $(window).width());
 //$(".page__background").on('tap', change_textimage_handler_off);
 
 
-swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:1,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
-$(".sketch").attr("height",$(window).width()+"px");
-$(".sketch").prev().insertAfter($(".sketch"));
-add_effect();
 
 $("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
 $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});
@@ -339,7 +335,7 @@ canvas.off('selection:cleared');
 canvas.on({'selection:cleared' : function() {hide_text_img(ak_image_nr);}});
 
 
-image_handler(true);
+
 $("#btn_favorite").on('click',function(e){e.stopPropagation();shareImg();});
 
 
@@ -1142,8 +1138,8 @@ rating_array[image_chain[image_nr]["image_id"]] = rating;
 
 
 var pinchinhandler = function(event) {$("#detect-area").off('pinchin');$("#collection_wrapper").off('pinchin');collection_size=collection_size+1;createCollection(collection_size);$(".tutorial").fadeOut();}
-var swipelefthandler = function(event) {canvas.discardActiveObject();show_image(-1);$(".tutorial").fadeOut();}
-var swiperighthandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,3);show_image(1);$(".tutorial").fadeOut();}
+var swipelefthandler = function(event) {canvas.discardActiveObject();show_image(1);$(".tutorial").fadeOut();}
+var swiperighthandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,3);show_image(-1);$(".tutorial").fadeOut();}
 var swipeuphandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,5);show_image(1);}
 var swipedownhandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,1);show_image(1);}
 //var holdhandler = function(event) {event = $.Event('touchmove');$(".sketch").trigger(event);}
@@ -1152,7 +1148,7 @@ function image_handler(attach)
 {
 if(attach)
 {
-$(".sketch").on('touchmove',function(event){event.stopPropagation();console.log("mousemove");})
+//$(".sketch").on('touchmove',function(event){event.stopPropagation();console.log("mousemove");})
 $("#detect-area").off('click');
 $("#detect-area").on('click', select_canvas_handler);
 $("#detect-area").off('pinchin');
@@ -1167,9 +1163,22 @@ $("#detect-area").off('swipedown');
 $("#detect-area").on('swipedown', swipedownhandler);
 //$("#detect-area").off('drag');
 //$("#detect-area").on('drag', holdhandler);
+
+if (!$( ".sketch" ).length){
+console.log("sketch attached");
+swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:1,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
+$(".sketch").attr("height",$(window).width()+"px");
+$(".sketch").prev().insertAfter($(".sketch"));
+add_effect();
 }
 else
 {
+swipe_effect.start();
+}
+}
+else
+{
+swipe_effect.stop();
 $("#detect-area").off('click');
 $("#detect-area").off('swipeleft');
 $("#detect-area").off('pinchin');
@@ -2028,7 +2037,7 @@ fabric.loadSVGFromString(text_image[key]["svg"], function(objects, options) {
 "left": text_image[key]["left"]/400*$(window).width(),"layer_id":text_image[key]["layer_id"],"originY":"center","originX":"center","hasBorders":false,"hasControls":false,"hasRotatingPoint":false,"opacity":"0.01","padding":0,"cornersize":10, "width":text_image[key]["width"], "height":text_image[key]["height"], "angle":text_image[key]["rotation"],"top": text_image[key]["top"]/400*$(window).width()
   });
 obj.perPixelTargetFind = true;
-obj.targetFindTolerance = 10;
+obj.targetFindTolerance = 20;
 obj.hasControls = obj.hasBorders = false;
 canvas.add(obj);
 },false,{crossOrigin : "Anonymous"});
