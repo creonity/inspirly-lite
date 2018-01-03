@@ -81,6 +81,7 @@ Basic_terms: "Nutzungsbedingungen",
 About_us: "&Uuml;ber uns",
 Privacy_policy: "Datenschutzerkl&auml;rung",
 Infos: "Infos",
+Effect_mode: "Effekte anzeigen",
     };
 
 
@@ -165,6 +166,7 @@ Basic_terms: "Basic terms",
 About_us: "About us",
 Privacy_policy: "Privacy policy",
 Infos: "Infos",
+Effect_mode: "Show effects",
     };
 
 
