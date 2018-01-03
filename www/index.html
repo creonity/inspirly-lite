@@ -213,12 +213,14 @@ For production change content-security-policy and admob
 
 <div style='padding:10px; padding-bottom:0px'>
 <div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
-<div style='float:left; width:50%; text-align:center'>
+<div style='float:left; width:40%; text-align:center'>
 <button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,1);show_image(1);"><i class="fa fa-star-o"></i></button>
 <button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,3);show_image(1);"><i class="fa fa-star-half-o"></i></button>
 <button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,5);show_image(1);"><i class="fa fa-star"></i></button>
 </div>
-<div style='width:25%; float:left; text-align:right; font-size:14px; line-height:14px'> <div id='best_guess' style='color:rgba(0,0,0,0.2)'></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div></div>
+<div style='width:35%; float:left; text-align:right; font-size:14px; line-height:14px'> <div><span id='image_id' style='color:rgba(0,0,0,0.2)'></span><span id='best_guess' style='color:rgba(0,0,0,0.2)'></span></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div>
+
+</div>
 <div style='clear:both'></div>
 </div>
 </div>
@@ -302,8 +304,6 @@ For production change content-security-policy and admob
 <button class="button button--outline download_btn" onclick="download_image(800)"><span data-bind="reshtml: 'Medium'"></span></button>
 <button class="button button--outline download_btn" onclick="download_image(1600)"><span data-bind="reshtml: 'Large'"></span></button>
 <button class="button button--outline download_btn" onclick="download_image(3200)"><span data-bind="reshtml: 'X_Large'"></span></button>
-<button class="button button--outline download_btn" onclick="download_image(6400)"><span data-bind="reshtml: 'X_Large'"></span></button>
-
 </p>
 
 <div id="download_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_download'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>

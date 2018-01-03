@@ -5,7 +5,7 @@ var version = "1.0L";
 var default_lang = "en";
 //window.localStorage.setItem("autolinebreak", "true");
 window.localStorage.setItem("mood", 0);
-window.localStorage.setItem("sleeptime", 500);
+window.localStorage.setItem("sleeptime", 50);
 window.localStorage.setItem("autolinebreak",true);
 window.localStorage.setItem("user_data",'{"0":{},"1":{"text_content":"lorem","zindex":"1","autolinebreak":true}}');
 if(!window.localStorage.getItem){window.localStorage.getItem("preview_quality",true);}
@@ -46,6 +46,7 @@ var $collectionGrid;
 var collection_size =1;
 var collectionItemsShown;
 var next_image_nr;
+var print_w = {};
 
 ons.disableAutoStyling();
 //Clear local storage
@@ -546,6 +547,7 @@ refresh_preloaded(true);hide_text_img();
 function shareImg()
 {
 document.querySelector('#myNavigator').pushPage('share.html');
+download_cache();
 
 if(window.localStorage.getItem("current_banner_image")!=window.localStorage.getItem("current_image"))
 {
@@ -620,7 +622,7 @@ function create_collection_item(image_nr,item_width)
 {
 if($("#collection_img_"+image_nr).length == 0)
 {
-var $content = $("<div onclick='clickCollectionItem("+image_nr+")' class='collection_img' style='height:"+item_width+"px; width:"+item_width+"px' id='collection_img_"+image_nr+"'>");
+var $content = $("<div class='collection_img' style='height:"+item_width+"px; width:"+item_width+"px' id='collection_img_"+image_nr+"'>");
 $collectionGrid.append( $content ).masonry( 'appended', $content);
 $collectionGrid.masonry();
 //$collectionGrid.append( $content ).masonry( 'addItems', $content);
@@ -644,6 +646,9 @@ function showCollectionItem(image_nr)
 //$("#collection_img_"+image_nr).removeClass("flickr_img");
 //$("#collection_img_"+image_nr).removeAttr("style").width(item_width).height(item_width).css({ top: item_top+'px', left: item_left+'px' });
 $("#collection_img_"+image_nr).css("background-image", "url("+image_chain[image_nr]["src"]+")");
+$("#collection_img_"+image_nr).off("click");
+$("#collection_img_"+image_nr).on("click",function(){clickCollectionItem(image_nr);});
+
 
 collectionItemsShown = collectionItemsShown+1;
 
@@ -1035,7 +1040,8 @@ if(window.localStorage.getItem('texture')=="true"){$("#texture").prop( "checked"
 
 async function show_image(image_change)
 {
-if(busy && image_change==1){return;}
+console.log("show_image");
+if(busy && image_change==1){console.log("busy");return;}
 ak_image_nr = ak_image_nr + image_change;
 if(ak_image_nr<0){ak_image_nr=0}
 if(ak_image_nr_show != ak_image_nr){
@@ -1051,12 +1057,14 @@ show_loader(true,true);
 await sleep(window.localStorage.getItem("sleeptime"));
 }
 if(!image_chain[ak_image_nr]){
-
 var code = "{}";
 if(image_chain[ak_image_nr-1]){if(image_chain[ak_image_nr-1]["code"]){code = image_chain[ak_image_nr-1]["code"];}}
-
 create_image(ak_image_nr,code,show_image,0);return;}
-if(!image_chain[ak_image_nr]["src"]){return;}
+if(!image_chain[ak_image_nr]["src"]){
+$( "#myNavigator").off("loaded_img_src");
+$( "#myNavigator").on("loaded_img_src",function(e,image_nr){
+if(image_nr==ak_image_nr && $("#c").is(":visible")){collection_size=1;ak_image_nr_collection = ak_image_nr;fullsize_image(ak_image_nr);}});
+return;}
 if(ak_image_nr==last_image_nr){return;}
 collection_size=1;
 ak_image_nr_collection = ak_image_nr;
@@ -1074,9 +1082,10 @@ $('<img>').attr('src', image_chain[ak_image_nr]["src"]).imagesLoaded( {"image_nr
  last_image_nr= ak_image_nr;
  }
 show_loader(false);
-$("#best_guess").html("("+image_chain[ak_image_nr]["best_guess"]+"%)");
+$("#best_guess").html(image_chain[ak_image_nr]["best_guess"]+"%");
 $("#time_calculated").html("("+Math.round(image_chain[ak_image_nr]["performance_calculation"]/100)/10+"s)");
 $("#time_loaded").html("("+Math.round(image_chain[ak_image_nr]["performance_loaded"]/100)/10+"s)");
+$("#image_id").html(image_chain[image_nr]["image_id"]+" : ");
 ak_image_nr_show = ak_image_nr;
 window.localStorage.setItem("current_image",image_chain[ak_image_nr]["src"]);
 window.localStorage.setItem("current_image_id",image_chain[ak_image_nr]["image_id"]);
@@ -1223,6 +1232,7 @@ if(data.error){busy=false;
     image_chain[image_nr]["src"]= "http://placehold.it/476x288/eb356c/ffffff?text="+encodeURI(data.error);}
 else{
 image_chain[image_nr]["src"]=data.image_url;
+$( "#myNavigator").trigger( "loaded_img_src",[image_nr] );
 
 console.log(data.debug_script);
 image_chain[image_nr]["text_image"]=[];
@@ -1582,13 +1592,62 @@ function displayImageByFileURL(fileEntry) {
 }
 */
 
+function share_by_platform(platform)
+{
+var share_options;
+share_options = {
+  message: $("#Created_with_inspirly ").html()+'#inspirly', // not supported on some apps (Facebook, Instagram)
+  subject: $("#Get_inspired").html(), // fi. for email
+  files: [image_chain[ak_image_nr]["prev_url_medium"]], // an array of filenames either locally or remotely
+  url: 'https://www.inspir.ly',
+  chooserTitle: $("#Pick_an_app").html() // Android only, you can override the default share sheet title
+}
+
+if(platform == "facebook"){window.plugins.socialsharing.shareViaFacebook($("#Created_with_inspirly").html()+' #inspirly',  image_chain[ak_image_nr]["prev_url_medium"], 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "instagram"){window.plugins.socialsharing.shareViaInstagram($("#Created_with_inspirly").html()+' #inspirly', image_chain[ak_image_nr]["prev_url_medium"], function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "whatsapp"){window.plugins.socialsharing.shareViaWhatsApp($("#Created_with_inspirly").html()+' #inspirly', image_chain[ak_image_nr]["prev_url_medium"], 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "twitter"){window.plugins.socialsharing.shareViaTwitter($("#Created_with_inspirly").html()+' #inspirly', image_chain[ak_image_nr]["prev_url_medium"], 'http://www.inspir.ly', function() {console.log('share ok')}, function(errormsg){showDialog('dialog-2');})}
+if(platform == "snapchat"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
+if(platform == "other"){window.plugins.socialsharing.shareWithOptions(share_options, share_onSuccess, share_onError);}
+
+var share_onSuccess = function(result) {
+  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+}
+var share_onError = function(msg) {
+ons.notification.alert("Sharing failed with message: " + msg);
+}
+}
+
+function share(platform)
+{
+$( "#myNavigator").off("loaded_prev_medium");
+if(image_chain[ak_image_nr]["prev_url_medium"])
+{
+$("#share_progress").fadeOut();
+share_by_platform(platform);
+}
+else
+{
+$("#share_progress").fadeIn();
+$(".share_btn").prop("disabled", true);
+$( "#myNavigator").off("loaded_prev_medium");
+$( "#myNavigator").on( "loaded_prev_medium", function(){
+$("#share_progress").fadeOut();
+$(".share_btn").prop("disabled", false);
+share_by_platform(platform);
+});
+}
+}
+
+/*
 function share(platform)
 {
 $("#share_progress").fadeIn();
 $(".share_btn").prop("disabled", true);
 
 var template_id = getTemplateId(window.localStorage.getItem("current_image"));
-var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=1080&template_id="+template_id+"&device_id="+device_id+"&share="+platform;
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=1600&template_id="+template_id+"&device_id="+device_id+"&share="+platform;
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/download.php",
@@ -1638,7 +1697,7 @@ error: function (msg, textStatus, errorThrown) {
 ons.notification.alert(error_connection_txt);}
     });
 }
-
+*/
 
 
 
@@ -1750,7 +1809,9 @@ $.ajax({
 
 
 //$("#print_progress").fadeOut(1000,function(){
-$("#print_products").html("<img onclick='print_product()' style='width:100%' src='"+data.image_url+"'>");
+$("#print_products").html("<img id='print_prev' style='width:100%' src='"+data.image_url+"'>");
+$("#print_prev").off("click");
+$("#print_prev").on("click",function(){print_product();});
 $("#print_products").fadeIn();
 //});
 window.localStorage.setItem("current_banner_image", window.localStorage.getItem("current_image"));
@@ -1768,6 +1829,76 @@ $("#print_products").show();}
 
 
 
+function download_cache()
+{
+$("#print_progress").fadeIn();
+//disable to click again on image
+var eles = document.getElementsByTagName('img');
+for (var i=0; i < eles.length; i++)
+   eles[i].onclick = null;
+
+
+var template_id = getTemplateId(window.localStorage.getItem("current_image"));
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=1600&template_id="+template_id+"&device_id="+device_id;
+$.ajax({
+  url: "https://www.inspir.ly/user_img/download.php",
+  type: "POST",
+  global: false,
+  data: datatosend,
+  success: function(msg, error) {
+  var data = JSON.parse(msg);
+console.log(data.debug_script);
+image_chain[ak_image_nr]["prev_url_medium"] = data.image_url;
+$( "#myNavigator").trigger( "loaded_prev_medium" );
+},
+error: function (msg, textStatus, errorThrown) {}
+    });
+
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=3200&template_id="+template_id+"&device_id="+device_id;
+$.ajax({
+  url: "https://www.inspir.ly/user_img/download.php",
+  type: "POST",
+  global: false,
+  data: datatosend,
+  success: function(msg, error) {
+  var data = JSON.parse(msg);
+console.log(data.debug_script);
+image_chain[ak_image_nr]["prev_url"] = data.image_url;
+$( "#myNavigator").trigger( "loaded_prev" );
+},
+error: function (msg, textStatus, errorThrown) {}
+    });
+
+}
+
+function print_product()
+{
+$( "#myNavigator").off("loaded_prev");
+if(image_chain[ak_image_nr]["prev_url"])
+{
+print_w[ak_image_nr] = window.open('', '_blank');
+print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
+print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
+//window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
+}
+else
+{
+print_w[ak_image_nr] = window.open('', '_blank');
+print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
+$("#print_progress").fadeIn();
+$("#print_prev").off("click");
+$( "#myNavigator").off("loaded_prev");
+$( "#myNavigator").on( "loaded_prev", function(){
+$("#print_progress").fadeOut();
+console.log("open");
+print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
+$("#print_prev").off("click");
+$("#print_prev").on("click",function(){print_product();});
+});
+}
+
+}
+/*
 function print_product()
 {
 $("#print_progress").fadeIn();
@@ -1778,7 +1909,7 @@ for (var i=0; i < eles.length; i++)
 
 
 var template_id = getTemplateId(window.localStorage.getItem("current_image"));
-var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=2000&template_id="+template_id+"&device_id="+device_id+"&print=1";
+var datatosend = "code="+image_chain[ak_image_nr]["code"]+"&size=1600&template_id="+template_id+"&device_id="+device_id+"&print=1";
 
 $.ajax({
   url: "https://www.inspir.ly/user_img/download.php",
@@ -1810,7 +1941,7 @@ ons.notification.alert(error_connection_txt);}
     });
 
 }
-
+*/
 
 function _getLocalImagePathWithoutPrefix(url) {
     if (url.indexOf('file:///') === 0) {
