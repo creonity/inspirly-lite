@@ -155,3 +155,6 @@ animation:pop-in 0.5s,flickerAnimation 4s infinite;
 #collection_wrapper{position:absolute;left:0px;top:0px; z-index:10;height:100%; width:100%;background:rgba(255,255,255,0.95);}
 #collection_area{height:100%; width:100%;}
 #crop_image_area{position:fixed; left:0px; z-index:10; top:0px; height:100%; width:100%; display: table; background:rgba(255,255,255,0.95);}
+
+
+.sketch {position:absolute; top:0px; left:0px; touch-action: none;}
