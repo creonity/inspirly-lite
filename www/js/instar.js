@@ -1142,8 +1142,8 @@ rating_array[image_chain[image_nr]["image_id"]] = rating;
 
 
 var pinchinhandler = function(event) {$("#detect-area").off('pinchin');$("#collection_wrapper").off('pinchin');collection_size=collection_size+1;createCollection(collection_size);$(".tutorial").fadeOut();}
-var swipelefthandler = function(event) {canvas.discardActiveObject();show_image(1);$(".tutorial").fadeOut();}
-var swiperighthandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,3);show_image(-1);$(".tutorial").fadeOut();}
+var swipelefthandler = function(event) {canvas.discardActiveObject();show_image(-1);$(".tutorial").fadeOut();}
+var swiperighthandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,3);show_image(1);$(".tutorial").fadeOut();}
 var swipeuphandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,5);show_image(1);}
 var swipedownhandler = function(event) {canvas.discardActiveObject();rate_image(ak_image_nr_show,1);show_image(1);}
 //var holdhandler = function(event) {event = $.Event('touchmove');$(".sketch").trigger(event);}
@@ -1155,10 +1155,10 @@ if(attach)
 $(".sketch").on('touchmove',function(event){event.stopPropagation();console.log("mousemove");})
 $("#detect-area").off('click');
 $("#detect-area").on('click', select_canvas_handler);
-$("#detect-area").off('swipeleft');
-$("#detect-area").on('swipeleft', swipelefthandler);
 $("#detect-area").off('pinchin');
 $("#detect-area").on('pinchin', pinchinhandler);
+$("#detect-area").off('swipeleft');
+$("#detect-area").on('swipeleft', swipelefthandler);
 $("#detect-area").off('swiperight');
 $("#detect-area").on('swiperight', swiperighthandler);
 $("#detect-area").off('swipeup');
