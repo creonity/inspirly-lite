@@ -5,7 +5,7 @@ var version = "1.0L";
 var default_lang = "en";
 //window.localStorage.setItem("autolinebreak", "true");
 window.localStorage.setItem("mood", 0);
-window.localStorage.setItem("sleeptime", 100);
+window.localStorage.setItem("sleeptime", 500);
 window.localStorage.setItem("autolinebreak",true);
 window.localStorage.setItem("user_data",'{"0":{},"1":{"text_content":"lorem","zindex":"1","autolinebreak":true}}');
 if(!window.localStorage.getItem){window.localStorage.getItem("preview_quality",true);}
@@ -1068,7 +1068,7 @@ async function show_image(image_change)
 console.log("show_image");
 if(busy && image_change==1){console.log("busy");return;}
 ak_image_nr = ak_image_nr + image_change;
-if(ak_image_nr<0){ak_image_nr=0}
+//if(ak_image_nr<0){ak_image_nr=0}
 if(ak_image_nr_show != ak_image_nr){
 if(last_image_nr>=0){image_chain[last_image_nr]["time_hidden"] = Date.now();
 //if(canvas._objects){if(canvas._objects.length>0){
@@ -1932,22 +1932,23 @@ function print_product()
 $( "#myNavigator").off("loaded_prev");
 if(image_chain[ak_image_nr]["prev_url"])
 {
-print_w[ak_image_nr] = window.open('', '_blank');
-print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
-print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
-//window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
+//print_w[ak_image_nr] = window.open('', '_blank');
+//print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
+//print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
+window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
 }
 else
 {
-print_w[ak_image_nr] = window.open('', '_blank');
-print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
+//print_w[ak_image_nr] = window.open('', '_blank');
+//print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
 $("#print_progress").fadeIn();
 $("#print_prev").off("click");
 $( "#myNavigator").off("loaded_prev");
 $( "#myNavigator").on( "loaded_prev", function(){
 $("#print_progress").fadeOut();
 console.log("open");
-print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
+//print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
+window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
 $("#print_prev").off("click");
 $("#print_prev").on("click",function(){print_product();});
 });

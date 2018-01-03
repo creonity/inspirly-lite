@@ -119,18 +119,18 @@ swipe_effect.mousedown = function() {
 swipe_effect.mousemove = function() {
 	var particle, theta, force, touch, max, i, j, n;
 		touch = swipe_effect.touches[0];
-if(start_y-touch.y>(image_width/10) && Math.abs(touch.dy)>3 && Math.abs(touch.dx)<1)
+if(start_y-touch.y>(image_width/20) && Math.abs(touch.dy)>3 && Math.abs(touch.dx)<1)
 {
-minus = 4-Math.abs(touch.dy);minus = minus < 0 ? 0 : minus;
-max = (start_y-touch.y)/(image_width/2)-minus;
+minus = 3-Math.abs(touch.dy);minus = minus < 0 ? 0 : minus;
+max = (start_y-touch.y)/(image_width/3)-minus;
 max = max < 0 ? 0 : Math.round(max)*streak;
 for ( j = 0; j < max; j++ ){swipe_effect.spawn( touch.x, touch.y, 1 );}
 }
 
-else if(touch.y-start_y>(image_width/10) && Math.abs(touch.dy)>3 && Math.abs(touch.dx)<1)
+else if(touch.y-start_y>(image_width/20) && Math.abs(touch.dy)>3 && Math.abs(touch.dx)<1)
 {
-minus = 4-Math.abs(touch.dy);minus = minus < 0 ? 0 : minus;
-max = (touch.y-start_y)/(image_width/2)-minus;
+minus = 3-Math.abs(touch.dy);minus = minus < 0 ? 0 : minus;
+max = (touch.y-start_y)/(image_width/3)-minus;
 max = max < 0 ? 0 : Math.round(max)*streak;
 for ( j = 0; j < max; j++ ){swipe_effect.spawn( touch.x, touch.y, 0 );}
 }
