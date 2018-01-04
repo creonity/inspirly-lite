@@ -170,7 +170,7 @@ if(typeof AdMob !== 'undefined') {
     adId: admobid.banner,
     adSize: 'CUSTOM',
     width: $(window).width(),
-    height: ($(window).height()-$(window).width()-$(".toolbar").height()-100);
+    height: ($(window).height()-$(window).width()-$(".toolbar").height()-100),
     position: AdMob.AD_POSITION.BOTTOM_CENTER,
     isTesting: true, // TODO: remove this line when release
     overlap: false,
@@ -368,7 +368,7 @@ $("#collection_wrapper").on('swiperight', swiperightcollectionhandler);
 
 if(window.localStorage.getItem("trainer_mode")=="true"){$("#trainer_mode_ui").show();}else{$("#trainer_mode_ui").hide();}
 if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
-if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}}
+if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 //show_image(0);
 //update_checkboxes();
 
