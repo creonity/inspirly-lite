@@ -129,7 +129,8 @@ screen.orientation.lock('portrait');
 //Prepare adds
 if(typeof AdMob !== 'undefined') {
 //create_bannerAd();
-//create_interstitial();}
+//create_interstitial();
+}
 
 device_id = device.uuid;
 
@@ -338,7 +339,7 @@ $container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth
 if(window.localStorage.getItem("trainer_mode")=="true"){$(".trainer_mode_ui").show();}else{$(".trainer_mode_ui").hide();}
 //if(typeof AdMob !== 'undefined'){AdMob.removeBanner();
 //create_bannerAd();
-}
+//}
 //if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 }
 
