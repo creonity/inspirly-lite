@@ -57,16 +57,16 @@ swipe_effect.setup = function() {
 
 	// Set off some initial particles.
 	var i, x, y, start_y;
-
+/*
 	for ( i = 0; i < 20; i++ ) {
 		x = ( swipe_effect.width * 0.5 ) + random( -100, 100 );
 		y = ( swipe_effect.height * 0.5 ) + random( -100, 100 );
 		swipe_effect.spawn( x, y );
 	}
+  */
 };
 
 swipe_effect.spawn = function( x, y, direction ) {
-
 	if ( particles.length >= MAX_PARTICLES )
 		pool.push( particles.shift() );
 
@@ -75,12 +75,12 @@ swipe_effect.spawn = function( x, y, direction ) {
 
 	particle.wander = random( 0.5, 2.0 );
 if(direction==0){particle.color = random(['rgba(135, 135, 135,0.73)','rgba(183, 183, 183,0.12)','rgba(221, 221, 221,0.9)','rgba(206, 206, 206,0.12)','rgba(244, 244, 244,0.27)','rgba(211, 211, 211,0.21)','rgba(226, 226, 226,0.71)','rgba(216, 216, 216,0.65)','rgba(206, 206, 206,0.36)','rgba(130, 1, 14,0.46)','rgba(160, 25, 1,0.17)','rgba(142, 21, 12,0.06)','rgba(140, 22, 1,0.62)','rgba(153, 14, 12,0.44)','rgba(145, 13, 19,0.32)','rgba(178, 14, 71,0.11)','rgba(147, 2, 15,0.81)','rgba(181, 15, 7,0.7)']);}
-if(direction==1){	particle.color = random(['rgba(211, 192, 21,0.78)','rgba(255, 230, 94,0.29)','rgba(239, 234, 93,0.56)','rgba(211, 180, 25,0.15)','rgba(234, 237, 71,0.42)','rgba(252, 249, 98,0.88)','rgba(218, 224, 53,0.57)','rgba(237, 237, 14,0.08)','rgba(222, 224, 92,0.79)','rgba(132, 1, 5,0.4)','rgba(242, 72, 137,0.51)','rgba(237, 92, 126,0.34)','rgba(173, 64, 24,0.81)','rgba(178, 42, 67,0.83)','rgba(226, 43, 119,0.65)','rgba(206, 29, 26,0.31)','rgba(221, 19, 36,0.28)','rgba(214, 87, 92,0.08)']);}
-
+else if(direction==1){	particle.color = random(['rgba(211, 192, 21,0.78)','rgba(255, 230, 94,0.29)','rgba(239, 234, 93,0.56)','rgba(211, 180, 25,0.15)','rgba(234, 237, 71,0.42)','rgba(252, 249, 98,0.88)','rgba(218, 224, 53,0.57)','rgba(237, 237, 14,0.08)','rgba(222, 224, 92,0.79)','rgba(132, 1, 5,0.4)','rgba(242, 72, 137,0.51)','rgba(237, 92, 126,0.34)','rgba(173, 64, 24,0.81)','rgba(178, 42, 67,0.83)','rgba(226, 43, 119,0.65)','rgba(206, 29, 26,0.31)','rgba(221, 19, 36,0.28)','rgba(214, 87, 92,0.08)']);}
+else{	particle.color = random(['rgba(231, 198, 190,0.6)','rgba(255, 255, 255,0.29)','rgba(231, 223, 190,0.56)','rgba(255, 255, 255,0.5)','rgba(255, 255, 255,0.3)']);}
 	particle.drag = random( 0.9, 0.99 );
 
 	theta = random( TWO_PI );
-	force = random( 2, 8 );
+	force = random( 1, 2 );
 
 	particle.vx = sin( theta ) * force;
 	particle.vy = cos( theta ) * force;

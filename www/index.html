@@ -157,7 +157,20 @@ For production change content-security-policy and admob
 </p>
 </div>
 
-<div id='collection_wrapper' class='hidden' ><div id='collection_area'></div></div>
+<div id='collection_wrapper' class='hidden' ><div id='collection_area_wrapper'><div id='collection_area'></div></div>
+
+<div class='hidden trainer_mode_ui'>
+<div style='padding:10px; padding-bottom:0px'>
+<div style='float:left; width:100%; text-align:center'>
+<button id='history_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-history"></i></button>
+<button id='pinchin_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-th-large"></i></button>
+<button id='forward_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-play"></i></button>
+
+</div>
+</div>
+<div style='clear:both'></div>
+</div>
+</div>
 
 
 
@@ -212,21 +225,26 @@ For production change content-security-policy and admob
 
 
 
-<div id="trainer_mode_ui" class='hidden'>
+<div class='hidden trainer_mode_ui'>
 
 <div style='padding:10px; padding-bottom:0px'>
-<div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
-<div style='float:left; width:40%; text-align:center'>
-<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,1);show_image(1);"><i class="fa fa-star-o"></i></button>
-<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,3);show_image(1);"><i class="fa fa-star-half-o"></i></button>
-<button class="button button--outline trainer_button" onclick="rate_image(ak_image_nr_show,5);show_image(1);"><i class="fa fa-star"></i></button>
+<div style='width:15%; height:1px; float:left; font-size:14px; line-height:14px;color:rgba(0,0,0,0.2)'>ID: <span id='image_id'></span></span></div>
+<div style='float:left; width:70%; text-align:center'>
+<button id='history_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-history"></i></button>
+<button id='star1_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star-o"></i></button>
+<button id='star2_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star-half-o"></i></button>
+<button id='star3_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star"></i></button>
+<button id='pinchin_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-th-large"></i></button>
+
+
 </div>
-<div style='width:35%; float:left; text-align:right; font-size:14px; line-height:14px'> <div><span id='image_id' style='color:rgba(0,0,0,0.2)'></span><span id='best_guess' style='color:rgba(0,0,0,0.2)'></span></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div>
+<div style='width:15%; float:left; text-align:right; font-size:14px; line-height:14px'> <div><span id='image_id' style='color:rgba(0,0,0,0.2)'></span><span id='best_guess' style='color:rgba(0,0,0,0.2)'></span></div>
 
 </div>
 <div style='clear:both'></div>
 </div>
 </div>
+
 
 <button class="fab fab--mini" id="new_image" style='position:fixed; right:5px; bottom:5px; background-color:rgba(0,128,255,0.7)'><i class="zmdi zmdi-plus"></i></button>
 
@@ -256,6 +274,45 @@ For production change content-security-policy and admob
     <button class="alert-dialog-button" onclick="hideDialog('dialog-3')"><span data-bind="reshtml: 'OK'"></span></button>
   </div>
 </ons-alert-dialog>
+
+
+<ons-modal direction="up">
+<div class="modal_con">
+
+  <div style='text-align:center; margin-bottom:10px; margin-top:20px'><img src='img/logo.svg' class='flickr_logo' style='width:40%'></div>
+  <div style='text-align:left;'>
+  <div style='padding:20px'>
+    <div style='margin-bottom:10px'>Willkomen!</div>
+    Ich bin <i>inspirly</i> und gestalte Textbilder nach deinem Wunsch. Ich zeige dir ein Design und du sagst mir, ob es dir gefällt, oder eben nicht :-(
+    Aber hey, kein Problem! Kommuniziere mit mir, bis dein Bild perfekt ist. ;-)<br>
+    Klicke dann auf das Herz <span class='heart'><i class="fa fa-heart"></i></span>, teile dein Design mit deinen Freunden
+    und speichere es für die Ewigkeit.
+    </div>
+
+    <div  style='background:rgba(255,255,255,0.4);padding:20px'>
+<div style='margin-top:10px; font-size:10px'><i>Schnellstart:<br>
+Nach oben = Design gefällt mir<br>
+Nach unten = Design gefällt mir nicht<br>
+Nach rechts = Design gefällt mir teilweise</i></div>
+<button id='hide_modal_btn' class="action-sheet-button">Loslegen</button>
+</div>
+<div style='padding:20px'>Ich verstehe folgende Zeichensprache:
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/siwpe_up.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir</b>: wische nach oben und ich nehme kleine Anpassungen vor.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_down.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir nicht</b>: wische nach unten und ich versuchs nochmals von Neuem.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_left.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir teilweise</b>: wische nach links und ich pass ein paar Dinge an.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_right.svg'><div class='tutorial_txt'>Zum <b>alten Design zurück</b>: wische nach rechts und ich zeig dir nochmals das Design von vorher.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/pinch_in.svg'><div class='tutorial_txt'>Du möchtest <b>mehrere Designs gleichzeitig</b>: Bewege zwei Finger auseinander und ich zeig dir zusätzliche Designs. So kannst du aus bis zu 16 Designs deinen Favoriten auswählen.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Text bearbeiten</b>: Klicke auf den Text und ich zeig dir die Optionen an. Klicke auf 'Fixiere' und ich lass den fixierten Text in Ruhe. Klicke auf 'Text' und schreib etwas Neues. Klicke auf 'Füllung' und wähle ein Foto für die Textfüllung aus.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/press.svg'><div class='tutorial_txt'>Den <b>Text verschieben</b>: Zieh den Text an den gewünschten Ort. Klicke danach auf Anwenden.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/rotate.svg'><div class='tutorial_txt'>Den <b>Text drehen</b>: Bewege zwei Finger in entgegengesetzte Richtung. Klicke danach auf anwenden</div></div>
+   <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Hintergrund bearbeiten</b>: Klicke auf den Hintergrund und ich zeig dir die Optionen an. Klicke auf 'Fixieren' und ich lass den Hintergrund in Ruhe. Klicke nochmals darauf und ich arbeite wieder am Hintergrund. Klicke auf 'Füllung' und wähle ein Foto für den Hintergrund aus.</div></div>
+  <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'><b>Textblock hinzufügen und löschen</b>: Klicke zuerst auf den Hintergrund und dann 'Text hinzufügen'. Ab sofort werde ich einen weiteren Textblock ins Design integrieren. Klicke auf den Textblock und dann auf 'Text löschen' um ein Design ohne diesen Textblockzu erhalten.</div></div>
+</div>
+ 
+    </div>
+
+  </div>
+</ons-modal>
 
   </ons-page>
 </ons-template>
@@ -437,7 +494,7 @@ For production change content-security-policy and admob
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
-    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
