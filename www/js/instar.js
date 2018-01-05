@@ -97,6 +97,10 @@ window.localStorage.setItem("template_id","");
 
 
 $(document).ready(function(){
+
+
+
+
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
@@ -255,11 +259,11 @@ $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova
 
 $(".modal").on("preshow",function(){$(".modal_con").height($(window).height()-100);});
 $(".modal").on("postshow",function(){
-$(".sketch").remove();swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:3,fullscreen:false,width: $(window).width(), height: $('.modal_con').prop('scrollHeight'),eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
+$(".sketch").remove();swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:3,fullscreen:false,width: $(window).width(), height: ($('.modal_con').prop('scrollHeight')*0.8),eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
 $(".sketch").insertAfter($(".modal__content"));
 $(".sketch").wrap( "<div id='sketch_wrapper'></div>" );
 $("#sketch_wrapper").height($(window).height());
-add_effect();var x =$(window).width();var y =$('.modal_con').prop('scrollHeight');
+add_effect();var x =$(window).width();var y =$('.modal_con').prop('scrollHeight')*0.8;
 startEff1 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 700);
 startEff2 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1200);
 startEff3 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1500);
@@ -318,7 +322,18 @@ $("#font_delete").on("click", font_delete_handler);
 $("#image_fixed").on('click', image_fixed_handler);
 $("#hide_modal_btn").on("click",function(){document.querySelector('ons-modal').hide();});
 $(".modal").on("posthide",function(){clearInterval(startEff1);clearInterval(startEff2);clearInterval(startEff3);swipe_effect.destroy();$(".sketch").remove();$('#sketch_wrapper').remove();if(window.localStorage.getItem("effect_mode")=="true"){if (!$( ".sketch" ).length){swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});$(".sketch").attr("height",$(window).width()+"px");$(".sketch").prev().insertAfter($(".sketch"));add_effect();swipe_effect.start();}}});
-if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop());});}
+if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
+
+window.console = {
+  log: function(str){
+    var node = document.createElement("div");
+
+node.insertBefore(document.createTextNode(str),node.firstChild);
+document.getElementById("myLog").insertBefore(node,document.getElementById("myLog").firstChild);
+  }
+}
+
+
 
 canvas.off('mouse:up');
 canvas.on({'mouse:up' : function(e) {if(canvas.getActiveObject()){show_text_img(canvas.getActiveObject());};}});
