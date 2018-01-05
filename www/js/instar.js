@@ -127,7 +127,9 @@ function initApp() {
 busy = false;
 screen.orientation.lock('portrait');
 //Prepare adds
-if(typeof AdMob !== 'undefined') {create_bannerAd();create_interstitial();}
+if(typeof AdMob !== 'undefined') {
+//create_bannerAd();
+//create_interstitial();}
 
 device_id = device.uuid;
 
@@ -334,8 +336,10 @@ $("#upload_loader").css("height",$(".page__content").height());
 $container = $('#image_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
 
 if(window.localStorage.getItem("trainer_mode")=="true"){$(".trainer_mode_ui").show();}else{$(".trainer_mode_ui").hide();}
-if(typeof AdMob !== 'undefined'){AdMob.removeBanner();create_bannerAd();}
-if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+//if(typeof AdMob !== 'undefined'){AdMob.removeBanner();
+//create_bannerAd();
+}
+//if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 }
 
 if (page.matches("#mood")) {
@@ -352,7 +356,7 @@ $("#mood").on("click",".mood_preview", function(){new_image($(this).attr("data-m
 
 $(document).on("hide", function( event ) {
 var page = event.target;
-if (page.matches("#image")) {if(typeof AdMob !== 'undefined'){AdMob.hideBanner();}}
+//if (page.matches("#image")) {if(typeof AdMob !== 'undefined'){AdMob.hideBanner();}}
 if (page.matches("#share")) {$("#print_products").hide();$( "#myNavigator").off("loaded_prev");$( "#myNavigator").off("loaded_prev_medium");}
 })
 
