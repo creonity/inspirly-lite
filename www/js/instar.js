@@ -252,7 +252,7 @@ getQuote();
 console.log("init");
 show_image(0);
 
-$("#detect-area").css("height", $(window).width());
+$("#detect-area").css("height", $(window).width()+200);
 $("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
 $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});
 
@@ -323,11 +323,12 @@ $("#add_font").on("click", add_font_handler);
 $("#font_delete").on("click", font_delete_handler);
 $("#image_fixed").on('click', image_fixed_handler);
 $("#hide_modal_btn").on("click",function(){document.querySelector('ons-modal').hide();});
-$(".modal").on("posthide",function(){clearInterval(startEff1);clearInterval(startEff2);clearInterval(startEff3);swipe_effect.destroy();$(".sketch").remove();$('#sketch_wrapper').remove();
+$(".modal").on("posthide",function(){
+//clearInterval(startEff1);clearInterval(startEff2);clearInterval(startEff3);swipe_effect.destroy();$(".sketch").remove();$('#sketch_wrapper').remove();
 
 //if(window.localStorage.getItem("effect_mode")=="true"){if (!$( ".sketch" ).length){swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});$(".sketch").attr("height",$(window).width()+"px");$(".sketch").prev().insertAfter($(".sketch"));add_effect();swipe_effect.start();}}
 });
-if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
+//if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
 
 /*
 $(document).on("click",function(e){
