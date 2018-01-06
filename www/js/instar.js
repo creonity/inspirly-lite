@@ -1121,7 +1121,8 @@ if(!image_chain[ak_image_nr-1]){$("#history_btn").prop("disabled", true);}
 if(window.localStorage.getItem("effect_mode")=="true")
 {
 if (!$( ".sketch" ).length){
-swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
+//swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
+swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementById("detect-area")});
 
 $(".sketch").attr("height",$(window).width()+"px");
 $(".sketch").prev().insertAfter($(".sketch"));
