@@ -12,7 +12,7 @@ if(!window.localStorage.getItem("preview_quality")){window.localStorage.setItem(
 if(!window.localStorage.getItem("trainer_mode")){window.localStorage.setItem("trainer_mode","false");}
 if(!window.localStorage.getItem("effect_mode")){window.localStorage.setItem("effect_mode","true");}
 var debug = 0;
-var show_svg = 0;
+var show_svg = false; //broken at ImageTracer.imageToSVG
 
 
 //helpers
@@ -57,6 +57,7 @@ var startEff1;
 var startEff2;
 var startEff3;
 var global_n=0;
+var no_show_image_option = false;
 
 //effects
 var particles = [];
@@ -252,14 +253,14 @@ getQuote();
 console.log("init");
 show_image(0);
 
-$("#detect-area").css("height", $(window).width()+200);
+$("#detect-area").css("height", $(window).width());
 $("#search_pic").on("click",function(){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.show();}});
 $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova !== 'undefined'){cordova.plugins.Keyboard.close();};search_pic($("#search_pic").val());}});
 
 
 
 $(".modal").on("preshow",function(){$(".modal_con").height($(window).height()-100);});
-/*
+
 $(".modal").on("postshow",function(){
 $(".sketch").remove();swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:3,fullscreen:false,width: $(window).width(), height: ($('.modal_con').prop('scrollHeight')*0.8),eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
 $(".sketch").insertAfter($(".modal__content"));
@@ -270,7 +271,7 @@ startEff1 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn
 startEff2 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1200);
 startEff3 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1500);
 });
-*/
+
 
 
 document.querySelector('ons-modal').show();
@@ -323,12 +324,11 @@ $("#add_font").on("click", add_font_handler);
 $("#font_delete").on("click", font_delete_handler);
 $("#image_fixed").on('click', image_fixed_handler);
 $("#hide_modal_btn").on("click",function(){document.querySelector('ons-modal').hide();});
-$(".modal").on("posthide",function(){
-//clearInterval(startEff1);clearInterval(startEff2);clearInterval(startEff3);swipe_effect.destroy();$(".sketch").remove();$('#sketch_wrapper').remove();
+$(".modal").on("posthide",function(){clearInterval(startEff1);clearInterval(startEff2);clearInterval(startEff3);swipe_effect.destroy();$(".sketch").remove();$('#sketch_wrapper').remove();
 
 //if(window.localStorage.getItem("effect_mode")=="true"){if (!$( ".sketch" ).length){swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});$(".sketch").attr("height",$(window).width()+"px");$(".sketch").prev().insertAfter($(".sketch"));add_effect();swipe_effect.start();}}
 });
-//if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
+if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
 
 /*
 $(document).on("click",function(e){
@@ -348,12 +348,19 @@ document.getElementById("myLog").insertBefore(node,document.getElementById("myLo
 */
 
 canvas.off('mouse:up');
-canvas.on({'mouse:up' : function(e) {if(canvas.getActiveObject()){show_text_img(canvas.getActiveObject());};}});
+canvas.on({'mouse:up' : function(e) {
+console.log("up");
+
+if(canvas.getActiveObject(e)){show_text_img(canvas.getActiveObject());}else if(no_show_image_option){no_show_image_option=false;}else{select_canvas_handler();}}});
 canvas.off('selection:updated');
-canvas.on({'selection:updated' : function() {hide_text_img(ak_image_nr);}});
+canvas.on({'selection:updated' : function() {
+console.log("update");hide_text_img(ak_image_nr);
+show_text_img(canvas.getActiveObject());}});
 canvas.off('selection:cleared');
-canvas.on({'selection:cleared' : function() {hide_text_img(ak_image_nr);}});
-console.log("init image");
+canvas.on({'selection:cleared' : function(e) {
+console.log("cleared");
+select_canvas_handler();no_show_image_option=true;hide_text_img(ak_image_nr);}});
+
 image_handler(true);
 
 $("#btn_favorite").on('click',function(e){e.stopPropagation();shareImg();});
@@ -574,7 +581,7 @@ if(!$(".modal").is(":visible")){$(".sketch").insertBefore($(".upper-canvas"));}
 async function createCollection(size)
 {
 console.log("create_collection "+ak_image_nr_collection+" "+ak_image_nr);
-canvas.clear();
+canvas.clear();canvas.renderAll();
 collectionItemsShown=0;
 
 //if(!$collectionGrid)
@@ -1093,8 +1100,8 @@ function image_handler(attach)
 if(attach && !busy)
 {
 //$(".sketch").on('touchmove',function(event){event.stopPropagation();console.log("mousemove");})
-$("#detect-area").off('click');
-$("#detect-area").on('click', select_canvas_handler);
+//$("#detect-area").off('click');
+//$("#detect-area").on('click', select_canvas_handler);
 $("#detect-area").off('pinchin');
 $("#detect-area").on('pinchin', pinchinhandler);
 $("#detect-area").off('swipeleft');
@@ -1122,8 +1129,7 @@ if(!image_chain[ak_image_nr-1]){$("#history_btn").prop("disabled", true);}
 if(window.localStorage.getItem("effect_mode")=="true")
 {
 if (!$( ".sketch" ).length){
-//swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
-swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementById("detect-area")});
+swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:2,eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
 
 $(".sketch").attr("height",$(window).width()+"px");
 $(".sketch").prev().insertAfter($(".sketch"));
@@ -1304,8 +1310,7 @@ if(debug == 1){console.log(data.debug_script);}
 image_chain[image_nr]["text_image"]=[];
 
 data.text_img = JSON.parse(data.text_img);
-for (var key in data.text_img) {
-if(data.text_img[key]["text_src"]==null){continue;}
+for (var key in data.text_img) {if(data.text_img[key]["text_src"]==null){continue;}
 image_chain[image_nr]["text_image"][key]=[];
 image_chain[image_nr]["text_image"][key]["src"]=data.text_img[key]["text_src"];
 if(show_svg){ImageTracer.imageToSVG( image_chain[image_nr]["text_image"][key]["src"], function(svg){image_chain[image_nr]["text_image"][key]["svg"]=svg;}, 'Artistic3');}
@@ -2024,7 +2029,6 @@ function _getLocalImagePathWithoutPrefix(url) {
 
 function add_text_image(text_image)
 {
-
 for (var key in text_image) {
 if(text_image[key]["src"]!=null)
 {
@@ -2033,7 +2037,11 @@ var scale_factor = $(window).width()/400;
 
 if(show_svg)
 {
-if(!text_image[key]["svg"]){ImageTracer.imageToSVG( image_chain[image_nr]["text_image"][key]["src"], function(svg){image_chain[image_nr]["text_image"][key]["svg"]=svg;}, 'Sharp');}
+console.log(text_image);
+//if(!text_image[key]["svg"]){ImageTracer.imageToSVG( text_image[key]["src"], function(svg){image_chain[ak_image_nr]["text_image"][key]["svg"]=svg;}, 'Sharp');}
+
+//console.log(image_chain[ak_image_nr]["text_image"][key]["svg"]);
+
 fabric.loadSVGFromString(text_image[key]["svg"], function(objects, options) {
   var obj = fabric.util.groupSVGElements(objects, options);
   obj.scale(scale_factor);
@@ -2070,25 +2078,42 @@ img.crossOrigin = "Anonymous";
     }, {crossOrigin : "Anonymous"});
 
 */
+var new_id = 0;
 
 fabric.Image.fromURL(text_image[key]["src"], function (img) {
     img.crossOrigin = "Anonymous";
     img.scale(scale_factor);
     img.set({
-    "left": text_image[key]["left"]/400*$(window).width(),"layer_id":text_image[key]["layer_id"],"originY":"center","originX":"center","hasBorders":false,"hasControls":false,"hasRotatingPoint":false,"opacity":"0.01","padding":0,"cornersize":10, "width":text_image[key]["width"], "height":text_image[key]["height"], "angle":text_image[key]["rotation"],"top": text_image[key]["top"]/400*$(window).width()
+    "left": text_image[img.new_key]["left"]/400*$(window).width(),"layer_id":text_image[img.new_key]["layer_id"],"originY":"center","originX":"center","hasBorders":false,"hasControls":false,"hasRotatingPoint":false,"opacity":"0.01","padding":0,"cornersize":10, "width":text_image[img.new_key]["width"], "height":text_image[img.new_key]["height"], "angle":text_image[img.new_key]["rotation"],"top": text_image[img.new_key]["top"]/400*$(window).width()
     });
     img.perPixelTargetFind = true;
-    img.targetFindTolerance = 20;
+   img.targetFindTolerance = 10;
     img.hasControls = img.hasBorders = false;
     canvas.add(img);
-    },{crossOrigin : "Anonymous"});
-
+    },{crossOrigin : "Anonymous",new_key:key});
 }
 }
 }
 }
 
+function set_canvas_back()
+{
+console.log("set back");
+canvas.getObjects().forEach(function (targ) {
+targ.set({"left": image_chain[ak_image_nr]["text_image"][targ.new_key]["left"]/400*$(window).width(),
+"width":image_chain[ak_image_nr]["text_image"][targ.new_key]["width"],
+"height":image_chain[ak_image_nr]["text_image"][targ.new_key]["height"],
+"angle":image_chain[ak_image_nr]["text_image"][targ.new_key]["rotation"],
+"top": image_chain[ak_image_nr]["text_image"][targ.new_key]["top"]/400*$(window).width(),
+"opacity":0.01});
+targ.setCoords();
+canvas.renderAll();
+});
 
+
+
+
+}
 
 
 /*
@@ -2229,23 +2254,27 @@ $("#text_input, #filling_input").hide();
 $("#font_text, #font_filling, #image_filling").removeClass("activeMenu")
 }
 
-async function hide_text_img(old_image_nr)
+function hide_text_img(old_image_nr)
 {
-console.log("hide_text"+ak_image_nr+" "+old_image_nr);
+console.log("hide_text");
 hide_menus();
 //fabric_last_obj.set({opacity: 0});
-canvas.clear();
+//
+
 
 //$("#fabric_area").css({"height":0,"width":0});
 $("#btn_favorite").show();
 $("#btn_apply").hide();
 $("#btn_apply").off("click");
 
-await sleep(200);
-console.log("hide_text_img");
+//await sleep(200);
 image_handler(true);
-if(ak_image_nr == old_image_nr){add_text_image(image_chain[ak_image_nr]["text_image"]);}
+if(ak_image_nr == old_image_nr){set_canvas_back();
+//add_text_image(image_chain[ak_image_nr]["text_image"]);
+}else{canvas.clear();canvas.renderAll();}
 }
+
+
 
 
 function change_lang(new_locale)
