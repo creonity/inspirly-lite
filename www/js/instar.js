@@ -259,6 +259,7 @@ $("#search_pic").keyup(function(event){if(event.keyCode == 13){if(typeof cordova
 
 
 $(".modal").on("preshow",function(){$(".modal_con").height($(window).height()-100);});
+/*
 $(".modal").on("postshow",function(){
 $(".sketch").remove();swipe_effect = Sketch.create({container: document.getElementsByClassName( 'canvas-container' )[0],interval:3,fullscreen:false,width: $(window).width(), height: ($('.modal_con').prop('scrollHeight')*0.8),eventTarget:document.getElementsByClassName( 'upper-canvas' )[0]});
 $(".sketch").insertAfter($(".modal__content"));
@@ -269,7 +270,7 @@ startEff1 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn
 startEff2 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1200);
 startEff3 = setInterval(function(){for(i=1;i<random(0,4);i++){swipe_effect.spawn(random(-20, x+20), random(-20, y+20), 2 );}}, 1500);
 });
-
+*/
 
 
 document.querySelector('ons-modal').show();
@@ -328,6 +329,7 @@ $(".modal").on("posthide",function(){clearInterval(startEff1);clearInterval(star
 });
 if($(".modal_con").length){$(".modal_con").off("scroll");$(".modal_con").on("scroll",function(){$('#sketch_wrapper').scrollTop($(this).scrollTop()*0.8);});}
 
+/*
 $(document).on("click",function(e){
 console.log(global_n+". "+$(this).attr('class'));global_n++;
 console.log(global_n+". "+$(this).attr('id'));global_n++;
@@ -342,7 +344,7 @@ document.getElementById("myLog").insertBefore(node,document.getElementById("myLo
   }
 }
 
-
+*/
 
 canvas.off('mouse:up');
 canvas.on({'mouse:up' : function(e) {if(canvas.getActiveObject()){show_text_img(canvas.getActiveObject());};}});
@@ -2038,7 +2040,7 @@ fabric.loadSVGFromString(text_image[key]["svg"], function(objects, options) {
 "left": text_image[key]["left"]/400*$(window).width(),"layer_id":text_image[key]["layer_id"],"originY":"center","originX":"center","hasBorders":false,"hasControls":false,"hasRotatingPoint":false,"opacity":"0.01","padding":0,"cornersize":10, "width":text_image[key]["width"], "height":text_image[key]["height"], "angle":text_image[key]["rotation"],"top": text_image[key]["top"]/400*$(window).width()
   });
 obj.perPixelTargetFind = true;
-obj.targetFindTolerance = 20;
+obj.targetFindTolerance = 40;
 obj.hasControls = obj.hasBorders = false;
 canvas.add(obj);
 },false,{crossOrigin : "Anonymous"});
