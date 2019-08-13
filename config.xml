@@ -35,7 +35,13 @@
     <preference name="orientation" value="portrait" />
     <preference name="phonegap-version" value="cli-9.0.0" />
     <icon src="icon.png" />
-    <engine name="ios" spec="^4.4.0" />
+    
+    <engines>
+  <engine name="cordova" version=">=7.1.0"/>
+  <engine name="cordova-android" version=">=6.3.0"/>
+  <engine name="ios" spec="^4.4.0" />
+</engines>
+    
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-admobpro" spec="^2.29.21" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
