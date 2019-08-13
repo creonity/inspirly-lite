@@ -3,7 +3,7 @@
 
 
 
-.page, .popover__content, .checkbox, .list, .button, .tabbar__label, .select-input, .progress_txt {font-family: 'Indie Flower', cursive;}
+.page, .popover__content, .checkbox, .list, .button, .tabbar__label, .select-input, .progress_txt, .action-sheet-title {font-family: 'Indie Flower', cursive;}
 .toolbar-button {color:rgb(183,183,183)}
 @font-face {
 font-family: "Indie Flower";
@@ -12,6 +12,7 @@ src: url("fonts/IndieFlower.ttf");
 
 //.page__background  {background: white !important;}
 
+.action-sheet-title {font-size:18px}
 
 .page--full_bg__background {
    background: url("../img/logo.jpg") !important;
@@ -27,6 +28,7 @@ background:rgba(249,245,230,0.6);
 
 .img_preview {
 width:33.2%;
+height:calc(33vw);
 background-color:black;
 background-repeat: no-repeat;
 background-position: center center;

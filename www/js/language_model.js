@@ -67,7 +67,7 @@ Crop_image : "Bild zuschneiden",
 Crop : "Zuschneiden",
 Cancel : "Abbrechen",
 no_pics_pixabay: "Leider keine Bilder gefunden.",
-Choose_template: "... oder W&auml;hle eine gespeicherte Vorlage",
+Choose_template: "W&auml;hle eine Vorlage",
 Favorite_has_beend_saved: "Zu deinen Vorlagen hinzugef&uuml;gt",
 Confirm_Delete_Favorite: "Willst du diese Vorlagen l&ouml;schen?",
 Confirm : "Best&auml;tige",
@@ -81,6 +81,7 @@ About_us: "&Uuml;ber uns",
 Privacy_policy: "Datenschutzerkl&auml;rung",
 Infos: "Infos",
 Effect_mode: "Effekte anzeigen",
+Choose_complexity: "Komplexit&auml;t der genertierten Bilder",
     };
 
 
@@ -152,7 +153,7 @@ Crop_image : "Crop image",
 Crop : "Crop",
 Cancel : "Cancel",
 no_pics_pixabay: "Oops, couldn't find any images.",
-Choose_template: "... or choose a saved template",
+Choose_template: "Choose a template",
 Favorite_has_beend_saved: "Added to your templates",
 Confirm_Delete_Favorite: "Do you want to delete this template?",
 Confirm : "Confirm",
@@ -166,6 +167,7 @@ About_us: "About us",
 Privacy_policy: "Privacy policy",
 Infos: "Infos",
 Effect_mode: "Show effects",
+Choose_complexity: "Complexity of generated images",
     };
 
 

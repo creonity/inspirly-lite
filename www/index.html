@@ -87,6 +87,8 @@ For production change content-security-policy and admob
 
 
 
+
+
 <ons-template id="rand_img.html">
   <ons-page  id = "image">
  <ons-toolbar>
@@ -97,7 +99,7 @@ For production change content-security-policy and admob
 <ons-gesture-detector>
 
 
-  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
+  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center; overflow: hidden;">
 <div id="fabric_area" style='position:absolute; top:0px; left:0px; width:100%; height:100%; overflow:hidden'>
 <canvas id='c' width="100" height="100"></canvas>
 </div>
@@ -127,7 +129,7 @@ For production change content-security-policy and admob
 <button id='font_fixed' class="button button--material--flat option_btn">FIXED</button>
 <button id='font_text' class="button button--material--flat option_btn">TEXT</button>
 <button id='font_filling' class="button button--material--flat option_btn">FILLING</button>
-<button id='font_delete' class="button button--material--flat option_btn">DELETE</button>
+<button id='font_delete' class="button button--material--flat option_btn hidden">DELETE</button>
 </div>
 
 <div id='image_options' class='hidden'>
@@ -141,22 +143,9 @@ For production change content-security-policy and admob
 
 
 
+
 <div id='text_input' class='hidden'>
-<ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
-<ons-list-item>
-<textarea maxlength="800" style="width:100%;height:40px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
-</ons-list-item>
-<ons-list-item>
-      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
-      <div class="right" id="autolinebreak_switch"></div>
-</ons-list-item>
-</ons-list>
-<p style="text-align: center;">
-<button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
-<button class="button button--outline download_btn" onclick="getQuote(true)"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
-</p>
+
 </div>
 
 <div id='collection_wrapper' class='hidden' ><div id='collection_area_wrapper'><div id='collection_area'></div></div>
@@ -234,7 +223,6 @@ For production change content-security-policy and admob
 <div style='float:left; width:70%; text-align:center'>
 <button id='history_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-history"></i></button>
 <button id='star1_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star-o"></i></button>
-<button id='star2_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star-half-o"></i></button>
 <button id='star3_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star"></i></button>
 <button id='pinchin_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-th-large"></i></button>
 
@@ -245,6 +233,15 @@ For production change content-security-policy and admob
 </div>
 <div style='clear:both'></div>
 </div>
+</div>
+
+
+
+
+<div id='quickStartGuide' style='padding:20px; padding-top:40px'>
+<b>Swipe right</b> if you <b>like</b> the image<br>
+<b>Swipe left</b> if you <b>don't like</b> the image<br>
+Click on the image and the text or swipe up for more options. Finally click on the <span class='heart'><i class="fa fa-heart"></i></span> to save and share your image
 </div>
 
 
@@ -278,6 +275,28 @@ For production change content-security-policy and admob
 </ons-alert-dialog>
 
 
+
+<ons-action-sheet id="textInput" cancelable title="Change text">
+<ons-list style='margin-bottom:50%'>
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
+</ons-list-item>
+<ons-list-item>
+      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
+      <div class="right" id="autolinebreak_switch"></div>
+</ons-list-item>
+<ons-list-item>
+      <p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
+<button class="button button--outline download_btn" onclick="getQuote(true,'user_txt')"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+</ons-list-item>
+</ons-list>
+</ons-action-sheet>
+
+
+
 <ons-modal direction="up">
 <div class="modal_con">
 
@@ -294,21 +313,18 @@ For production change content-security-policy and admob
     <div  style='background:rgba(255,255,255,0.4);padding:20px; padding-bottom:50px'>
 <button id='hide_modal_btn' class="action-sheet-button">Loslegen</button>
 <div style='margin-top:20px; font-size:10px'><i>Schnellstart:<br>
-Nach oben = Design gefällt mir<br>
-Nach unten = Design gefällt mir nicht<br>
-Nach rechts = Design gefällt mir teilweise</i></div>
+Nach rechts = Design gefällt mir<br>
+Nach links = Design gefällt mir nicht<br>
 </div>
 <div style='padding:20px'>Ich verstehe folgende Zeichensprache:
-    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/siwpe_up.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir</b>: wische nach oben und ich nehme kleine Anpassungen vor.</div></div>
-    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_down.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir nicht</b>: wische nach unten und ich versuchs nochmals von Neuem.</div></div>
-    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_left.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir teilweise</b>: wische nach links und ich pass ein paar Dinge an.</div></div>
-    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_right.svg'><div class='tutorial_txt'>Zum <b>alten Design zurück</b>: wische nach rechts und ich zeig dir nochmals das Design von vorher.</div></div>
-    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/pinch_in.svg'><div class='tutorial_txt'>Du möchtest <b>mehrere Designs gleichzeitig</b>: Bewege zwei Finger auseinander und ich zeig dir zusätzliche Designs. So kannst du aus bis zu 16 Designs deinen Favoriten auswählen.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_right.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir</b>: wische nach rechts und ich nehme kleine Anpassungen vor.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_left.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir nicht</b>: wische nach links und ich versuchs nochmals von Neuem.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_up.svg'><div class='tutorial_txt'>Du möchtest <b>mehrere Designs gleichzeitig</b>: wische nach oben und ich zeig dir zusätzliche Designs. So kannst du aus bis zu 9 Designs deinen Favoriten auswählen.</div></div>
     <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Text bearbeiten</b>: Klicke auf den Text und ich zeig dir die Optionen an. Klicke auf 'Fixiere' und ich lass den fixierten Text in Ruhe. Klicke auf 'Text' und schreib etwas Neues. Klicke auf 'Füllung' und wähle ein Foto für die Textfüllung aus.</div></div>
     <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/press.svg'><div class='tutorial_txt'>Den <b>Text verschieben</b>: Zieh den Text an den gewünschten Ort. Klicke danach auf Anwenden.</div></div>
     <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/rotate.svg'><div class='tutorial_txt'>Den <b>Text drehen</b>: Bewege zwei Finger in entgegengesetzte Richtung. Klicke danach auf anwenden</div></div>
    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Hintergrund bearbeiten</b>: Klicke auf den Hintergrund und ich zeig dir die Optionen an. Klicke auf 'Fixieren' und ich lass den Hintergrund in Ruhe. Klicke nochmals darauf und ich arbeite wieder am Hintergrund. Klicke auf 'Füllung' und wähle ein Foto für den Hintergrund aus.</div></div>
-  <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'><b>Textblock hinzufügen und löschen</b>: Klicke zuerst auf den Hintergrund und dann 'Text hinzufügen'. Ab sofort werde ich einen weiteren Textblock ins Design integrieren. Klicke auf den Textblock und dann auf 'Text löschen' um ein Design ohne diesen Textblockzu erhalten.</div></div>
+  <div class='tutorial_box hidden'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'><b>Textblock hinzufügen und löschen</b>: Klicke zuerst auf den Hintergrund und dann 'Text hinzufügen'. Ab sofort werde ich einen weiteren Textblock ins Design integrieren. Klicke auf den Textblock und dann auf 'Text löschen' um ein Design ohne diesen Textblockzu erhalten.</div></div>
 </div>
  
     </div>
@@ -435,15 +451,31 @@ Nach rechts = Design gefällt mir teilweise</i></div>
     </ons-toolbar>
 
   <ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
+    <ons-list-header>1. <span data-bind="reshtml: 'Text'"></span></ons-list-header>
+
+
+
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txtNew'></textarea>
+</ons-list-item>
+
+<ons-list-item>
+      <p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="getQuote(true,'user_txtNew')"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txtNew').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+</ons-list-item>
 </ons-list>
-<div id='moddsets_area' style='width:100%; overflow:scroll'></div>
+
 
 
   <ons-list>
-<ons-list-header><span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
+<ons-list-header>2. <span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
 </ons-list>
   
+
+
+<div id='moddsets_area' style='width:100%; overflow:scroll'></div>
 
 <div id='templates_area' style='width:100%; overflow:scroll'></div>
 
@@ -468,11 +500,31 @@ Nach rechts = Design gefällt mir teilweise</i></div>
       <div class="center">Settings</div>
     </ons-toolbar>
 
+
+
+
+
+
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
     <ons-list-item onclick="change_lang('en');">English</ons-list-item>
     <ons-list-item onclick="change_lang('de');">Deutsch</ons-list-item>
 </ons-list>
+
+<ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_complexity'"></span></ons-list-header>
+<ons-row style="margin-top: 15px; margin-bottom:15px">
+      <ons-col width="40px" style="text-align: center; line-height: 31px;">
+          <ons-icon icon="md-brightness-low" style='color:rgba(0,0,0,0.3)'></ons-icon>
+      </ons-col>
+      <ons-col>
+      </ons-icon><ons-range id="complexitySlider" style="width: 100%;" value="25"></ons-range> </ons-col>
+         <ons-col width="40px" style="text-align: center; line-height: 31px;">
+        <ons-icon icon="md-brightness-high" style='color:rgba(0,0,0,0.4)'></ons-icon>
+      </ons-col>
+      </ons-row>
+</ons-list>
+
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
@@ -496,7 +548,7 @@ Nach rechts = Design gefällt mir teilweise</i></div>
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
-    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();$('.modal').trigger('postshow')"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
     <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
