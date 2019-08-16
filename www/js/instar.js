@@ -462,7 +462,7 @@ $("#user_txtNew").val(user_data[1]["text_content"]);
 $(document).on("hide", function( event ) {
 var page = event.target;
 //if (page.matches("#image")) {if(typeof AdMob !== 'undefined'){AdMob.hideBanner();}}
-if (page.matches("#share")) {$("#print_products").hide();$( "#myNavigator").off("loaded_prev");$( "#myNavigator").off("loaded_prev_medium");}
+if (page.matches("#share")) {$( "#myNavigator").off("loaded_prev");$( "#myNavigator").off("loaded_prev_medium");}
 })
 
 
@@ -2035,10 +2035,10 @@ $.ajax({
 
 
 //$("#print_progress").fadeOut(1000,function(){
-$("#print_products").html("<img id='print_prev' style='width:100%' src='"+data.image_url+"'>");
+$("#print_products").html("<img id='print_prev' onload='console.log(\"ok\");$(this).fadeIn();' class='hidden' style='width:100%' src='"+data.image_url+"'>");
 $("#print_prev").off("click");
 $("#print_prev").on("click",function(){print_product();});
-$("#print_products").fadeIn();
+//$("#print_prev").fadeIn();
 //});
 window.localStorage.setItem("current_banner_image", window.localStorage.getItem("current_image"));
 window.localStorage.setItem("current_banner_image_src", data.image_url);

@@ -35,6 +35,10 @@ background-position: center center;
 background-size:cover;
 }
 
+#print_products {
+width:100%;
+height: calc(37.5vw);
+}
 
 //.tabbar, .toolbar {background-image:url("../img/stoff_bg.jpg");}
 //.tabbar, .toolbar {background:rgba(255,249,203,1);}
