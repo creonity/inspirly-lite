@@ -13,7 +13,7 @@ if(!window.localStorage.getItem("trainer_mode")){window.localStorage.setItem("tr
 if(!window.localStorage.getItem("effect_mode")){window.localStorage.setItem("effect_mode","true");}
 if(!window.localStorage.getItem("preload_mode")){window.localStorage.setItem("preload_mode","true");}
 if(!window.localStorage.getItem("complexity")){window.localStorage.setItem("complexity",20);}
-if(!window.localStorage.getItem("frenzyPoints")){window.localStorage.setItem("frenzyPoints",0);}
+window.localStorage.setItem("frenzyPoints",0);
 
 
 var debug = 0;
@@ -439,16 +439,16 @@ if(window.localStorage.getItem("trainer_mode")=="true"){$(".trainer_mode_ui").sh
 }
 
 if (page.matches("#mood")) {
-$container = $('#templates_area').masonry({itemSelector: '.img_preview', columnWidth: 1});
-
-
-
-
-
+$container = $('#templates_area').masonry({itemSelector: '.template_preview', columnWidth: 1});
 if(typeof cordova !== 'undefined'){show_favorites_from_folder();}
 $container = $('#moddsets_area').masonry({itemSelector: '.mood_preview', columnWidth: 1});
 show_mood_sets();
 
+
+$("#mood").off("click");
+$("#mood").on("click",".template_preview", function(){new_image($(this).attr("data-template"));})
+
+$("#mood").off("click");
 $("#mood").on("click",".mood_preview", function(){new_image($(this).attr("data-moodset"));})
 var user_data = JSON.parse(window.localStorage.getItem("user_data"));
 $("#user_txtNew").val(user_data[1]["text_content"]);
@@ -702,7 +702,7 @@ collectionTimeOut = window.setTimeout(function(){collection_handler(true);next_i
 
 function create_collection_item(image_nr,item_width)
 {
-window.localStorage.setItem("frenzyPoints",window.localStorage.getItem("frenzyPoints")-1);
+window.localStorage.setItem("frenzyPoints",window.localStorage.getItem("frenzyPoints")-0.5);
 if($("#collection_img_"+image_nr).length == 0)
 {
 var $content = $("<div class='collection_img' attr_image_nr='"+image_nr+"' style='height:"+item_width+"px;  width:"+item_width+"px' id='collection_img_"+image_nr+"'>");
@@ -822,7 +822,7 @@ items += item;
 
 function show_images_from_folder()
 {
-var local_images = ["13553443228vDLFBsmmsWVgO6edwhu.jpg","1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344364flUg9SBs1L5fkvKO84v9.jpg","1355344366gQWnjVMq2FNQ95A7V8j3.jpg","1355344368dMVIPKuEOnhVVyR5IoHZ.jpg","1355344370eQX2FMOFRz81FQbMKoSG.jpg","1355344371f7nZl1yxmnBnm3TqUJjE.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344404bvAXybnLLbC2SCGjij7T.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344376WqXbXLYtylBvjkz96vT1.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344382vI8OvaGMhxTd9QJOFm7V.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344390wfNNarTmUyhepOAyOXyk.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344392X24tTFKxv2p5pfmz1hS5.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","1355344396EM9WExJE6QlWA84xD8vS.jpg","1355344397IfjiapI6ppzLAfBuZDxs.jpg","13553443984ujp9trfNo7CNQpZ63qY.jpg","1355344398Gal68ymZG5A8XIAFWGm3.jpg","1355344399I89VwcxfpDM3i2OsWcGV.jpg","13553444006C3VJj87mL4CmuhN92mJ.png","1355344402igaAcIt1bGyvtrKV3ZOK.jpg","1355344408qK7KFLXnwDQXZhcWF6Nx.jpg","1355344410IX6Pu4eIuPXr2UVh7njp.png","1355344412Em23mkiNxYJFGFRXvjsD.png","1355344414ASZ1WU58VWHWyFGQItX9.png","checkers_bg.jpg","vintage_bg.jpg"];
+var local_images = ["1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344412Em23mkiNxYJFGFRXvjsD.png","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","vintage_bg.jpg"];
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $( function() {var $items = getItemsLocal(local_images);
 $container.masonryImagesReveal( $items );});
@@ -841,7 +841,7 @@ return $( items );
 function show_mood_sets()
 {
 var mood_images = ["JYab","mOEl","OO6e","xbn0","YjqY","2EkY"];
-$container.masonry( 'remove',$(".img_preview")).masonry('layout');
+$container.masonry( 'remove',$(".mood_preview")).masonry('layout');
 $( function() {var $items = getMoodsLocal(mood_images);
 $container.masonryImagesReveal( $items );});
 }
@@ -976,7 +976,7 @@ $('image_to_crop').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///y
 function show_favorites_from_folder()
 {
 var local_templates = [];
-$container.masonry( 'remove',$(".img_preview")).masonry('layout');
+$container.masonry( 'remove',$(".template_preview")).masonry('layout');
 var path = cordova.file.dataDirectory + "templates/";
   window.resolveLocalFileSystemURL(path,
     function (fileSystem) {
@@ -1003,7 +1003,9 @@ $( function() {var $items = getFavoritesLocal(local_templates);$container.masonr
 function getFavoritesLocal(local_templates) {
 var items = '';
 $.each(local_templates, function(index, value) {
-var item = "<div id='"+index+"' onclick='choose_template(\""+value+"\")' class='img_preview' style='background-image: url("+value+"); height:"+$(window).width()/3+"px;'><button class='button button--light delete_btn' style='position:absolute; top:5px; left:5px; z-index:4;' onclick='deleteFav(event,\""+value+"\",\""+index+"\");'><i class='fa fa-close'></i></button></div>";
+//var item = "<div id='"+index+"' onclick='choose_template(\""+value+"\")' class='img_preview' style='background-image: url("+value+"); height:"+$(window).width()/3+"px;'><button class='button button--light delete_btn' style='position:absolute; top:5px; left:5px; z-index:4;' onclick='deleteFav(event,\""+value+"\",\""+index+"\");'><i class='fa fa-close'></i></button></div>";
+var item = "<div id='"+index+"' data-template='"+value+"' class='template_preview img_preview' style='background-image: url("+value+"); height:"+$(window).width()/3+"px;'><button class='button button--light delete_btn' style='position:absolute; top:5px; left:5px; z-index:4;' onclick='deleteFav(event,\""+value+"\",\""+index+"\");'><i class='fa fa-close'></i></button></div>";
+
 items += item;
 });
 return $( items );
@@ -2104,7 +2106,7 @@ if(image_chain[ak_image_nr]["prev_url"])
 //print_w[ak_image_nr].document.write('Please be patient, while we render your image so you can print it in larger size. It shouldn\'t take longer than 20 seconds.');
 //print_w[ak_image_nr].location.href = "
 //window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
-window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&t__useQpc=false&ed=false&t__smart=false&continueUrl="+encodeURI("https://www.zazzle.com/inspirly")+"&tc=inspirly_app&ic="+image_chain[ak_image_nr]["image_id"]+"&t_image0_iid=inspirly&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
+window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&t__useQpc=false&ed=false&t__smart=false&continueUrl="+encodeURI("https://www.zazzle.com/inspirly")+"&tc=inspirly_app&ic="+image_chain[ak_image_nr]["image_id"]+"&t_image0_iid=inspirly&image0="+encodeURI("http://www.inspir.ly/user_img/serve_image.php?image_url="+image_chain[ak_image_nr]["prev_url"]));
 }
 else
 {
@@ -2118,7 +2120,7 @@ $("#print_progress").fadeOut();
 console.log("open");
 //print_w[ak_image_nr].location.href = "http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]);
 //window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
-window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&t__useQpc=false&ed=false&t__smart=false&continueUrl="+encodeURI("https://www.zazzle.com/inspirly")+"&tc=inspirly_app&ic="+image_chain[ak_image_nr]["image_id"]+"&t_image0_iid=inspirly&image0="+encodeURI(image_chain[ak_image_nr]["prev_url"]));
+window.open("http://www.zazzle.com/api/create/at-238761569768290129?rf=238761569768290129&ax=DesignBlast&cg=196340684027374117&sr=250134954166200634&t__useQpc=false&ed=false&t__smart=false&continueUrl="+encodeURI("https://www.zazzle.com/inspirly")+"&tc=inspirly_app&ic="+image_chain[ak_image_nr]["image_id"]+"&t_image0_iid=inspirly&image0="+encodeURI("http://www.inspir.ly/user_img/serve_image.php?image_url="+image_chain[ak_image_nr]["prev_url"]));
 
 $("#print_prev").off("click");
 $("#print_prev").on("click",function(){print_product();});
@@ -2213,6 +2215,8 @@ obj.perPixelTargetFind = true;
 obj.selectionBackgroundColor="rgba(0,0,0,0.1)";
 obj.targetFindTolerance = 10;
 obj.hasControls = obj.hasBorders = false;
+obj.lockMovementX = obj.lockMovementY = true;
+
 
 canvas.add(obj);
 },false,{crossOrigin : "Anonymous"});
@@ -2253,6 +2257,7 @@ fabric.Image.fromURL(text_image[key]["src"], function (img) {
     img.selectionBackgroundColor="rgba(0,0,0,0.1)";
    img.targetFindTolerance = 10;
     img.hasControls = img.hasBorders = false;
+    img.lockMovementX = img.lockMovementY = true;
     canvas.add(img);
     },{crossOrigin : "Anonymous",new_key:key});
 
@@ -2274,7 +2279,9 @@ targ.set({"left": image_chain[ak_image_nr]["text_image"][targ.new_key]["left"]/4
 "angle":image_chain[ak_image_nr]["text_image"][targ.new_key]["rotation"],
 "top": image_chain[ak_image_nr]["text_image"][targ.new_key]["top"]/400*$(window).width(),
 "opacity":0.03,
-"selectionBackgroundColor":"rgba(0,0,0,0)"});
+"selectionBackgroundColor":"rgba(0,0,0,0)",
+"lockMovementX":true,
+"lockMovementY":true});
 
 
 
@@ -2410,7 +2417,7 @@ $("#font_options").show();
 $("#user_txt").val(image_chain[ak_image_nr]["text_image"][ak_layer_id]["text_content"]);
 
 fabric_last_obj =fabric_obj;
-fabric_obj.set({opacity: 0.7,perPixelTargetFind:false,selectionBackgroundColor:"rgba(0,0,0,0.1)"});
+fabric_obj.set({opacity: 0.7,perPixelTargetFind:false,lockMovementX:false,lockMovementY:false,selectionBackgroundColor:"rgba(0,0,0,0.1)"});
 canvas.renderAll();
 
 $("#text_options").toggle();
@@ -2441,7 +2448,10 @@ console.log("hide_text");
 hide_menus();
 //fabric_last_obj.set({opacity: 0});
 //
-if(fabric_last_obj){fabric_last_obj.set({opacity: 0.03,perPixelTargetFind:true});}
+if(fabric_last_obj){fabric_last_obj.set({opacity: 0.03,perPixelTargetFind:true,lockMovementX:true,lockMovement:true});}
+
+
+
 
 //$("#fabric_area").css({"height":0,"width":0});
 $("#btn_favorite").show();

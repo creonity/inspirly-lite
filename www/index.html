@@ -235,10 +235,9 @@ For production change content-security-policy and admob
 </div>
 </div>
 
-
-
-
-<div id='quickStartGuide' style='padding:20px; padding-top:40px'>
+<div id='quickStartGuide' style='padding:20px; padding-top:20px'>
+Note: this is a scientific project. All images are rendered on demand by our <b>learning inspirly AI</b>. Please be patient. Currently about one out of ten images are useful.
+<br><br>
 <b>Swipe right</b> if you <b>like</b> the image<br>
 <b>Swipe left</b> if you <b>don't like</b> the image<br>
 Click on the image and the text or swipe up for more options. Finally click on the <span class='heart'><i class="fa fa-heart"></i></span> to save and share your image
@@ -273,6 +272,8 @@ Click on the image and the text or swipe up for more options. Finally click on t
     <button class="alert-dialog-button" onclick="hideDialog('dialog-3')"><span data-bind="reshtml: 'OK'"></span></button>
   </div>
 </ons-alert-dialog>
+
+
 
 
 
@@ -331,6 +332,12 @@ Nach links = Design gefällt mir nicht<br>
 
   </div>
 </ons-modal>
+
+
+
+
+
+
 <p id="myLog"></p>
   </ons-page>
 </ons-template>
@@ -361,6 +368,16 @@ Nach links = Design gefällt mir nicht<br>
 
     <p style="text-align: center;">
 
+
+<p>
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
+</ons-list>
+<div id="print_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_print'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
+
+<div id='print_products' class='hidden'></div>
+    </p>
+
 <ons-list style="margin-bottom:20px">
     <ons-list-header><span data-bind="reshtml: 'Share_image_via_apps_from_your_phone'"></span></ons-list-header>
 </ons-list>
@@ -386,14 +403,7 @@ Nach links = Design gefällt mir nicht<br>
 
 <div id="download_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_download'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
 
-<p>
-<ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
-</ons-list>
-<div id="print_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_print'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
 
-<div id='print_products' class='hidden'></div>
-    </p>
 
 
 <div id='download_prev' class='hidden'></div>
@@ -419,7 +429,7 @@ Nach links = Design gefällt mir nicht<br>
   </div>
 </ons-alert-dialog>
 
-<p style="text-align: center;margin-top:10px">
+<p style="text-align: center;margin-top:10px" class='hidden'>
 <ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
 </p>
 
