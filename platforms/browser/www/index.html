@@ -30,17 +30,22 @@ For production change content-security-policy and admob
     <link rel="stylesheet" type="text/css" href="css/cropper.min.css" />
 
 
-
+    <script src="js/fabric.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/onsenui.min.js"></script>
     <script src="js/knockout-3.4.2.js"></script>
     <script src="js/language_model.js"></script>
     <script src="js/functions.js"></script>
+    <script src="moods/birthday/quotes.js"></script>
     <script src="js/instar.js"></script>
     <script src="js/ko.localizationbinding.js"></script>
     <script src="js/masonry.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/cropper.min.js"></script>
+    <script src="js/sketch.min.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/imagetracer_v1.2.2.js"></script>
+    
 
 
 
@@ -57,30 +62,6 @@ For production change content-security-policy and admob
 
 
 
-<ons-template id="mySplitter.html">
-<ons-page id="mySplitter">
-<ons-splitter>
-  <ons-splitter-side id="menu" side="left" width="220px" collapse>
-    <ons-page>
-      <ons-list>
-        <ons-list-item onclick="fn.load('create.html')" tappable>
-          <span data-bind="reshtml: 'Designer'"></span>
-        </ons-list-item>
-           <ons-list-item onclick="fn.load('settings.html')" tappable>
-          <span data-bind="reshtml: 'Settings'"></span>
-        </ons-list-item>
-        <ons-list-item onclick="fn.load('about.html')" tappable>
-          <span data-bind="reshtml: 'About'"></span>
-        </ons-list-item>
-      </ons-list>
-    </ons-page>
-  </ons-splitter-side>
-  <ons-splitter-content id="content" page="create.html"></ons-splitter-content>
-</ons-splitter>
-  </ons-page>
-</ons-template>
-
-
 
 
 
@@ -89,10 +70,9 @@ For production change content-security-policy and admob
 <ons-page id="language">
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">English</ons-list-item>
-    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mySplitter.html')">Deutsch</ons-list-item>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">Deutsch</ons-list-item>
 </ons-list>
-
   </ons-page>
 </ons-template>
 
@@ -102,64 +82,169 @@ For production change content-security-policy and admob
 
 
 
-<ons-template id="create.html">
-<ons-page id="create">
-<ons-toolbar disable-auto-styling>
-      <div class="left">
-        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
-      </div>
+
+
+
+
+
+
+
+<ons-template id="rand_img.html">
+  <ons-page  id = "image">
+ <ons-toolbar>
+      <div class="center"><img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'></div>
+    <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
     </ons-toolbar>
 
+<ons-gesture-detector>
 
 
-<ons-popover direction="up" cancelable id="options">
-  <div style="padding: 10px; text-align: right;">
-<ons-list style="margin-bottom:10px; background-color:rgba(0,0,0,0)">
-<ons-list-item>
-<span data-bind="reshtml: 'Which_aspect_of_the_image_do_you_like_Mark_what_should_not_be_changed'"></span>
-</ons-list-item>
+  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center; overflow: hidden;">
+<div id="fabric_area" style='position:absolute; top:0px; left:0px; width:100%; height:100%; overflow:hidden'>
+<canvas id='c' width="100" height="100"></canvas>
+</div>
+<div class="tutorial hidden" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
+<span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
+</div>
+
+<img src='img/logo_sq.png' class='loader'>
+
+
+<div id='download_image_holder' style="display:none">
+<div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
+    <button id="btn_apply" class="button button--light create_btn hidden" style="position:absolute; bottom:5px; left:5px; z-index:3; width:150px; background:rgba(255,0,0,0.5); color:white"><span data-bind="reshtml: 'Apply'"></span></button>
+
+    <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;"><i class="fa fa-heart"></i></button>
+</div>
+</div>
+</ons-gesture-detector>
+
+
+
+
+
+
+
+<div id='font_options' class='hidden'>
+<button id='font_fixed' class="button button--material--flat option_btn">FIXED</button>
+<button id='font_text' class="button button--material--flat option_btn">TEXT</button>
+<button id='font_filling' class="button button--material--flat option_btn">FILLING</button>
+<button id='font_delete' class="button button--material--flat option_btn hidden">DELETE</button>
+</div>
+
+<div id='image_options' class='hidden'>
+<button id='image_fixed' class="button button--material--flat option_btn">FIXED</button>
+<button id='image_filling' class="button button--material--flat option_btn">BACKGROUND</button>
+<button id='add_font' class="button button--material--flat option_btn hidden">ADD TEXT</button>
+</div>
+
+
+
+
+
+
+
+<div id='text_input' class='hidden'>
+
+</div>
+
+<div id='collection_wrapper' class='hidden' ><div id='collection_area_wrapper'><div id='collection_area'></div></div>
+
+<div class='hidden trainer_mode_ui'>
+<div style='padding:10px; padding-bottom:0px'>
+<div style='float:left; width:100%; text-align:center'>
+<button id='history_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-history"></i></button>
+<button id='pinchin_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-th-large"></i></button>
+<button id='forward_collection_btn' class="button button--outline trainer_button collection_btn"><i class="fa fa-play"></i></button>
+
+</div>
+</div>
+<div style='clear:both'></div>
+</div>
+</div>
+
+
+
+<div id='filling_input' class='hidden'>
+<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle;text-align:center'>
+<svg class="progress-circular progress-circular--indeterminate">
+  <circle class="progress-circular__background"/>
+  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
+  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
+</svg>
+</div></div></div>
+
+
+
+
+<div id='crop_wrapper' class='hidden' ><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
 </ons-list>
-<label class="checkbox">
-<span data-bind="reshtml: 'Fontstyle'"></span>
-  <input id="font" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('font', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-<span data-bind="reshtml: 'Fontsize_and_position'"></span>
-  <input id="fontsize" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontsize', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-<span data-bind="reshtml: 'Fontfilling'"></span>
-  <input id="fontfilling" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('fontfilling', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br>
-<label class="checkbox">
-<span data-bind="reshtml: 'Frame'"></span>
-  <input id="frame" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('frame', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br><label class="checkbox">
-<span data-bind="reshtml: 'Background'"></span>
-  <input id="background" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('background', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br><label class="checkbox">
-<span data-bind="reshtml: 'Texture'"></span>
-  <input id="texture" type="checkbox" class="checkbox__input" onchange="window.localStorage.setItem('texture', $(this).is(':checked'));refresh_preloaded()">
- <div class="checkbox__checkmark"></div>
-</label>
-<br></div>
-</ons-popover>
+<div id='crop_canvas_wrapper'><img id='image_to_crop'></div>
+<div style="float:right; padding:5px">
+<button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
+<button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
+</div>
+</div></div></div>
+<div id='toparea' style='padding:5px'>
+<input type="search" id="search_pic" value="" placeholder="Search image on Pixabay" class="search-input" style="width: 50%; margin-top:7px">
+<div style='float:right'>
+    <button class="button button--outline create_btn" class='hidden' id='resetImage_btn' onclick="resetImage();"><i class="fa fa-close"></i></button>
+    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
+    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
+</div>
+<div style='clear:both'></div>
+</div>
+<div id='image_area' style='width:100%; overflow:scroll'>
 
+
+
+</div>
+<div style='clear:both'></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class='hidden trainer_mode_ui'>
+
+<div style='padding:10px; padding-bottom:0px'>
+<div style='width:15%; height:1px; float:left; font-size:14px; line-height:14px;color:rgba(0,0,0,0.2)'>ID: <span id='image_id'></span></span></div>
+<div style='float:left; width:70%; text-align:center'>
+<button id='history_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-history"></i></button>
+<button id='star1_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star-o"></i></button>
+<button id='star3_btn' class="button button--outline trainer_button star_button fullsize_btn"><i class="fa fa-star"></i></button>
+<button id='pinchin_btn' class="button button--outline trainer_button fullsize_btn"><i class="fa fa-th-large"></i></button>
+
+
+</div>
+<div style='width:15%; float:left; text-align:right; font-size:14px; line-height:14px'> <div><span id='image_id' style='color:rgba(0,0,0,0.2)'></span><span id='best_guess' style='color:rgba(0,0,0,0.2)'></span></div>
+
+</div>
+<div style='clear:both'></div>
+</div>
+</div>
+
+<div id='quickStartGuide' style='padding:20px; padding-top:20px'>
+Note: this is a scientific project. All images are rendered on demand by our <b>learning inspirly AI</b>. Please be patient. Currently about one out of ten images are useful.
+<br><br>
+<b>Swipe right</b> if you <b>like</b> the image<br>
+<b>Swipe left</b> if you <b>don't like</b> the image<br>
+Click on the image and the text or swipe up for more options. Finally click on the <span class='heart'><i class="fa fa-heart"></i></span> to save and share your image
+</div>
+
+
+<button class="fab fab--mini" id="new_image" style='position:fixed; right:5px; bottom:5px; background-color:rgba(0,128,255,0.7)'><i class="zmdi zmdi-plus"></i></button>
 
 <div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
 <div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
@@ -178,90 +263,6 @@ For production change content-security-policy and admob
 <div class='hidden' id ='Cancel_lbl'><span data-bind="reshtml: 'Cancel'"></span></div>
 
 
-
-<ons-tabbar id="tabbar" disable-auto-styling>
-  <ons-tab data-bind="resattr: { label: 'Text' }" icon="fa-quote-left" page="text.html" disable-auto-styling></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Image' }" icon="fa-image" page="own_image.html" disable-auto-styling ></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Template' }" icon="fa-heart" page="mood.html" disable-auto-styling></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Designer' }" icon="fa-eye" id='btn_image_menu' page="rand_img.html" disable-auto-styling active></ons-tab>
-  <ons-tab data-bind="resattr: { label: 'Share' }" icon="fa-share-square" id='share' page="share.html" disable-auto-styling></ons-tab>
-</ons-tabbar>
-  </ons-page>
-</ons-template>
-
-
-
-
-<template id="text.html">
-  <ons-page id= "usr_text_input">
-<ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="reshtml: 'Insert_text'"></span></ons-list-header>
-
-<ons-list-item>
-<textarea maxlength="800" style="width:100%;height:120px" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
-</ons-list-item>
-
-
-
-
-<ons-list-item>
-
-      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
-      <div class="right" id="autolinebreak_switch"></div>
-</ons-list-item>
-
-</ons-list>
-
-<p style="text-align: center;">
-
-<button class="button button--outline download_btn" onclick="getQuote(true)"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
-</p>
-
-
-
-  </ons-page>
-</template>
-
-
-
-
-
-
-<template id="own_image.html">
-  <ons-page id= "own_image">
-<div id='upload_loader_wrapper' class='hidden'><div id='upload_loader'><div style='display: table-cell; vertical-align: middle;text-align:center'>
-<svg class="progress-circular progress-circular--indeterminate">
-  <circle class="progress-circular__background"/>
-  <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
-  <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
-</svg>
-</div></div></div>
-<div id='crop_wrapper' class='hidden'><div id='crop_image_area'><div style='display: table-cell; vertical-align: middle'>
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Crop_image'"></span></ons-list-header>
-</ons-list>
-<div id='crop_canvas_wrapper'><img id='image_to_crop'></div>
-<div style="float:right; padding:5px">
-<button class="button button--outline" onclick="$('#crop_wrapper').fadeOut();$('#image_to_crop').cropper('destroy')"><i class="fa fa-close"></i> <span data-bind="reshtml: 'Cancel'"></span></button>
-<button class="button button--outline" onclick="crop_image();"><i class="fa fa-crop"></i> <span data-bind="reshtml: 'Crop'"></span></button>
-</div>
-</div></div></div>
-<div id='toparea' style='padding:5px'>
-<input type="search" id="search_pic" value="" placeholder="Search image on Pixabay" class="search-input" style="width: 60%; margin-top:7px">
-<div style='float:right'>
-    <button class="button button--outline create_btn" onclick="getImage();"><i class="fa fa-image"></i></button>
-    <button class="button button--outline create_btn" onclick="takeImage();"><i class="fa fa-camera-retro"></i></button>
-</div>
-<div style='clear:both'></div>
-</div>
-<div id='image_area' style='width:100%; overflow:scroll'>
-
-
-
-</div>
-<div style='clear:both'></div>
-
 <ons-alert-dialog id="dialog-3">
   <div class="alert-dialog-title"><span data-bind="reshtml: 'Error'"></span></div>
   <div class="alert-dialog-content">
@@ -272,109 +273,72 @@ For production change content-security-policy and admob
   </div>
 </ons-alert-dialog>
 
-  </ons-page>
-
-
-</template>
 
 
 
 
-
-
-
-<template id="mood.html">
-  <ons-page id="mood">
-    <p style="text-align: center;">
-  <ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Choose_mood_of_image'"></span></ons-list-header>
-
- <ons-list-item tappable>
-<select id='select_mood' class="select-input">
-  <option value='1' data-bind="reshtml: 'Lovely'"></option>
-  <option value='2' data-bind="reshtml: 'Young'"></option>
-  <option value='3' data-bind="reshtml: 'Sparkling'"></option>
-  <option value='4' data-bind="reshtml: 'Serious'"></option>
-  <option value='5' data-bind="reshtml: 'Cheerful'"></option>
-  <option value='6' data-bind="reshtml: 'Sad'"></option>
-  <option value='0' data-bind="reshtml: 'Anything_goes'" selected></option>
-</select>
+<ons-action-sheet id="textInput" cancelable title="Change text">
+<ons-list style='margin-bottom:50%'>
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
 </ons-list-item>
-
-
+<ons-list-item>
+      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
+      <div class="right" id="autolinebreak_switch"></div>
+</ons-list-item>
+<ons-list-item>
+      <p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
+<button class="button button--outline download_btn" onclick="getQuote(true,'user_txt')"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+</ons-list-item>
 </ons-list>
+</ons-action-sheet>
 
 
 
-  <ons-list>
-<ons-list-header><span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
-</ons-list>
-    </p>
+<ons-modal direction="up">
+<div class="modal_con">
 
-<div id='templates_area' style='width:100%; overflow:scroll'>
+  <div style='text-align:center; margin-bottom:10px; margin-top:20px'><img src='img/logo.svg' class='flickr_logo' style='width:40%'></div>
+  <div style='text-align:left;'>
+  <div style='padding:20px'>
+    <div style='margin-bottom:10px'>Willkomen!</div>
+    Ich bin <i>inspirly</i> und gestalte Textbilder nach deinem Wunsch. Ich zeige dir ein Design und du sagst mir, ob es dir gefällt, oder eben nicht :-(
+    Aber hey, kein Problem! Kommuniziere mit mir, bis dein Bild perfekt ist. ;-)<br>
+    Klicke dann auf das Herz <span class='heart'><i class="fa fa-heart"></i></span>, teile dein Design mit deinen Freunden
+    und speichere es für die Ewigkeit.
+    </div>
 
-  </ons-page>
-</template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<ons-template id="rand_img.html">
-  <ons-page  id = "image">
-
-
-
-<ons-gesture-detector>
-
-
-  <div id="detect-area" style="background:rgba(244,244,244,0.8); margin:auto; margin-top:10px; position: relative; width: 100%;  text-align: center;">
-<div class="tutorial" style='position: absolute; right:0px; top:100px; z-index:2; padding:15px; padding-left:30px; background:url(img/swipe_left_background_wh.png); background-repeat:no-repeat; color:black'>
-<span data-bind="reshtml: 'Swipe_left_to_change_the_design'"></span>
+    <div  style='background:rgba(255,255,255,0.4);padding:20px; padding-bottom:50px'>
+<button id='hide_modal_btn' class="action-sheet-button">Loslegen</button>
+<div style='margin-top:20px; font-size:10px'><i>Schnellstart:<br>
+Nach rechts = Design gefällt mir<br>
+Nach links = Design gefällt mir nicht<br>
 </div>
-
-<img src='img/logo_sq.png' class='loader'>
-
-
-<div id='download_image_holder' style="display:none">
-<div id='download_image' style='text-align: center; height: <script>$(window).width();</script>px '></div>
-    <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:55px; z-index:3;" onclick="addFavorite();"><i class="fa fa-heart"></i></button>
-    <button id="btn_options" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;" onclick="showPopover(this,'options');"><i class="fa fa-comment"></i></button>
+<div style='padding:20px'>Ich verstehe folgende Zeichensprache:
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_right.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir</b>: wische nach rechts und ich nehme kleine Anpassungen vor.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_left.svg'><div class='tutorial_txt'>Das <b>Design gefällt dir nicht</b>: wische nach links und ich versuchs nochmals von Neuem.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/swipe_up.svg'><div class='tutorial_txt'>Du möchtest <b>mehrere Designs gleichzeitig</b>: wische nach oben und ich zeig dir zusätzliche Designs. So kannst du aus bis zu 9 Designs deinen Favoriten auswählen.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Text bearbeiten</b>: Klicke auf den Text und ich zeig dir die Optionen an. Klicke auf 'Fixiere' und ich lass den fixierten Text in Ruhe. Klicke auf 'Text' und schreib etwas Neues. Klicke auf 'Füllung' und wähle ein Foto für die Textfüllung aus.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/press.svg'><div class='tutorial_txt'>Den <b>Text verschieben</b>: Zieh den Text an den gewünschten Ort. Klicke danach auf Anwenden.</div></div>
+    <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/rotate.svg'><div class='tutorial_txt'>Den <b>Text drehen</b>: Bewege zwei Finger in entgegengesetzte Richtung. Klicke danach auf anwenden</div></div>
+   <div class='tutorial_box'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'>Den <b>Hintergrund bearbeiten</b>: Klicke auf den Hintergrund und ich zeig dir die Optionen an. Klicke auf 'Fixieren' und ich lass den Hintergrund in Ruhe. Klicke nochmals darauf und ich arbeite wieder am Hintergrund. Klicke auf 'Füllung' und wähle ein Foto für den Hintergrund aus.</div></div>
+  <div class='tutorial_box hidden'><img class='tutorial_img' src='img/fingers/touch.svg'><div class='tutorial_txt'><b>Textblock hinzufügen und löschen</b>: Klicke zuerst auf den Hintergrund und dann 'Text hinzufügen'. Ab sofort werde ich einen weiteren Textblock ins Design integrieren. Klicke auf den Textblock und dann auf 'Text löschen' um ein Design ohne diesen Textblockzu erhalten.</div></div>
 </div>
-</div>
-</ons-gesture-detector>
+ 
+    </div>
 
-<div id="trainer_mode_ui">
-
-<div style='padding:10px; padding-bottom:0px'>
-<div style='width:25%; height:1px; float:left; font-size:14px; line-height:14px'><span data-bind="reshtml: 'How_do_you_like_it'"></span></div>
-<div style='float:left; width:50%; text-align:center'>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,1);"><i class="fa fa-star-o"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,3);"><i class="fa fa-star-half-o"></i></button>
-<button class="button button--outline trainer_button" onclick="show_image(false,false,5);"><i class="fa fa-star"></i></button>
-</div>
-<div style='width:25%; float:left; text-align:right; font-size:14px; line-height:14px'> <div id='best_guess' style='color:rgba(0,0,0,0.2)'></div><div id='time_calculated' style='color:rgba(0,0,0,0.2)'></div><div id='time_loaded' style='color:rgba(0,0,0,0.2)'></div></div>
-<div style='clear:both'></div>
-</div>
-</div>
+  </div>
+</ons-modal>
 
 
+
+
+
+
+<p id="myLog"></p>
   </ons-page>
 </ons-template>
 
@@ -395,9 +359,25 @@ For production change content-security-policy and admob
 
 <template id="share.html">
   <ons-page id="share">
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center">Save Image</div>
+    </ons-toolbar>
 
     <p style="text-align: center;">
 
+
+<p>
+<ons-list style='margin-top:20px;margin-bottom:10px'>
+    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
+</ons-list>
+<div id="print_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_print'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
+
+<div id='print_products'></div>
+    </p>
+<p style="text-align: center;">
 <ons-list style="margin-bottom:20px">
     <ons-list-header><span data-bind="reshtml: 'Share_image_via_apps_from_your_phone'"></span></ons-list-header>
 </ons-list>
@@ -416,24 +396,17 @@ For production change content-security-policy and admob
     <ons-list-header><span data-bind="reshtml: 'Download_image'"></span></ons-list-header>
 </ons-list>
 <button class="button button--outline download_btn" onclick="download_image(400)"><span data-bind="reshtml: 'Small'"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Medium'"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'Large'"></span></button>
-<button class="button button--outline download_btn" onclick="showDialog('dialog-1')"><span data-bind="reshtml: 'X_Large'"></span></button>
+<button class="button button--outline download_btn" onclick="download_image(800)"><span data-bind="reshtml: 'Medium'"></span></button>
+<button class="button button--outline download_btn" onclick="download_image(1600)"><span data-bind="reshtml: 'Large'"></span></button>
+<button class="button button--outline download_btn" onclick="download_image(3200)"><span data-bind="reshtml: 'X_Large'"></span></button>
 </p>
-<img id='imageElement' src=''>
+
 <div id="download_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_download'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
 
-<p>
-<ons-list style='margin-top:20px;margin-bottom:10px'>
-    <ons-list-header><span data-bind="reshtml: 'Print_image'"></span></ons-list-header>
-</ons-list>
-<div id="print_progress" class="hidden progress_txt"><span data-bind="reshtml: 'Optimize_to_print'"></span><div class="progress-bar progress-bar--indeterminate"></div></div>
-
-<div id='print_products' class='hidden'></div>
-    </p>
 
 
-<div id='download_prev'></div>
+
+<div id='download_prev' class='hidden'></div>
 
 
 <ons-alert-dialog id="dialog-1">
@@ -456,10 +429,70 @@ For production change content-security-policy and admob
   </div>
 </ons-alert-dialog>
 
+<p style="text-align: center;margin-top:10px" class='hidden'>
+<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
+</p>
+
   </ons-page>
 </template>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template id="mood.html">
+  <ons-page id="mood">
+
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center">New Image</div>
+    </ons-toolbar>
+
+  <ons-list>
+    <ons-list-header>1. <span data-bind="reshtml: 'Text'"></span></ons-list-header>
+
+
+
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txtNew'></textarea>
+</ons-list-item>
+
+<ons-list-item>
+      <p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="getQuote(true,'user_txtNew')"><span data-bind="reshtml: 'Random'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txtNew').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+</ons-list-item>
+</ons-list>
+
+
+
+  <ons-list>
+<ons-list-header>2. <span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
+</ons-list>
+  
+
+
+<div id='moddsets_area' style='width:100%; overflow:scroll'></div>
+
+<ons-list-header>...<span data-bind="reshtml: 'or_Favorite'"></span></ons-list-header>
+</ons-list>
+<div id='templates_area' style='width:100%; overflow:scroll'></div>
+
+  </ons-page>
+</template>
 
 
 
@@ -472,29 +505,43 @@ For production change content-security-policy and admob
 
 <template id="settings.html">
   <ons-page id="settings">
-<ons-toolbar disable-auto-styling>
-      <div class="left">
-        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
-      </div>
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center">Settings</div>
     </ons-toolbar>
+
+
+
 
 
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="locale='en';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">English</ons-list-item>
-    <ons-list-item onclick="locale='de';window.localStorage.removeItem('current_text');window.localStorage.setItem('locale', locale);fn.load('mySplitter.html')">Deutsch</ons-list-item>
+    <ons-list-item onclick="change_lang('en');">English</ons-list-item>
+    <ons-list-item onclick="change_lang('de');">Deutsch</ons-list-item>
 </ons-list>
+
+<ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_complexity'"></span></ons-list-header>
+<ons-row style="margin-top: 15px; margin-bottom:15px">
+      <ons-col width="40px" style="text-align: center; line-height: 31px;">
+          <ons-icon icon="md-brightness-low" style='color:rgba(0,0,0,0.3)'></ons-icon>
+      </ons-col>
+      <ons-col>
+      </ons-icon><ons-range id="complexitySlider" style="width: 100%;" value="25"></ons-range> </ons-col>
+         <ons-col width="40px" style="text-align: center; line-height: 31px;">
+        <ons-icon icon="md-brightness-high" style='color:rgba(0,0,0,0.4)'></ons-icon>
+      </ons-col>
+      </ons-row>
+</ons-list>
+
 
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
     <ons-list-item>
-  <div class="center" style="margin-top:0px" id="preview_quality_switch"></div>
+  <div class="center" style="margin-top:0px" id="preview_quality_switch"><ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
     </ons-list-item>
 </ons-list>
 <ons-list>
@@ -504,9 +551,24 @@ For production change content-security-policy and admob
     </ons-list-item>
 </ons-list>
 
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Effect_mode'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="effect_switch"></div>
+    </ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
+    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();$('.modal').trigger('postshow')"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
+</ons-list>
+
 
 <p style="text-align: center;margin-top:10px">
-<button class="button button--outline" onclick="fn.load('create.html')"><span data-bind="reshtml: 'Go_back'"></span></button>
+<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
 </p>
 
   </ons-page>
@@ -517,21 +579,17 @@ For production change content-security-policy and admob
 
 <template id="about.html">
   <ons-page id="about">
-<ons-toolbar disable-auto-styling>
-      <div class="left">
-        <ons-toolbar-button onclick="fn.open()" disable-auto-styling>
-          <ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-        <img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'>
-      </div>
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center"><span data-bind="reshtml: 'About_us'"></span></div>
     </ons-toolbar>
 
 
 
 
-<div style='padding:20px' data-bind="visible: 'terms_de'">
+<div style='padding:20px' id='terms_de' data-bind="resvisible: 'terms_de'">
     <p style="text-align: center;">
     Wir von inspir.ly lieben sch&ouml;ne Bilder genauso wie du. Benutze inspir.ly und werde inspiriert. Alle Bilder werden von unseren einzigartigen <i>inspir.ly Desiger KI</i> erstellt,
      welche mit Hilfe von k&uuml;nstlicher Intelligenz bei jedem Desing dazulernt. Manchmal braucht es noch etwas Geduld, daf&uuml;r sind die Designs umso grossartiger. Sobald dir ein Design ge&auml;llt,
@@ -629,7 +687,7 @@ Wir behalten uns das Recht vor, jederzeit &Auml;nderungen an dieser Datenschutze
 
 
 
-<div style='padding:20px' data-bind="visible: 'terms_en'">
+<div style='padding:20px' data-bind="resvisible: 'terms_en'">
     <p style="text-align: center;">
 We at inspir.ly love beauty just like you. Use inspir.ly and get inspired. All images are created by our unique <i>inspirly design engine AI</i>. The engine learns each time it creates an image to get better and better. When you like what
 you see, hit share to publish it on instagram, facebook, twitter, whatsap and co.

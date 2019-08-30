@@ -3,7 +3,7 @@
 
 
 
-.page, .popover__content, .checkbox, .list, .button, .tabbar__label, .select-input, .progress_txt {font-family: 'Indie Flower', cursive;}
+.page, .popover__content, .checkbox, .list, .button, .tabbar__label, .select-input, .progress_txt, .action-sheet-title {font-family: 'Indie Flower', cursive;}
 .toolbar-button {color:rgb(183,183,183)}
 @font-face {
 font-family: "Indie Flower";
@@ -12,6 +12,7 @@ src: url("fonts/IndieFlower.ttf");
 
 //.page__background  {background: white !important;}
 
+.action-sheet-title {font-size:18px}
 
 .page--full_bg__background {
    background: url("../img/logo.jpg") !important;
@@ -27,12 +28,17 @@ background:rgba(249,245,230,0.6);
 
 .img_preview {
 width:33.2%;
+height:calc(33vw);
 background-color:black;
 background-repeat: no-repeat;
 background-position: center center;
 background-size:cover;
 }
 
+#print_products {
+width:100%;
+height: calc(37.5vw);
+}
 
 //.tabbar, .toolbar {background-image:url("../img/stoff_bg.jpg");}
 //.tabbar, .toolbar {background:rgba(255,249,203,1);}
@@ -68,7 +74,9 @@ margin-bottom:20px;
 .hidden {display:none}
 
 .social_sharing {width:38px}
-.trainer_button {width:38px;color:rgb(255,204,0)}
+.trainer_button {width:38px;color:rgba(0,0,0,0.2);border-color:rgba(0,0,0,0.2)}
+.star_button {width:38px;color:rgb(255,204,0)}
+
 
 @keyframes flickerAnimation {
   0%   { opacity:0.6; }
@@ -111,10 +119,83 @@ width:200px;
 
 .pixabay {background:rgba(255,255,255,0.8);padding:5px; position:absolute;bottom:55px;right:0px; z-index:4; border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
 
+.option_btn {color:grey}
+.option_btn.active {color:black}
+.option_btn.activeMenu {color:black; border-bottom:1px solid black}
 
-#crop_image_area {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
+#crop_image_area {position:fixed; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
 #upload_loader {position:absolute; top:0px; left:0px; z-index:10; width:100%;background:rgba(255,255,255,0.95);display: table;}
 img {max-width: 100%;}
 
 #image_to_crop {}
 #crop_canvas_wrapper {width:100%px; overflow:hidden}
+
+
+
+
+
+
+
+
+
+@-webkit-keyframes pop-in {
+0% { opacity: 0; -webkit-transform: scale(0.1); }
+100% { opacity: 1; -webkit-transform: scale(1); }
+}
+@-moz-keyframes pop-in {
+0% { opacity: 0; -moz-transform: scale(0.1); }
+100% { opacity: 1; -moz-transform: scale(1); }
+}
+@keyframes pop-in {
+0% { opacity: 0; transform: scale(0.1); }
+100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes flickr {
+  0%   { opacity:0.8; }
+  25%  { opacity:1; }
+  50% { opacity:0.8; }
+  75% { opacity:1; }
+  100%  { opacity:0.8; }
+}
+
+
+.collection_img {background-color:white; float:left; position:absolute; background-image:url("../img/logo_sq.png"); margin:0.5%;border-radius: 5px;background-size: cover}
+.flickr_img {
+-webkit-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+-moz-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+-ms-animation:pop-in 0.5s,flickerAnimation 4s infinite;
+animation:pop-in 0.5s,flickerAnimation 4s infinite;
+}
+
+.flickr_logo {animation:pop-in 0.5s,flickr 4s infinite;}
+
+
+
+#collection_wrapper{position:absolute;left:0px;top:0px; z-index:10;height:100%; width:100%;background:rgba(255,255,255,0.95);}
+#collection_area_wrapper {overflow:hidden;width:100%; padding-top:10px}
+#collection_area{height:100%; width:100%;}
+#crop_image_area{position:fixed; left:0px; z-index:10; top:0px; height:100%; width:100%; display: table; background:rgba(255,255,255,0.95);}
+
+
+.sketch {position:absolute; top:0px; left:0px; touch-action: none; pointer-events:none; overflow:hidden;}
+.heart {text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de; color:white}
+
+.modal {background-color: rgba(213,210,208,0.95);margin-top:45px}
+.modal_con {overflow-y: scroll; height:100px; padding-bottom:120px;
+font-size:14px;
+text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    color: #131313;
+    letter-spacing: .15em;
+    line-height: 1.5;
+      }
+.modal_con::-webkit-scrollbar {display: none;}
+
+
+.tutorial_img {float:left; width:50px}
+.tutorial_txt {margin-left:65px}
+.tutorial_box {margin-top:20px}
+#sketch_wrapper {overflow:scroll; width:100%; position:absolute; top:0px; left:0px;touch-action: none; pointer-events:none;}
+#sketch_wrapper::-webkit-scrollbar {display: none;}

@@ -78,6 +78,8 @@
     <access origin="*" />
     <access origin="http://192.168.178.22:8080/*" />
     <icon src="icon.png" />
+    <engines>
+    </engines>
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <config-file parent="LSApplicationQueriesSchemes" platform="ios" target="*-Info.plist">
@@ -103,4 +105,5 @@
     <preference name="PaginationMode" value="unpaginated" />
     <preference name="CameraUsesGeolocation" value="false" />
     <preference name="orientation" value="portrait" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
 </widget>

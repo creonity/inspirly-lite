@@ -67,7 +67,10 @@
     <access origin="*" />
     <access origin="http://192.168.178.22:8080/*" />
     <icon src="icon.png" />
+    <engines>
+    </engines>
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="orientation" value="portrait" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
 </widget>

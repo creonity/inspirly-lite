@@ -1,4 +1,4 @@
-﻿// See https://github.com/tfsjohan/Knockout-Localization-Binding for more details.
+// See https://github.com/tfsjohan/Knockout-Localization-Binding for more details.
 
 (function () {
 	ko.bindingHandlers.restext = {
@@ -24,6 +24,23 @@
 				context);
 		}
 	};
+
+
+ko.bindingHandlers.resvisible = {
+  update: function(element, valueAccessor, allBindingsAccessor, viewModel, context) {
+    var isCurrentlyHidden   = getLocalizedText(ko.utils.unwrapObservable(valueAccessor()));
+    ko.bindingHandlers.visible.update(
+    element, 
+    function () {  return isCurrentlyHidden ; },
+    allBindingsAccessor,
+		viewModel,
+		context);
+  }
+};
+
+
+
+
 
 	ko.bindingHandlers.reshref = {
 		update: function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
