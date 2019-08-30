@@ -54,9 +54,10 @@ quote_array["de"]["2"].push("Es ist ein Junge");
 quote_array["en"]["3"] = [];
 quote_array["de"]["3"] = [];
 
-quote_array["en"]["3"].push("[NAME] & [NAME2]");
-quote_array["en"]["3"].push("[DATE] [NAME] & [NAME2]");
+quote_array["en"]["3"].push("Forever");
+quote_array["en"]["3"].push("Happily married");
 quote_array["en"]["3"].push("Just married!");
-quote_array["de"]["3"].push("[NAME] & [NAME2]");
-quote_array["de"]["3"].push("[DATE] [NAME] & [NAME2]");
+quote_array["de"]["3"].push("Wird sind verlobt.");
+quote_array["de"]["3"].push("Wir haben geheiratet!");
 quote_array["de"]["3"].push("Frisch verheiratet");
+quote_array["de"]["3"].push("F&uuml;r immer und ewig");

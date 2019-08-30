@@ -272,7 +272,7 @@ if (page.matches("#mood2")) {ko.applyBindings(languageModel,document.getElementB
 
 
 if (page.matches("#image")) {
-
+$("#quickStartGuide").hide();
 app.showTextInput = document.getElementById("textInput").show.bind(document.getElementById("textInput"));
 app.hideTextInput = document.getElementById("textInput").hide.bind(document.getElementById("textInput"));
 
@@ -865,6 +865,7 @@ if(!$(".modal").is(":visible")){$(".sketch").insertBefore($(".upper-canvas"));}
 //Collection Feature
 async function createCollection(size)
 {
+$("#quickStartGuide").fadeOut();
 size = 3;collection_size=3;
 canvas.clear();canvas.renderAll();
 collectionItemsShown=0;
@@ -942,6 +943,7 @@ fullsize_image(image_nr);
 $collectionGrid.masonry('destroy');
 $("#collection_area").html("");
 $("#collection_wrapper").hide();
+$("#quickStartGuide").fadeIn();
 collection_size=collection_size-1;
 }
 
@@ -1797,7 +1799,7 @@ String.prototype.trim = function() {
 
 //Image from camera
 function takeImage() {
-navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 80, allowEdit: true, cameraDirection: 1, 
+navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 90, allowEdit: false, cameraDirection: 1, 
     correctOrientation: true, 
     destinationType: Camera.DestinationType.FILE_URI });
 
@@ -1814,7 +1816,7 @@ function onFail(message) {
             console.log("upload_initiated");
             show_loader(true);
             navigator.camera.getPicture(uploadPhoto, function(message) {console.log('get picture failed');},{
-			quality: 100,
+			quality: 90,
 			destinationType: navigator.camera.DestinationType.FILE_URI,
 			sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
 		}
