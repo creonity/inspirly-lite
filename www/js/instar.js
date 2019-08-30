@@ -465,7 +465,7 @@ $("#myNavigator").trigger("imagePageLoaded");
 
 if (page.matches("#mood")) {
 $container = $('#templates_area').masonry({itemSelector: '.template_preview', columnWidth: 1});
-if(typeof cordova !== 'undefined'){show_favorites_from_folder();}
+//if(typeof cordova !== 'undefined'){show_favorites_from_folder();}
 $containerMood = $('#moodsets_area').masonry({itemSelector: '.mood_preview', columnWidth: 1});
 show_mood_sets();
 

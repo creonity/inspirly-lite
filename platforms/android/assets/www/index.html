@@ -36,7 +36,7 @@ For production change content-security-policy and admob
     <script src="js/knockout-3.4.2.js"></script>
     <script src="js/language_model.js"></script>
     <script src="js/functions.js"></script>
-    <script src="moods/birthday/quotes.js"></script>
+    <script src="moods/quotes.js"></script>
     <script src="js/instar.js"></script>
     <script src="js/ko.localizationbinding.js"></script>
     <script src="js/masonry.pkgd.min.js"></script>
@@ -70,8 +70,8 @@ For production change content-security-policy and admob
 <ons-page id="language">
 <ons-list>
     <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">English</ons-list-item>
-    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('rand_img.html')">Deutsch</ons-list-item>
+    <ons-list-item onclick="locale='en';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mood.html')">English</ons-list-item>
+    <ons-list-item onclick="locale='de';window.localStorage.setItem('locale', locale);document.querySelector('#myNavigator').pushPage('mood.html')">Deutsch</ons-list-item>
 </ons-list>
   </ons-page>
 </ons-template>
@@ -80,6 +80,124 @@ For production change content-security-policy and admob
 
 
 
+<ons-template id="mood.html">
+  <ons-page id="mood">
+
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center"><span data-bind="reshtml: 'new_image'"></span></div>
+    </ons-toolbar>
+
+
+<div id='moodsetWrapper'><div id='moodsets_areaWrapper'><div id='moodsets_area' class='moodsets_area' style='width:100%; overflow:scroll'></div></div>
+<div id='moodBack'><div id='backTitle'><span data-bind="reshtml: 'choose_event'"></span></div></div>
+</div>
+
+<div id='moodInputMenu' class='hidden'>
+  <ons-list>
+    <ons-list-header><span data-bind="reshtml: 'personalizeCard'"></span></ons-list-header>
+
+<div class='moodMenu' id='moodInputs'>
+<span id='moodMenuName' class='hidden'><input class="text-input text-input--material mood_input" style='margin-top:9px; margin-right:10px; width:150px' id='inputName' placeholder="Name" type="text"> </span>
+<span id='moodMenuName2' class='hidden'><input class="text-input text-input--material mood_input" style='margin-top:9px; margin-right:10px; width:150px' id='inputName2' placeholder="Name" type="text"> </span>
+<span id='moodMenuAge' class='hidden'>Age: <select id='inputAge' class="select-input select-input--material mood_input"></select> </span>
+<span id='moodMenuDate' class='hidden' style='display:block; padding-top:20px'>Date: <select id='inputDay' class="select-input select-input--material mood_input"></select> <select id='inputMonth' class="select-input select-input--material mood_input"></select> <select id='inputYear' class="select-input select-input--material mood_input"></select> </span>
+<span id='moodMenuQuote' class='hidden'>Quote: <select id='inputQuote' class="select-input select-input--material mood_input"></select> </span>
+<span id='moodMenuGender' class='hidden' style='display:block; padding-top:20px'>Gender: <select id='inputGender' class="select-input select-input--material mood_input"><option>Boy</option><option>Girl</option></select> </span>
+</div>
+
+<div id='moodText' class='hidden'>
+<ons-list-header style='margin-top:10px'><span data-bind="reshtml: 'changeText'"></span></ons-list-header>
+
+<div class='moodMenu'>
+
+</div>
+</div>
+</div>
+
+<div id='designerOptions' class='hidden'>
+<ons-list-header><span data-bind="reshtml: 'chooseMode'"></span></ons-list-header>
+<p style="text-align: center;">
+<button class="button button--outline download_btn" onclick="window.localStorage.setItem('designerMode',0);new_image()"><span data-bind="reshtml: 'Designer'"></span></button>
+<button class="button button--outline download_btn" onclick="window.localStorage.setItem('designerMode',1);new_image()"><span data-bind="reshtml: 'AI'"></span></button>
+<button class="button button--outline download_btn" onclick="window.localStorage.setItem('designerMode',2);new_image()"><span data-bind="reshtml: 'Favorites'"></span></button>
+</p>
+</div>
+
+
+
+</div>
+<div class='hidden'>
+<ons-list-item>
+<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txtNew'></textarea>
+</ons-list-item>
+
+<ons-list-item>
+      <p style="text-align: center;">
+
+<button class="button button--outline download_btn" onclick="getQuote(true,'user_txtNew')"><span data-bind="reshtml: 'next'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txtNew').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+</p>
+</ons-list-item>
+</div>
+
+<div class='hidden'>
+<ons-list-header>...<span data-bind="reshtml: 'or_Favorite'"></span></ons-list-header>
+<div id='templates_area' style='width:100%; overflow:scroll'></div>
+</div>
+</ons-list>
+  </ons-page>
+</ons-template>
+
+
+
+<ons-template id="mood2.html">
+  <ons-page id="mood2">
+
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center"><span data-bind="reshtml: 'new_image'"></span></div>
+    </ons-toolbar>
+
+
+
+<div id='moodsetWrapper'>
+<div id='moodTextInputWrapper'>
+<div id='moodTextInput' placeholder='Free Text' contenteditable='true'></div>
+<button id='btnCreate' class="button button--outline">Karte erstellen</button>
+</div>
+<div id='mood2Back'>
+
+
+
+<div id='backTitle'><span data-bind="reshtml: 'personalizeCard'"></span></div>
+
+
+<div id='moodsets_areaWrapper'><div id='quotesWrapper' class='moodsets_area'  style='width:100%; overflow:scroll'>
+<div id='quotes'></div>
+
+
+</div></div>
+<div id='textSelection' class=""></div>
+
+<div class="inputMenu hidden">
+  <form>
+    <input type="text">
+    <button></button>
+  </form>
+</div>
+
+</div>
+</div>
+
+
+</ons-list>
+  </ons-page>
+</ons-template>
 
 
 
@@ -95,6 +213,11 @@ For production change content-security-policy and admob
       <div class="center"><img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'></div>
     <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
     </ons-toolbar>
+
+
+
+
+
 
 <ons-gesture-detector>
 
@@ -115,6 +238,8 @@ For production change content-security-policy and admob
     <button id="btn_apply" class="button button--light create_btn hidden" style="position:absolute; bottom:5px; left:5px; z-index:3; width:150px; background:rgba(255,0,0,0.5); color:white"><span data-bind="reshtml: 'Apply'"></span></button>
 
     <button id="btn_favorite" class="button button--light create_btn" style="position:absolute; bottom:5px; right:5px; z-index:3;"><i class="fa fa-heart"></i></button>
+    <button id="btn_share" class="button button--light create_btn" style="position:absolute; top:5px; right:5px; z-index:3;"><i class="fa fa-share"></i></button>
+
 </div>
 </div>
 </ons-gesture-detector>
@@ -236,11 +361,14 @@ For production change content-security-policy and admob
 </div>
 
 <div id='quickStartGuide' style='padding:20px; padding-top:20px'>
-Note: this is a scientific project. All images are rendered on demand by our <b>learning inspirly AI</b>. Please be patient. Currently about one out of ten images are useful.
+Note: All images are rendered on demand by our <b>learning inspirly AI</b>.
 <br><br>
-<b>Swipe right</b> if you <b>like</b> the image<br>
-<b>Swipe left</b> if you <b>don't like</b> the image<br>
-Click on the image and the text or swipe up for more options. Finally click on the <span class='heart'><i class="fa fa-heart"></i></span> to save and share your image
+<b>Swipe right</b> to change it a little<br>
+<b>Swipe left</b> to change it a lot<br>
+<b>Swipe up</b> to get a collection<br>
+<b>Click on the image or the text</b> to make specific changes<br>
+<b>Click on the <i class="fa fa-share"></i> to add it to your favorites<br>
+<b>Finally click on the <span class='heart'><i class="fa fa-heart"></i></span> to save and share your image
 </div>
 
 
@@ -450,49 +578,16 @@ Nach links = Design gefällt mir nicht<br>
 
 
 
-<template id="mood.html">
-  <ons-page id="mood">
-
- <ons-toolbar>
-  <div class="left">
-<div class="left"><ons-back-button></ons-back-button></div>
-</div>
-      <div class="center">New Image</div>
-    </ons-toolbar>
-
-  <ons-list>
-    <ons-list-header>1. <span data-bind="reshtml: 'Text'"></span></ons-list-header>
 
 
 
-<ons-list-item>
-<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txtNew'></textarea>
-</ons-list-item>
-
-<ons-list-item>
-      <p style="text-align: center;">
-<button class="button button--outline download_btn" onclick="getQuote(true,'user_txtNew')"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txtNew').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
-</p>
-</ons-list-item>
-</ons-list>
 
 
 
-  <ons-list>
-<ons-list-header>2. <span data-bind="reshtml: 'Choose_template'"></span></ons-list-header>
-</ons-list>
-  
 
 
-<div id='moddsets_area' style='width:100%; overflow:scroll'></div>
 
-<ons-list-header>...<span data-bind="reshtml: 'or_Favorite'"></span></ons-list-header>
-</ons-list>
-<div id='templates_area' style='width:100%; overflow:scroll'></div>
 
-  </ons-page>
-</template>
 
 
 
@@ -535,6 +630,13 @@ Nach links = Design gefällt mir nicht<br>
         <ons-icon icon="md-brightness-high" style='color:rgba(0,0,0,0.4)'></ons-icon>
       </ons-col>
       </ons-row>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Experimental_mode'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="experimentalMode_switch"><ons-switch id='experimentalMode' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
+    </ons-list-item>
 </ons-list>
 
 
