@@ -1797,7 +1797,8 @@ String.prototype.trim = function() {
 
 //Image from camera
 function takeImage() {
-navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 100,
+navigator.camera.getPicture(uploadPhoto, function(message) {console.log('take picture failed');}, { quality: 80, allowEdit: true, cameraDirection: 1, 
+    correctOrientation: true, 
     destinationType: Camera.DestinationType.FILE_URI });
 
 
