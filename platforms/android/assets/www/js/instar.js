@@ -917,9 +917,7 @@ if(typeof image_chain[image_nr]["src"] === 'undefined'){$("#collection_img_"+ima
 
 //if(!image_chain[image_nr]){$("#collection_img_"+image_nr).addClass("flickr_img");create_image(image_nr,image_chain[ak_image_nr]["code"],showCollectionItem,image_nr);}
 //else if(!image_chain[image_nr]["src"]){$("#collection_img_"+image_nr).addClass("flickr_img");create_image(image_nr,image_chain[ak_image_nr]["code"],showCollectionItem,image_nr);}
-else{
-console.log("fromHistory"+image_nr);
-showCollectionItem(image_nr);}
+else{showCollectionItem(image_nr);}
 
 }
 
@@ -1474,12 +1472,12 @@ canvas.off('mouse:up');
 //$("#download_image").addClass("translateLeft");
 //$("#download_image").addClass("translateRight");
 canvas.discardActiveObject();
-
-if($collectionGrid){$collectionGrid.masonry('destroy');}
+if($collectionGrid.data('masonry')){$collectionGrid.masonry('destroy');}
 $("#collection_area").html("");
 if(!history){ak_image_nr_collection=image_chain.length;}
-else if(history == 1){ak_image_nr_collection=max(0,ak_image_nr_collection-(collection_size*collection_size));}
-else if(history == 2){ak_image_nr_collection = ak_image_nr_collection+(collection_size*collection_size);}
+else if(history == 1){ak_image_nr_collection=max(0,ak_image_nr_collection-(collection_size*collection_size));}//go back in history
+else if(history == 2){ak_image_nr_collection = ak_image_nr_collection+(collection_size*collection_size);}//go forward in history
+else if(history == 3){ak_image_nr_collection = ak_image_nr_collection;}//stay
 //$collectionGrid.masonry('destroy');$("#collection_area").html("");ak_image_nr_collection=Math.max(0,ak_image_nr_collection-(collection_size*collection_size));createCollection(collection_size)}else{ons.notification.toast({message: "End of history", timeout: 2000});}}
 
 image_handler(false);collection_handler(false);
@@ -1532,9 +1530,9 @@ $("#detect-area").on('swipeleft', function(){collectionHandler(NaN,false);});
 $("#detect-area").off('swiperight');
 $("#detect-area").on('swiperight', function(){collectionHandler(ak_image_nr_show,false);});
 $("#detect-area").off('swipeup');
-$("#detect-area").on('swipeup', function(){collectionHandler(NaN,true);});
+$("#detect-area").on('swipeup', function(){collectionHandler(NaN,3);});
 $("#detect-area").off('swipedown');
-$("#detect-area").on('swipedown', function(){collectionHandler(NaN,true);});
+$("#detect-area").on('swipedown', function(){collectionHandler(NaN,3);});
 $("#pinchin_btn").off('click');
 $("#pinchin_btn").on('click', function(){collectionHandler(NaN,false);});
 $("#history_btn").off('click');
