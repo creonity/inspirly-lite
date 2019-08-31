@@ -500,7 +500,7 @@ opacity: 0;
 
 
 #moodsets_areaWrapper {
-height:80vh;
+height:70vh;
 overflow:scroll;
 
 }
@@ -526,7 +526,7 @@ top:5px
 }
 
 #moodTextInputWrapper {overflow:hidden; position:relative;}
-#moodTextInput {width:74vw; height:100px; background:rgba(255,255,255,0.5); transition: all 0.2s linear; font-size:30px; color:rgba(0,0,0,0.5); margin:5vw; padding:8vw; padding-top:20px; border-radius: 10% 10% 10% 9% / 48% 60% 38% 58%  ;}
+#moodTextInput {overflow:scroll; width:74vw; height:100px; background:rgba(255,255,255,0.5); transition: all 0.2s linear; font-size:30px; color:rgba(0,0,0,0.5); margin:5vw; padding:8vw; padding-top:20px; border-radius: 10% 10% 10% 9% / 48% 60% 38% 58%  ;}
 #moodTextInput.transition {background:rgba(255,255,255,1);box-shadow:0 0 20px white; color: black}
 #moodTextInput:focus, input:focus{outline: none;}
 #btnCreate {color:white;border-color:white; margin-left:7vw;background:none; transform: skewY(-7deg); margin-bottom:10px; margin-top:10px;}
