@@ -457,12 +457,12 @@ text-transform: uppercase;
   
 
 
-.bubble-in {
-animation: bubbleIn 0.4s ease;
+.bubble-ins {
+animation: bubbleIns 0.4s ease;
 opacity: 1;
 }
 
-@keyframes bubbleIn {
+@keyframes bubbleIns {
 0% {
 transform: scale(1);
 opacity: 0.01;
@@ -478,12 +478,12 @@ opacity: 1;
 }
 
 
-.bubble-pop {
-animation: bubblePop 0.4s ease;
+.bubble-pops {
+animation: bubblePops 0.4s ease;
 opacity: 0;
 }
 
-@keyframes bubblePop {
+@keyframes bubblePops {
 0% {
 transform: scale(1);
 opacity: 1;
@@ -507,7 +507,8 @@ overflow:scroll;
 
 #quotesWrapper {
 transform: skewY(+7deg);
-//height:80vh;
+//height:60vh;
+margin-top:0px;
 //flex-grow: 1;
 }
 
@@ -521,15 +522,15 @@ height:100%; overflow:hidden;
 
 #mood2Back {position:relative; width:100vw; text-align: center; height:100%; background:#F5E6CC; transform: skewY(-7deg); top:-100px; transition: all 0.2s linear;}
 
-#mood2Back.transition {
-top:5px
-}
+#mood2Back.transition {top:5px}
 
-#moodTextInputWrapper {overflow:hidden; position:relative;}
-#moodTextInput {overflow:scroll; width:74vw; height:100px; background:rgba(255,255,255,0.5); transition: all 0.2s linear; font-size:30px; color:rgba(0,0,0,0.5); margin:5vw; padding:8vw; padding-top:20px; border-radius: 10% 10% 10% 9% / 48% 60% 38% 58%  ;}
+#moodTextInputWrapper {overflow:hidden; position:relative;display: inline;}
+#moodTextInput {white-space: pre-line;overflow:scroll; width:74vw; height:100px; background:rgba(255,255,255,0.5); transition: all 0.2s linear; font-size:30px; color:rgba(0,0,0,0.5); margin:5vw; padding:8vw; padding-top:20px; border-radius: 10% 10% 10% 9% / 48% 60% 38% 58%  ;}
 #moodTextInput.transition {background:rgba(255,255,255,1);box-shadow:0 0 20px white; color: black}
 #moodTextInput:focus, input:focus{outline: none;}
 #btnCreate {color:white;border-color:white; margin-left:7vw;background:none; transform: skewY(-7deg); margin-bottom:10px; margin-top:10px;}
+#btnFavorite {color:white;border-color:white; margin-left:7vw;background:none; transform: skewY(-7deg); margin-bottom:10px; margin-top:10px;}
+
 
 #backTitle {
 color:white;
@@ -561,7 +562,10 @@ margin:10px;
 
 
 
-
+.quote_edit {
+float:right;
+margin-right:5px;
+}
 
 
 
