@@ -544,6 +544,7 @@ $(".quotes").off();
 $(".quote_edit").off();
 $("#quotesWrapper").on("click",".quote_edit",function(event){
 $("#moodTextInput").html($(this).parents(".quotes").children(".quoteContent").html());$("#moodTextInput").trigger("touch");$("#moodTextInput").focus();
+set_user_data(1,"text_content",$(this).parents(".quotes").children(".quoteContent").html());
 event.stopPropagation();})
 $("#quotesWrapper").on("click",".quotes",function(){$("#textSelection").html($(this).children(".quoteContent").html());
 //document.querySelector('#myNavigator').once("ons-postpop", function(){createCollection(3)});
@@ -1838,10 +1839,10 @@ user_txt=encodeURIComponent($("#"+textField).html().replace(patt2,"llllinebreak"
 user_txt = user_txt.replace(patt5,"\n").replace(patt7," ").replace(patt8,"\n");
 
 //user_txt = encodeURIComponent($("#"+textField).html());
-console.log(user_txt);
+
 if(user_txt.length==0){user_txt = encodeURI(getQuote(false,textField));}
 str_length = user_txt.length;
-console.log(window.localStorage.getItem("autolinebreak"));
+
 if(window.localStorage.getItem("autolinebreak")=="true")
 {
 console.log("oki");
@@ -1849,7 +1850,6 @@ var text_items = user_txt.split(/[\n ]+/);
 letter_length = str_length - text_items.length;
 var line_number = 1;
 line_number = Math.ceil(letter_length/(Math.ceil(letter_length/100)*10));
-console.log(line_number);
 var avg_line_length = letter_length/line_number;
 var user_txt_structured = "";
 counter = 0;
@@ -1862,10 +1862,9 @@ user_txt_structured = user_txt_structured+" ";}
 });
 if(text_items.length==2){user_txt_structured=text_items[0]+"\n"+text_items[1];}
 user_txt = user_txt_structured;
-console.log(user_txt);
 }
 user_txt = user_txt.trim();
-console.log(user_txt);
+
 return user_txt;  
 }
 
