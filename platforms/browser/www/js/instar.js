@@ -156,7 +156,7 @@ function initApp() {
 busy = false;
 screen.orientation.lock('portrait');
 //Prepare adds
-if (! AdMob ) { alert( 'admob plugin not ready' ); }
+//if (! AdMob ) { alert( 'admob plugin not ready' ); }
 if(typeof AdMob !== 'undefined') {
 create_bannerAd();
 create_interstitial();
@@ -168,7 +168,7 @@ device_id = device.uuid;
 //In your 'deviceready' handler, set up your Analytics tracker:
 //window.ga.startTrackerWithId('UA-104693442-1', 30)
 
-
+/*
 AppRate.preferences = {
   openStoreInApp: true,
   displayAppName: 'inspir.ly LITE',
@@ -187,8 +187,8 @@ AppRate.preferences = {
   }
 };
 
-AppRate.promptForRating(true);
-
+AppRate.promptForRating(false);
+*/
 }
 
 
