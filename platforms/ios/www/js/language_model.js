@@ -91,6 +91,8 @@ last: "Vorheriger",
 chooseMode : "W&auml;hle den Modus",
 AI : "inspirly KI",
 Experimental_mode : "Experimenteller Modus",
+HD : "HD",
+UHD : "UHD",
     };
 
 
@@ -186,6 +188,8 @@ last: "Last",
 chooseMode : "Choose Mode",
 AI : "inspirly AI",
 Experimental_mode : "Experimental Mode",
+HD : "HD",
+UHD : "UHD",
     };
 
 

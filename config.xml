@@ -49,6 +49,11 @@
     <plugin name="cordova-plugin-file" spec="4.3.3"/>
     <plugin name="cordova-plugin-file-transfer" spec="1.6.3"/>
     
+    <plugin spec="https://github.com/j3k0/cordova-plugin-purchase.git#phonegap-cli-8.0.0">
+    <param name="BILLING_KEY" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0SEIF/9U2TyT5CNH9bW9r3Q4oe4XSHO2ujcVQ+NkWo/ykDPzF5f4NmwWteG4qICBRq4mQwi+yXI6i6k84NCIYs0rG3vQ/X7Io/zP8bpOmY+kSD6KHYoghE+l3OZVduhWyMUber1B39zUOh3ig04x4HEE3aK7qxtFdUwx8ZSCxBV/Ekb8egBNOIBnxMl1YtkxDW5Gfa3W8DMelmUY6qSq43FcWytbs0sNUJOHMMr5e/bCd/CzVqomd+NIMSkp18OzCnpy9OuAYAee8s0NbNqspJHV+ZDRGQ2t41QhW0Sh9frUjUaiy/LCVXiNYlC8GH0cpQlBAa6Fk2pjYoSyNteZTQIDAQAB"/>
+</plugin>
+    
+    <plugin name="org.apache.cordova.network-information" source="pgb" />
 
     <plugin name="cordova-plugin-gallery-refresh" spec="^1.0.56" />
     <plugin name="cordova-plugin-screen-orientation" spec="^2.0.1" />
