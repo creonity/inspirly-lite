@@ -461,13 +461,13 @@ Note: All images are rendered on demand by our <b>learning inspirly AI</b>.
 <ons-action-sheet id="textInput" cancelable title="Change text">
 <ons-list style='margin-bottom:50%'>
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
+<div id='user_txt' placeholder='Free Text' contenteditable='true'></div>
 </ons-list-item>
 <ons-list-item>
       <p style="text-align: center;">
 <button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
 <button class="button button--outline download_btn" onclick="getQuote(true,'user_txt')"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').html('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
 </p>
 </ons-list-item>
 </ons-list>

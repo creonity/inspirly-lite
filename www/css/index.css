@@ -532,6 +532,9 @@ height:100%; overflow:hidden;
 #btnFavorite {color:white;border-color:white; margin-left:7vw;background:none; transform: skewY(-7deg); margin-bottom:10px; margin-top:10px;}
 
 
+#user_txt {white-space: pre-line;overflow:scroll; width:100%; height:100px; background:rgba(255,255,255,0.5); font-size:30px; color:rgba(0,0,0,0.5);}
+#user_txt:focus, input:focus{outline: none;}
+
 #backTitle {
 color:white;
   font: 2em/1 'LeagueGothicRegular', sans-serif;
