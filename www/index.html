@@ -57,7 +57,7 @@ For production change content-security-policy and admob
 </head>
 
 
-<body>
+<body onload="onLoad()">
 <ons-navigator id="myNavigator" page="language.html"></ons-navigator>
 
 
@@ -898,8 +898,4 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 
 
 </body>
-
-<script>
-document.addEventListener('deviceready', initApp, false);
-</script>
 </html>

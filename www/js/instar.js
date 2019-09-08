@@ -119,12 +119,13 @@ window.localStorage.removeItem("crop_image");
 window.localStorage.setItem("template_id","");
 
 
+function onLoad() {
+        document.addEventListener("deviceready", initApp, false);
+    }
+
+
 
 $(document).ready(function(){
-
-
-
-
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
     document.addEventListener('deviceready', initApp, false);
 } else {initApp();}
@@ -151,13 +152,14 @@ if( /(android)/i.test(navigator.userAgent) ) {
 
 function initApp() {
 
-
+//console.log("oki"+AdMob);
 busy = false;
 screen.orientation.lock('portrait');
 //Prepare adds
+if (! AdMob ) { alert( 'admob plugin not ready' ); }
 if(typeof AdMob !== 'undefined') {
-//create_bannerAd();
-//create_interstitial();
+create_bannerAd();
+create_interstitial();
 }
 
 device_id = device.uuid;
@@ -185,7 +187,7 @@ AppRate.preferences = {
   }
 };
 
-AppRate.promptForRating(false);
+AppRate.promptForRating(true);
 
 }
 
@@ -466,13 +468,16 @@ $("#myNavigator").trigger("imagePageLoaded");
 //if(typeof AdMob !== 'undefined'){AdMob.removeBanner();
 //create_bannerAd();
 //}
-//if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 }
 
 if (page.matches("#mood")) {
 $containerMood = $('#moodsets_area').masonry({itemSelector: '.mood_preview', columnWidth: 1});
 show_mood_sets();
-
+console.log("addmobi");
+if(typeof AdMob !== 'undefined'){
+console.log("addmob");
+AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 
 /*
 quantity("inputAge",0,120);

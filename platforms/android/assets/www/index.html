@@ -57,7 +57,7 @@ For production change content-security-policy and admob
 </head>
 
 
-<body>
+<body onload="onLoad()">
 <ons-navigator id="myNavigator" page="language.html"></ons-navigator>
 
 
@@ -86,6 +86,90 @@ For production change content-security-policy and admob
 
 
 
+<template id="settings.html">
+  <ons-page id="settings">
+ <ons-toolbar>
+  <div class="left">
+<div class="left"><ons-back-button></ons-back-button></div>
+</div>
+      <div class="center">Settings</div>
+    </ons-toolbar>
+
+
+
+
+
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
+    <ons-list-item onclick="change_lang('en');">English</ons-list-item>
+    <ons-list-item onclick="change_lang('de');">Deutsch</ons-list-item>
+</ons-list>
+
+<ons-list>
+<ons-list-header><span data-bind="reshtml: 'Choose_complexity'"></span></ons-list-header>
+<ons-row style="margin-top: 15px; margin-bottom:15px">
+      <ons-col width="40px" style="text-align: center; line-height: 31px;">
+          <ons-icon icon="md-brightness-low" style='color:rgba(0,0,0,0.3)'></ons-icon>
+      </ons-col>
+      <ons-col>
+      </ons-icon><ons-range id="complexitySlider" style="width: 100%;" value="25"></ons-range> </ons-col>
+         <ons-col width="40px" style="text-align: center; line-height: 31px;">
+        <ons-icon icon="md-brightness-high" style='color:rgba(0,0,0,0.4)'></ons-icon>
+      </ons-col>
+      </ons-row>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Experimental_mode'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="experimentalMode_switch"><ons-switch id='experimentalMode' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
+    </ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Auto_line_break'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="autolinebreak_switch"><ons-switch id='autolinebreak' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
+    </ons-list-item>
+</ons-list>
+
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="preview_quality_switch"><ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
+    </ons-list-item>
+</ons-list>
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Trainer_mode_help_our_inspirly_Designer_AI_to_become_better'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="trainer_switch"></div>
+    </ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Effect_mode'"></span></ons-list-header>
+    <ons-list-item>
+  <div class="center" style="margin-top:0px" id="effect_switch"></div>
+    </ons-list-item>
+</ons-list>
+
+<ons-list>
+    <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
+    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();$('.modal').trigger('postshow')"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
+    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
+</ons-list>
+
+
+<p style="text-align: center;margin-top:10px">
+<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
+</p>
+
+  </ons-page>
+</template>
 
 
 
@@ -102,7 +186,10 @@ For production change content-security-policy and admob
 <div class="left"><ons-back-button></ons-back-button></div>
 </div>
       <div class="center"><span data-bind="reshtml: 'new_image'"></span></div>
+  <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
     </ons-toolbar>
+
+
 
 
 <div id='moodsetWrapper'><div id='moodsets_areaWrapper'><div id='moodsets_area' class='moodsets_area' style='width:100%; overflow:scroll'></div></div>
@@ -122,6 +209,8 @@ For production change content-security-policy and admob
 <div class="left"><ons-back-button></ons-back-button></div>
 </div>
       <div class="center"><span data-bind="reshtml: 'new_image'"></span></div>
+  <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
+ 
     </ons-toolbar>
 
 
@@ -181,8 +270,6 @@ For production change content-security-policy and admob
       <div class="center"><img style='width:100px; padding-top:10px; margin:auto' img src='img/logo_sm.png'></div>
     <button id="btn_setting" class="button button--quiet right" style='color:#e0e0e0' onclick="document.querySelector('#myNavigator').pushPage('settings.html');"><i class="fa fa-gear"></i></button>
     </ons-toolbar>
-
-
 
 
 
@@ -254,7 +341,9 @@ For production change content-security-policy and admob
 </div>
 <div style='clear:both'></div>
 </div>
+
 </div>
+<button class="fab fab--mini" id="new_image" style='position:fixed; z-index:10000; right:5px; bottom:5px; background-color:rgba(0,128,255,0.7)'><i class="zmdi zmdi-plus"></i></button>
 
 
 
@@ -340,7 +429,6 @@ Note: All images are rendered on demand by our <b>learning inspirly AI</b>.
 </div>
 
 
-<button class="fab fab--mini" id="new_image" style='position:fixed; right:5px; bottom:5px; background-color:rgba(0,128,255,0.7)'><i class="zmdi zmdi-plus"></i></button>
 
 <div class='hidden' id ='error_connection_txt'><span data-bind="reshtml: 'Please_connect_to_the_internet_and_try_again'"></span></div>
 <div class='hidden' id ='Picture_has_beend_saved'><span data-bind="reshtml: 'Picture_has_beend_saved'"></span></div>
@@ -373,17 +461,13 @@ Note: All images are rendered on demand by our <b>learning inspirly AI</b>.
 <ons-action-sheet id="textInput" cancelable title="Change text">
 <ons-list style='margin-bottom:50%'>
 <ons-list-item>
-<textarea maxlength="800" style="width:100%;" class="textarea--transparent" rows="5" placeholder="..." id='user_txt'></textarea>
-</ons-list-item>
-<ons-list-item>
-      <div class="center"><span data-bind="reshtml: 'Auto_line_break'"></span></div>
-      <div class="right" id="autolinebreak_switch"></div>
+<div id='user_txt' placeholder='Free Text' contenteditable='true'></div>
 </ons-list-item>
 <ons-list-item>
       <p style="text-align: center;">
 <button class="button button--outline download_btn" onclick="applyChanges(canvas.getActiveObject()['layer_id'])"><span data-bind="reshtml: 'Apply'"></span></button>
 <button class="button button--outline download_btn" onclick="getQuote(true,'user_txt')"><span data-bind="reshtml: 'Random'"></span></button>
-<button class="button button--outline download_btn" onclick="$('#user_txt').val('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
+<button class="button button--outline download_btn" onclick="$('#user_txt').html('');window.localStorage.setItem('current_text', '');"><span data-bind="reshtml: 'Clear'"></span></button>
 </p>
 </ons-list-item>
 </ons-list>
@@ -563,83 +647,6 @@ Nach links = Design gefällt mir nicht<br>
 
 
 
-<template id="settings.html">
-  <ons-page id="settings">
- <ons-toolbar>
-  <div class="left">
-<div class="left"><ons-back-button></ons-back-button></div>
-</div>
-      <div class="center">Settings</div>
-    </ons-toolbar>
-
-
-
-
-
-
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Choose_language'"></span></ons-list-header>
-    <ons-list-item onclick="change_lang('en');">English</ons-list-item>
-    <ons-list-item onclick="change_lang('de');">Deutsch</ons-list-item>
-</ons-list>
-
-<ons-list>
-<ons-list-header><span data-bind="reshtml: 'Choose_complexity'"></span></ons-list-header>
-<ons-row style="margin-top: 15px; margin-bottom:15px">
-      <ons-col width="40px" style="text-align: center; line-height: 31px;">
-          <ons-icon icon="md-brightness-low" style='color:rgba(0,0,0,0.3)'></ons-icon>
-      </ons-col>
-      <ons-col>
-      </ons-icon><ons-range id="complexitySlider" style="width: 100%;" value="25"></ons-range> </ons-col>
-         <ons-col width="40px" style="text-align: center; line-height: 31px;">
-        <ons-icon icon="md-brightness-high" style='color:rgba(0,0,0,0.4)'></ons-icon>
-      </ons-col>
-      </ons-row>
-</ons-list>
-
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Experimental_mode'"></span></ons-list-header>
-    <ons-list-item>
-  <div class="center" style="margin-top:0px" id="experimentalMode_switch"><ons-switch id='experimentalMode' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
-    </ons-list-item>
-</ons-list>
-
-
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'High_preview_quality_switch_off_if_images_load_slowly'"></span></ons-list-header>
-    <ons-list-item>
-  <div class="center" style="margin-top:0px" id="preview_quality_switch"><ons-switch id='preview_quality' checked disable-auto-styling style='margin-left:0px'></ons-switch></div>
-    </ons-list-item>
-</ons-list>
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Trainer_mode_help_our_inspirly_Designer_AI_to_become_better'"></span></ons-list-header>
-    <ons-list-item>
-  <div class="center" style="margin-top:0px" id="trainer_switch"></div>
-    </ons-list-item>
-</ons-list>
-
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Effect_mode'"></span></ons-list-header>
-    <ons-list-item>
-  <div class="center" style="margin-top:0px" id="effect_switch"></div>
-    </ons-list-item>
-</ons-list>
-
-<ons-list>
-    <ons-list-header><span data-bind="reshtml: 'Infos'"></span></ons-list-header>
-    <ons-list-item onclick="document.querySelector('#myNavigator').popPage();document.querySelector('ons-modal').show();$('.modal').trigger('postshow')"><span data-bind="reshtml: 'Help'"></span></ons-list-item>
-    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Basic_terms'"></span></ons-list-item>
-    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'Privacy_policy'"></span></ons-list-item>
-    <ons-list-item onclick="document.querySelector('#myNavigator').pushPage('about.html');"><span data-bind="reshtml: 'About_us'"></span></ons-list-item>
-</ons-list>
-
-
-<p style="text-align: center;margin-top:10px">
-<ons-back-button class="button button--outline" ><span data-bind="reshtml: 'Go_back'"></span></ons-back-button>
-</p>
-
-  </ons-page>
-</template>
 
 
 
@@ -891,8 +898,4 @@ We reserve the right to make changes to this policy. Any changes to this policy 
 
 
 </body>
-
-<script>
-document.addEventListener('deviceready', initApp, false);
-</script>
 </html>
