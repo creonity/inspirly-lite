@@ -235,6 +235,7 @@ autoShow:false
 function create_rewardViedo()
 {
 if(typeof AdMob !== 'undefined') {
+//AdMob.rewardvideo.prepare( {
 AdMob.prepareRewardVideoAd( {
 license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
 isTesting: true,
@@ -245,7 +246,7 @@ autoShow:false
 }
 
 
-prepareRewardVideoAd(adId/options, success, fail);
+
 
 
 
@@ -913,8 +914,7 @@ async function createCollection(templateImageNr)
 {
 $("#quickStartGuide").fadeOut();
 $("#myNavigator").off("imagePageLoaded");
-
-if(AdMob) AdMob.showInterstitial();
+if(typeof AdMob !== 'undefined') {AdMob.showInterstitial();}
 
 canvas.clear();canvas.renderAll();
 collectionItemsShown=0;
@@ -1077,7 +1077,7 @@ items += item;
 
 function show_images_from_folder()
 {
-var local_images = ["1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344412Em23mkiNxYJFGFRXvjsD.png","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","vintage_bg.jpg"];
+var local_images = ["1355344363e5rbCRhbQRkQTRcqGavc.jpg","1355344372Aa2PFr4Fo7uK3uEts3Rx.jpg","1355344374opSFogbDspStKtEWLw5o.jpg","1355344377XgCUgoT8uXBx1rUpChpS.jpg","1355344379RRSAPz5REmRPBycQXy2c.jpg","1355344380JLj24A6WtnUZZaPzydLB.jpg","1355344381cOO6e3iHXKKzhIWog2lM.jpg","1355344385XXXopbAuVgPleR2ydwyq.jpg","1355344389r2jnDKdHqVc2DYiHjeE6.jpg","1355344391wI9rKbMKpgKPxagQagOx.jpg","1355344394I9AKfWp27CEHHWviYHfj.jpg","1355344412Em23mkiNxYJFGFRXvjsD.jpg","13553443872FwXjXhfFqDYB6PSIGMx.jpg","1355344395917FnCQbxBc5UNkZUdB1.jpg","vintage_bg.jpg"];
 $container.masonry( 'remove',$(".img_preview")).masonry('layout');
 $( function() {var $items = getItemsLocal(local_images);
 $container.masonryImagesReveal( $items );});
@@ -2048,7 +2048,7 @@ console.log("go_upload");
 
 function download_image(size)
 {
-AdMob.showRewardVideoAd();
+if(typeof AdMob !== 'undefined') {AdMob.showRewardVideoAd();}
 
 
 $("#download_progress").fadeIn();
