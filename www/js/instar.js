@@ -158,8 +158,9 @@ screen.orientation.lock('portrait');
 //Prepare adds
 //if (! AdMob ) { alert( 'admob plugin not ready' ); }
 if(typeof AdMob !== 'undefined') {
-create_bannerAd();
+//create_bannerAd();
 create_interstitial();
+create_rewardViedo();
 }
 
 device_id = device.uuid;
@@ -231,8 +232,20 @@ autoShow:false
 }
 }
 
+function create_rewardViedo()
+{
+if(typeof AdMob !== 'undefined') {
+AdMob.prepareRewardVideoAd( {
+license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
+isTesting: true,
+adId:admobid.reward,
+autoShow:false
+});
+}
+}
 
 
+prepareRewardVideoAd(adId/options, success, fail);
 
 
 
@@ -468,16 +481,13 @@ $("#myNavigator").trigger("imagePageLoaded");
 //if(typeof AdMob !== 'undefined'){AdMob.removeBanner();
 //create_bannerAd();
 //}
-if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+//if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 }
 
 if (page.matches("#mood")) {
 $containerMood = $('#moodsets_area').masonry({itemSelector: '.mood_preview', columnWidth: 1});
 show_mood_sets();
-console.log("addmobi");
-if(typeof AdMob !== 'undefined'){
-console.log("addmob");
-AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
+//if(typeof AdMob !== 'undefined'){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);}
 
 /*
 quantity("inputAge",0,120);
@@ -903,6 +913,8 @@ async function createCollection(templateImageNr)
 {
 $("#quickStartGuide").fadeOut();
 $("#myNavigator").off("imagePageLoaded");
+
+if(AdMob) AdMob.showInterstitial();
 
 canvas.clear();canvas.renderAll();
 collectionItemsShown=0;
@@ -2036,8 +2048,7 @@ console.log("go_upload");
 
 function download_image(size)
 {
-//AdMob.showRewardVideoAd();
-
+AdMob.showRewardVideoAd();
 
 
 $("#download_progress").fadeIn();
