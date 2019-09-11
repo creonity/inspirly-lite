@@ -242,14 +242,11 @@ isTesting: true,
 adId:admobid.reward,
 autoShow:false
 },
-function(){createDownload_image(downloadSize);},
+function(){create_rewardVideo();},
 function(){}
 );
 }
 }
-
-
-
 
 
 
@@ -270,7 +267,9 @@ $("#btn_options").addClass("create_btn_active");
 //Init Script
 $(document).on("init", function( event ) {
 var page = event.target;
-
+if(typeof AdMob !== 'undefined'){
+document.addEventListener(AdMob.events.OnAdRewarded, function (e) {createDownload_image(downloadSize);}, false);
+}
 
 
 
@@ -2057,7 +2056,7 @@ if(typeof AdMob !== 'undefined' && size > 400) {
 downloadSize = size;
 $("#admobVideo_txt").fadeIn();
 window.setTimeout(function(){
-AdMob.showRewardVideoAd();create_rewardVideo();
+AdMob.showRewardVideoAd();
 $("#admobVideo_txt").fadeOut();
 }, 3000);
 }
