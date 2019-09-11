@@ -161,6 +161,7 @@ if(typeof AdMob !== 'undefined') {
 //create_bannerAd();
 create_interstitial();
 create_rewardVideo();
+document.addEventListener(AdMob.events.OnAdRewarded, function (e) {createDownload_image(downloadSize);}, false);
 }
 
 device_id = device.uuid;
@@ -267,9 +268,7 @@ $("#btn_options").addClass("create_btn_active");
 //Init Script
 $(document).on("init", function( event ) {
 var page = event.target;
-if(typeof AdMob !== 'undefined'){
-document.addEventListener(AdMob.events.OnAdRewarded, function (e) {createDownload_image(downloadSize);}, false);
-}
+
 
 
 
