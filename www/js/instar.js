@@ -136,9 +136,14 @@ if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 
 if( /(android)/i.test(navigator.userAgent) ) {
 	admobid = { // for Android
-					banner: 'ca-app-pub-3176168089117396/9768598254',
-					interstitial: 'ca-app-pub-3176168089117396/4266001898',
-          reward: 'ca-app-pub-3176168089117396/2030467207'
+	//				banner: 'ca-app-pub-3176168089117396/9768598254',
+//					interstitial: 'ca-app-pub-3176168089117396/4266001898',
+//          reward: 'ca-app-pub-3176168089117396/2030467207'
+          
+          banner: 'ca-app-pub-3940256099942544/6300978111',
+					interstitial: 'ca-app-pub-3940256099942544/1033173712',
+          reward:	'ca-app-pub-3940256099942544/5224354917'
+          
 	};
 } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
 	admobid = { // for iOS
@@ -162,7 +167,7 @@ if(typeof AdMob !== 'undefined') {
 create_interstitial();
 create_rewardVideo();
 
-//document.addEventListener('onRewarded', function(data){createDownload_image(downloadSize);});
+document.addEventListener('onRewarded', function(data){createDownload_image(downloadSize);});
 }
 
 device_id = device.uuid;
@@ -1139,7 +1144,7 @@ $( function() {key_new = key_new+1;var $items = getMoodsLocal(key_new,mood_image
 $containerMood.masonryImagesReveal( $items );
 var randAnimate = Math.floor(Math.random() * 3);
 $(".mood_preview").removeClass("animation-target").addClass("mood_preview_animate"+randAnimate);
-});},timeoutTime,key);
+});},timeoutTime);
 timeoutTime = timeoutTime+201;
 }
 //});
