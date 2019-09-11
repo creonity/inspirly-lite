@@ -73,8 +73,8 @@ var collectionTimeOutTime = 5000;
 var imageTimeOut = false;
 var imageTimeOutTime = 2000;
 var app = {};
-
-
+var admobCounter = 0;
+var downloadSize = 1600;
 
 //effects
 var particles = [];
@@ -160,7 +160,7 @@ screen.orientation.lock('portrait');
 if(typeof AdMob !== 'undefined') {
 //create_bannerAd();
 create_interstitial();
-create_rewardViedo();
+create_rewardVideo();
 }
 
 device_id = device.uuid;
@@ -232,7 +232,7 @@ autoShow:false
 }
 }
 
-function create_rewardViedo()
+function create_rewardVideo()
 {
 if(typeof AdMob !== 'undefined') {
 //AdMob.rewardvideo.prepare( {
@@ -241,7 +241,10 @@ license: "lukas.nagel@gmx.ch/6af2fe6663be05e6b5e76d7afbb13ed8",
 isTesting: true,
 adId:admobid.reward,
 autoShow:false
-});
+},
+function(){createDownload_image(downloadSize);},
+function(){}
+);
 }
 }
 
@@ -912,9 +915,10 @@ if(!$(".modal").is(":visible")){$(".sketch").insertBefore($(".upper-canvas"));}
 //Collection Feature
 async function createCollection(templateImageNr)
 {
+admobCounter = admobCounter+1;
 $("#quickStartGuide").fadeOut();
 $("#myNavigator").off("imagePageLoaded");
-if(typeof AdMob !== 'undefined') {AdMob.showInterstitial();}
+if(typeof AdMob !== 'undefined' && admobCounter>=5) {AdMob.showInterstitial();create_interstitial();admobCounter=0;}
 
 canvas.clear();canvas.renderAll();
 collectionItemsShown=0;
@@ -2048,9 +2052,23 @@ console.log("go_upload");
 
 function download_image(size)
 {
-if(typeof AdMob !== 'undefined') {AdMob.showRewardVideoAd();}
 
+if(typeof AdMob !== 'undefined' && size > 400) {
+downloadSize = size;
+$("#admobVideo_txt").fadeIn();
+window.setTimeout(function(){
+AdMob.showRewardVideoAd();create_rewardVideo();
+$("#admobVideo_txt").fadeOut();
+}, 3000);
+}
+else
+{
+createDownload_image(size);
+}
+}
 
+function createDownload_image(size)
+{
 $("#download_progress").fadeIn();
 $(".download_btn").prop("disabled", true);
 

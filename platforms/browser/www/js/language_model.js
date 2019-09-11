@@ -93,6 +93,7 @@ AI : "inspirly KI",
 Experimental_mode : "Experimenteller Modus",
 HD : "HD",
 UHD : "UHD",
+PleaseWatchAd: "Das Bild wird nach dem kurzen Video runtergeladen.",
     };
 
 
@@ -190,6 +191,7 @@ AI : "inspirly AI",
 Experimental_mode : "Experimental Mode",
 HD : "HD",
 UHD : "UHD",
+PleaseWatchAd: "The image will be downloaded after the short video.",
     };
 
 
