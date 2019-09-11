@@ -58,8 +58,7 @@ height: calc(37.5vw);
 
 .saturate { filter: hue-rotate(180deg); }
 
-#mood > .page__background {background-color:#A64AC9}
-#mood2 > .page__background {background-color:#17E9E0}
+
 
 
 .mood_preview {
@@ -70,8 +69,10 @@ height: calc(37.5vw);
 	width: 38vw;;
 	height: 38vw;;
 	margin: 4vw;
-	background-color: #21D4FD;
-	background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+	background-color: white;
+  text-transform: uppercase;
+  font-size:30px;
+//	background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
 	border-radius: 62% 38% 70% 30% / 46% 59% 41% 54% ;
 
 	overflow: hidden;
@@ -518,7 +519,24 @@ height:100%; overflow:hidden;
 
 .moodsets_area {margin-bottom:20px;}
 
-#moodBack {text-align: center; height:100%; background:#FCCD04; transform: skewY(-7deg);}
+
+#mood > .page__background {background-color:#ffd3b6    }
+#mood2 > .page__background {background-color:#a8e6cf }
+#moodBack {text-align: center; height:100%; margin-top:-3vh; background:#ff8b94  ; transform: skewY(-7deg);}
+#backTitle {
+color:white;
+  font: 2em/1 'LeagueGothicRegular', sans-serif;
+  border: .12em solid #222  ;
+
+  -webkit-mask-image: url(../img/knockout.png);
+mask-image: url(../img/knockout.png);
+background:#222  ;
+font-size: 40px;
+line-height: 1;
+padding: .08em .08em 0;
+text-transform: uppercase;
+  }
+
 
 #mood2Back {position:relative; width:100vw; text-align: center; height:100%; background:#F5E6CC; transform: skewY(-7deg); top:-100px; transition: all 0.2s linear;}
 
@@ -535,19 +553,7 @@ height:100%; overflow:hidden;
 #user_txt {white-space: pre-line;overflow:scroll; width:100%; height:100px; background:rgba(255,255,255,0.5); font-size:30px; color:rgba(0,0,0,0.5);}
 #user_txt:focus, input:focus{outline: none;}
 
-#backTitle {
-color:white;
-  font: 2em/1 'LeagueGothicRegular', sans-serif;
-  border: .12em solid #222;
 
-  -webkit-mask-image: url(../img/knockout.png);
-mask-image: url(../img/knockout.png);
-background:#222;
-font-size: 40px;
-line-height: 1;
-padding: .08em .08em 0;
-text-transform: uppercase;
-  }
 
 
 
@@ -555,7 +561,7 @@ text-transform: uppercase;
 .quotes {
  font: 2em/1.5;
 width:80%;
-height:30px;
+min-height:30px;
 background:white;
 border-radius: 10% 10% 10% 9% / 48% 60% 38% 58%  ;
 text-align:center;

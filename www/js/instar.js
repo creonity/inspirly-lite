@@ -1102,7 +1102,10 @@ $("#quotes").empty();
 var $grid = $('#quotes').masonry({itemSelector: '.quotes',columnWidth: '.quotes'});
 
 var moodQuotes = quote_array[locale][window.localStorage.getItem("moodId")];
+shuffle(moodQuotes);
 
+moodQuotes = moodQuotes.slice(0,10);
+console.log(moodQuotes);
 
 var timeoutTime = 0;
 moodQuotes.forEach(function(element) {
@@ -1123,21 +1126,23 @@ timeoutTime = timeoutTime+100+Math.floor(Math.random() * 201);
 
 function show_mood_sets()
 {
-
-
-var mood_images = ["1","2","3","4"];
+var elements = [];
+var key_new = 0;
+var mood_images = {1:"inspirational",2:"birthday",3:"wedding",4:"valentine",5:"baby",6:"mother",7:"father",8:"funny",9:"christmas",10:"new year",11:"eastern",12:"halloween",13:"condolence"};
+//var mood_images = ["1","2","3","4"];
  $containerMood.masonry( 'remove',$(".mood_preview")).masonry('layout');
 var timeoutTime = 0;
-mood_images.forEach(function(element) {
+for (var key in mood_images) {
+//mood_images.forEach(function(element) {
 window.setTimeout(function(){
-$( function() {var $items = getMoodsLocal([element]);
+$( function() {key_new = key_new+1;var $items = getMoodsLocal(key_new,mood_images[key_new]);
 $containerMood.masonryImagesReveal( $items );
 var randAnimate = Math.floor(Math.random() * 3);
-
 $(".mood_preview").removeClass("animation-target").addClass("mood_preview_animate"+randAnimate);
-});},timeoutTime);
+});},timeoutTime,key);
 timeoutTime = timeoutTime+201;
-});
+}
+//});
 
 
 /*
@@ -1154,13 +1159,13 @@ $(".mood_preview").removeClass("animation-target").addClass("mood_preview_animat
 
 }
 
-function getMoodsLocal(mood_images) {
+function getMoodsLocal(key, element) {
 var items = '';
-$.each(mood_images, function(index, value) {
+//$.each(mood_images, function(index, value) {
 
-var item = "<div data-moodset='"+value+"' class='mood_preview img_preview animation-target' style='background-image: url(img/moods/"+value+".jpg); height:"+$(window).width()/3+"px;'></div>";
+var item = "<div data-moodset='"+key+"' class='mood_preview animation-target' style='background-image: url();height:"+$(window).width()/3+"px;'>"+element+"</div>";
 items += item;
-});
+//});
 return $( items );
 }
 
@@ -2880,7 +2885,16 @@ if(check_var == "null" || check_var == null || check_var == "" || check_var == f
 else{return false;}
 }
 
-
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
 
 
 var showDialog = function (id) {document.getElementById(id).show();};
