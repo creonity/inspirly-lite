@@ -161,7 +161,8 @@ if(typeof AdMob !== 'undefined') {
 //create_bannerAd();
 create_interstitial();
 create_rewardVideo();
-document.addEventListener(AdMob.events.OnAdRewarded, function (e) {createDownload_image(downloadSize);}, false);
+
+document.addEventListener('onRewarded', function(data){createDownload_image(downloadSize);});
 }
 
 device_id = device.uuid;
