@@ -86,7 +86,12 @@ var swipe_effect;
 
 
 
-
+document.addEventListener('onRewarded', function(data){
+$("#admobVideo_txt3").fadeIn();
+createDownload_image(downloadSize);});
+document.addEventListener('onRewardedVideoStarted', function(data){
+$("#admobVideo_txt2").fadeIn();
+create_rewardVideo();});
 
 
 
@@ -171,12 +176,7 @@ create_rewardVideo();
 
 
 
-document.addEventListener('onRewarded', function(data){
-$("#admobVideo_txt3").fadeIn();
-createDownload_image(downloadSize);});
-document.addEventListener('onRewardedVideoStarted', function(data){
-$("#admobVideo_txt2").fadeIn();
-create_rewardVideo();});
+
 
 
 device_id = device.uuid;
