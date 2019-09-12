@@ -169,6 +169,7 @@ create_rewardVideo();
 }
 
 document.addEventListener('onRewarded', function(data){createDownload_image(downloadSize);});
+document.addEventListener('onRewardedVideoStarted', function(data){create_rewardVideo();});
 
 
 device_id = device.uuid;
